@@ -75,7 +75,7 @@ function initialise() {
       start_date TEXT NOT NULL,  -- MM-DD (month-day)
       end_date   TEXT NOT NULL,  -- MM-DD
       price_per_night REAL NOT NULL,
-      min_stay   INTEGER NOT NULL DEFAULT 3
+      min_stay   INTEGER NOT NULL DEFAULT 2
     );
 
     -- Seed default seasons if none exist
@@ -83,18 +83,21 @@ function initialise() {
     -- Other dates: €325/night | Peak dates: €395/night
     INSERT OR IGNORE INTO pricing_seasons (id, name, start_date, end_date, price_per_night, min_stay)
     VALUES
-      (1, 'Other Dates',  '01-07', '01-12', 325, 3),
-      (2, 'Peak Season',  '01-13', '01-21', 395, 5),
-      (3, 'Other Dates',  '01-22', '02-25', 325, 3),
-      (4, 'Peak Season',  '02-26', '03-11', 395, 5),
-      (5, 'Other Dates',  '03-12', '05-28', 325, 3),
-      (6, 'Peak Season',  '05-29', '06-06', 395, 5),
-      (7, 'Other Dates',  '06-07', '06-30', 325, 3),
-      (8, 'Peak Season',  '07-01', '08-31', 395, 7),
-      (9, 'Other Dates',  '09-01', '10-22', 325, 3),
-      (10,'Peak Season',  '10-23', '10-31', 395, 5),
-      (11,'Other Dates',  '11-01', '12-19', 325, 3),
-      (12,'Peak Season',  '12-20', '12-31', 395, 5);
+      (1, 'Other Dates',  '01-07', '01-12', 325, 2),
+      (2, 'Peak Season',  '01-13', '01-21', 395, 2),
+      (3, 'Other Dates',  '01-22', '02-25', 325, 2),
+      (4, 'Peak Season',  '02-26', '03-11', 395, 2),
+      (5, 'Other Dates',  '03-12', '05-28', 325, 2),
+      (6, 'Peak Season',  '05-29', '06-06', 395, 2),
+      (7, 'Other Dates',  '06-07', '06-30', 325, 2),
+      (8, 'Peak Season',  '07-01', '08-31', 395, 2),
+      (9, 'Other Dates',  '09-01', '10-22', 325, 2),
+      (10,'Peak Season',  '10-23', '10-31', 395, 2),
+      (11,'Other Dates',  '11-01', '12-19', 325, 2),
+      (12,'Peak Season',  '12-20', '12-31', 395, 2);
+
+    -- Ensure min_stay is 2 for all seasons (fixes any previously seeded values)
+    UPDATE pricing_seasons SET min_stay = 2 WHERE min_stay != 2;
   `);
 }
 
@@ -313,7 +316,7 @@ function calculatePrice(checkIn, checkOut) {
   const igicRate = 0.07; // Canary Islands IGIC tax 7%
 
   let total = 0;
-  let minStay = parseInt(process.env.MIN_STAY_NIGHTS || '3');
+  let minStay = parseInt(process.env.MIN_STAY_NIGHTS || '2');
   let hasPeakNight = false;
 
   for (const date of dates) {

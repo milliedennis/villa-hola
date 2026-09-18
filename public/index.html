@@ -410,12 +410,17 @@ a { color: inherit; text-decoration: none; }
 #gallery .section-label { color: var(--terra-light); }
 #gallery .section-title { color: var(--white); }
 .gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 280px);
+  display: flex;
+  flex-direction: row;
   gap: 12px;
   margin-top: 48px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 4px;
 }
+.gallery-grid::-webkit-scrollbar { display: none; }
 .gallery-item {
   border-radius: var(--radius);
   overflow: hidden;
@@ -423,9 +428,16 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   background: #2A2A2A;
   transition: transform .3s;
+  flex: 0 0 auto;
+  width: 72vw;
+  max-width: 560px;
+  height: 340px;
+  scroll-snap-align: start;
+}
+@media (max-width: 600px) {
+  .gallery-item { width: 85vw; height: 260px; }
 }
 .gallery-item:hover { transform: scale(1.02); z-index: 2; }
-.gallery-item:first-child { grid-column: 1/3; grid-row: 1; }
 .gallery-item img {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -1232,7 +1244,7 @@ footer {
     <div class="feature-item">
       <span class="feature-icon">🏊</span>
       <div class="feature-title">Private Pool</div>
-      <div class="feature-desc">Your own heated pool — no sharing, total privacy, sunbathe all day.</div>
+      <div class="feature-desc">Your own private pool — solar-warmed with a thermal cover, reaching up to 33°C. No sharing, total privacy.</div>
     </div>
     <div class="feature-item">
       <span class="feature-icon">📍</span>
@@ -1758,7 +1770,7 @@ footer {
             <div><div>10% Early Booking Discount</div><div style="color:rgba(255,255,255,0.5);font-size:12px">Off-peak dates · 1+ year ahead</div></div>
           </div>
           <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);font-size:13px;color:rgba(255,255,255,0.5)">
-            €80 cleaning fee (stays under 5 nights) · Weekly clean included for 5+ nights · Min. 3 nights
+            €80 cleaning fee (stays under 5 nights) · Weekly clean included for 5+ nights · Min. 2 nights
           </div>
         </div>
 
@@ -1832,7 +1844,7 @@ footer {
           <span class="faq-arrow">⌄</span>
         </button>
         <div class="faq-answer">
-          When you book online, you pay a 20% deposit to secure your dates. The remaining 80% balance is then arranged with us directly via WhatsApp. We will contact you shortly after your booking to confirm the details and arrange the balance payment.
+          When you book online, you pay a 20% deposit to secure your dates. The remaining 80% balance is due 30 days before your check-in date and is arranged with us directly via WhatsApp. We will contact you shortly after your booking to confirm the details and arrange the balance payment.
         </div>
       </div>
       <div class="faq-item">
@@ -1841,7 +1853,7 @@ footer {
           <span class="faq-arrow">⌄</span>
         </button>
         <div class="faq-answer">
-          Our minimum stay is 3 nights outside of peak season, and 5 nights during the summer (June–August). Please check availability for your preferred dates and the booking form will advise you of any minimum.
+          Our minimum stay is 2 nights year-round. Please check availability for your preferred dates and the booking form will advise you of any minimum.
         </div>
       </div>
       <div class="faq-item">
@@ -1850,7 +1862,7 @@ footer {
           <span class="faq-arrow">⌄</span>
         </button>
         <div class="faq-answer">
-          Please contact us via WhatsApp for the latest information on pool heating. Lanzarote's climate is warm year-round, so the pool is generally comfortable even without heating.
+          The pool is not heated, but it is fitted with a thermal cover that retains heat from the sun. Lanzarote's warm climate means the pool benefits from solar energy throughout the year, and water temperatures can reach up to 33°C during warmer months. The pool is generally very pleasant for swimming.
         </div>
       </div>
       <div class="faq-item">
@@ -1877,7 +1889,7 @@ footer {
           <span class="faq-arrow">⌄</span>
         </button>
         <div class="faq-answer">
-          Cancellations made more than 60 days before check-in will receive a full deposit refund. Cancellations within 60 days of check-in are non-refundable. We strongly recommend taking out holiday travel insurance. Full terms and conditions are provided on booking.
+          Cancellations made more than 60 days before check-in will receive a full deposit refund. Cancellations within 60 days of check-in are non-refundable. Full terms and conditions are provided on booking.
         </div>
       </div>
       <div class="faq-item">
@@ -1895,7 +1907,7 @@ footer {
           <span class="faq-arrow">⌄</span>
         </button>
         <div class="faq-answer">
-          Villa Hola accommodates a maximum of 6 guests in 3 bedrooms. This limit must be respected — the number of guests stated at booking is the maximum permitted to stay at the property.
+          Villa Hola accommodates a maximum of 8 guests across 4 bedrooms. This limit must be respected — the number of guests stated at booking is the maximum permitted to stay at the property.
         </div>
       </div>
       <div class="faq-item">
@@ -1904,7 +1916,7 @@ footer {
           <span class="faq-arrow">⌄</span>
         </button>
         <div class="faq-answer">
-          A hire car is highly recommended for exploring Lanzarote — the island has incredible scenery, volcanic landscapes and beaches that are best discovered by car. That said, Playa Blanca itself has a good range of restaurants, beaches and shops within walking distance. Taxis are also readily available.
+          A hire car is highly recommended for exploring Lanzarote — the island has incredible scenery, volcanic landscapes and beaches that are best discovered by car. That said, Playa Blanca itself has a good range of restaurants, beaches and shops within walking distance. Taxis are also available.
         </div>
       </div>
     </div>
