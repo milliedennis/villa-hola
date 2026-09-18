@@ -1605,11 +1605,14 @@ footer {
 
             <div class="availability-result" id="avail-result"></div>
             <div class="price-breakdown" id="price-breakdown">
-              <div class="price-row"><span id="pr-nights">3 nights</span><span id="pr-subtotal">€360.00</span></div>
-              <div class="price-row"><span>Cleaning fee</span><span id="pr-cleaning">€80.00</span></div>
-              <div class="price-row total"><span>Total</span><span id="pr-total">€440.00</span></div>
-              <div class="price-row deposit">🔒 <span>Deposit due now (20%)</span><span id="pr-deposit">€44.00</span></div>
-              <div class="price-row balance">💬 <span>Balance via WhatsApp</span><span id="pr-balance">€396.00</span></div>
+              <div class="price-row"><span id="pr-nights">3 nights</span><span id="pr-subtotal">€0.00</span></div>
+              <div class="price-row" id="pr-discount-row" style="display:none;color:#4A7C59"><span>🎉 Early booking discount (10%)</span><span id="pr-discount">-€0.00</span></div>
+              <div class="price-row" id="pr-cleaning-row"><span>Cleaning fee</span><span id="pr-cleaning">€80.00</span></div>
+              <div class="price-row" id="pr-weekly-clean-row" style="display:none;color:#4A7C59"><span>✓ Weekly clean included</span><span>—</span></div>
+              <div class="price-row"><span>IGIC (7% Canary Islands tax)</span><span id="pr-igic">€0.00</span></div>
+              <div class="price-row total"><span>Total inc. IGIC</span><span id="pr-total">€0.00</span></div>
+              <div class="price-row deposit">🔒 <span>Deposit due now (20%)</span><span id="pr-deposit">€0.00</span></div>
+              <div class="price-row balance">💬 <span>Balance via WhatsApp</span><span id="pr-balance">€0.00</span></div>
             </div>
 
             <div class="form-actions">
@@ -1746,16 +1749,16 @@ footer {
         <div class="sidebar-card">
           <h4>Pricing Guide</h4>
           <div class="sidebar-feature"><span class="sidebar-feature-icon">❄️</span>
-            <div><div>Low Season</div><div style="color:rgba(255,255,255,0.5);font-size:12px">from €325/night</div></div>
+            <div><div>Low Season</div><div style="color:rgba(255,255,255,0.5);font-size:12px">from €325/night + 7% IGIC</div></div>
           </div>
           <div class="sidebar-feature"><span class="sidebar-feature-icon">🌸</span>
-            <div><div>Peak Season</div><div style="color:rgba(255,255,255,0.5);font-size:12px">from €395/night</div></div>
+            <div><div>Peak Season</div><div style="color:rgba(255,255,255,0.5);font-size:12px">from €395/night + 7% IGIC</div></div>
           </div>
           <div class="sidebar-feature"><span class="sidebar-feature-icon">☀️</span>
-            <div><div>10% Early Booking Discount</div><div style="color:rgba(255,255,255,0.5);font-size:12px">Book direct & save</div></div>
+            <div><div>10% Early Booking Discount</div><div style="color:rgba(255,255,255,0.5);font-size:12px">Off-peak dates · 1+ year ahead</div></div>
           </div>
           <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);font-size:13px;color:rgba(255,255,255,0.5)">
-            + €80 cleaning fee · Min. 3 nights
+            €80 cleaning fee (stays under 5 nights) · Weekly clean included for 5+ nights · Min. 3 nights
           </div>
         </div>
 
@@ -2153,12 +2156,32 @@ function clearAvailability() {
 }
 
 function showPriceBreakdown(p) {
-  document.getElementById('pr-nights').textContent  = `${p.nights} nights`;
+  document.getElementById('pr-nights').textContent   = `${p.nights} nights`;
   document.getElementById('pr-subtotal').textContent = `€${p.subtotal.toFixed(2)}`;
-  document.getElementById('pr-cleaning').textContent = `€${p.cleaningFee.toFixed(2)}`;
+  document.getElementById('pr-igic').textContent     = `€${(p.igic || 0).toFixed(2)}`;
   document.getElementById('pr-total').textContent    = `€${p.grandTotal.toFixed(2)}`;
   document.getElementById('pr-deposit').textContent  = `€${p.deposit.toFixed(2)}`;
   document.getElementById('pr-balance').textContent  = `€${p.balance.toFixed(2)}`;
+
+  // Early booking discount row
+  const discRow = document.getElementById('pr-discount-row');
+  if (p.earlyBookingApplied && p.discountAmount > 0) {
+    document.getElementById('pr-discount').textContent = `-€${p.discountAmount.toFixed(2)}`;
+    discRow.style.display = '';
+  } else {
+    discRow.style.display = 'none';
+  }
+
+  // Cleaning fee vs weekly clean
+  if (p.cleaningFee > 0) {
+    document.getElementById('pr-cleaning').textContent = `€${p.cleaningFee.toFixed(2)}`;
+    document.getElementById('pr-cleaning-row').style.display = '';
+    document.getElementById('pr-weekly-clean-row').style.display = 'none';
+  } else {
+    document.getElementById('pr-cleaning-row').style.display = 'none';
+    document.getElementById('pr-weekly-clean-row').style.display = '';
+  }
+
   document.getElementById('price-breakdown').style.display = 'block';
 }
 function hidePriceBreakdown() {

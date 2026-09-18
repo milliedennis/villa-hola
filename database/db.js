@@ -309,25 +309,49 @@ function calculatePrice(checkIn, checkOut) {
   const dates = getDatesInRange(checkIn, checkOut); // nights = dates.length
   const cleaningFee = parseFloat(process.env.CLEANING_FEE || '80');
   const depositPct  = parseFloat(process.env.DEPOSIT_PERCENT || '20') / 100;
+  const earlyDiscountPct = parseFloat(process.env.EARLY_BOOKING_DISCOUNT || '10') / 100;
+  const igicRate = 0.07; // Canary Islands IGIC tax 7%
 
   let total = 0;
   let minStay = parseInt(process.env.MIN_STAY_NIGHTS || '3');
+  let hasPeakNight = false;
 
   for (const date of dates) {
     const [year, month, day] = date.split('-').map(Number);
     const mmdd = `${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
     const season = getSeason(mmdd, seasons);
-    total += season ? season.price_per_night : parseFloat(process.env.PRICE_LOW_SEASON || '325');
+    const nightPrice = season ? season.price_per_night : parseFloat(process.env.PRICE_LOW_SEASON || '325');
+    total += nightPrice;
     if (season && season.min_stay > minStay) minStay = season.min_stay;
+    // Flag if any night falls in peak season (price > low season rate)
+    if (nightPrice > parseFloat(process.env.PRICE_LOW_SEASON || '325')) hasPeakNight = true;
   }
 
   const nights = dates.length;
-  const subtotal = total;
-  const grandTotal = subtotal + cleaningFee;
+
+  // Early booking discount: >365 days ahead AND no peak season nights
+  const today = new Date();
+  const checkInDate = new Date(checkIn);
+  const daysAhead = Math.floor((checkInDate - today) / (1000 * 60 * 60 * 24));
+  const earlyBookingApplies = daysAhead > 365 && !hasPeakNight;
+  const discountAmount = earlyBookingApplies ? Math.round(total * earlyDiscountPct * 100) / 100 : 0;
+  const subtotal = Math.round((total - discountAmount) * 100) / 100;
+
+  // Cleaning fee only applies to stays under 5 nights
+  // 5+ nights: weekly clean is included in the price
+  const applicableCleaningFee = nights < 5 ? cleaningFee : 0;
+
+  const totalBeforeIgic = subtotal + applicableCleaningFee;
+  const igic = Math.round(totalBeforeIgic * igicRate * 100) / 100;
+  const grandTotal = Math.round((totalBeforeIgic + igic) * 100) / 100;
   const deposit = Math.round(grandTotal * depositPct * 100) / 100;
   const balance = Math.round((grandTotal - deposit) * 100) / 100;
 
-  return { nights, subtotal, cleaningFee, grandTotal, deposit, balance, minStay };
+  return {
+    nights, subtotal, cleaningFee: applicableCleaningFee,
+    discountAmount, earlyBookingApplied: earlyBookingApplies,
+    igic, grandTotal, deposit, balance, minStay
+  };
 }
 
 function getSeason(mmdd, seasons) {
