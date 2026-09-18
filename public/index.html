@@ -1298,6 +1298,21 @@ footer {
   .gallery-item:first-child { grid-column: 1; height: 260px; }
   .booking-steps { font-size: 11px; }
 }
+
+/* ── Language Switcher ─────────────────────────────────────────────────── */
+.lang-switcher { display: flex; align-items: center; gap: 2px; }
+.lang-btn {
+  background: none; border: none; cursor: pointer;
+  font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.65);
+  padding: 5px 7px; border-radius: 4px; transition: all .2s;
+  letter-spacing: .04em; font-family: 'Inter', sans-serif;
+}
+.lang-btn:hover { color: var(--white); background: rgba(255,255,255,0.12); }
+.lang-btn.active { color: var(--white); background: rgba(255,255,255,0.18); }
+#navbar.scrolled .lang-btn { color: var(--text-light); }
+#navbar.scrolled .lang-btn.active { color: var(--text-dark); background: var(--sand); }
+.lang-sep { color: rgba(255,255,255,0.25); font-size: 10px; user-select: none; }
+#navbar.scrolled .lang-sep { color: var(--sand-dark); }
 </style>
 </head>
 <body>
@@ -1313,15 +1328,22 @@ footer {
         Villa Hola
       </a>
       <ul class="nav-links">
-        <li><a href="#about">The Villa</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#facilities">Facilities</a></li>
-        <li><a href="#location">Location</a></li>
-        <li><a href="#booking">Booking</a></li>
-        <li><a href="#faq">FAQs</a></li>
+        <li><a href="#about" data-i18n="nav-villa">The Villa</a></li>
+        <li><a href="#gallery" data-i18n="nav-gallery">Gallery</a></li>
+        <li><a href="#facilities" data-i18n="nav-facilities">Facilities</a></li>
+        <li><a href="#location" data-i18n="nav-location">Location</a></li>
+        <li><a href="#booking" data-i18n="nav-booking">Booking</a></li>
+        <li><a href="#faq" data-i18n="nav-faq">FAQs</a></li>
       </ul>
+      <div class="lang-switcher" id="lang-switcher-desktop">
+        <button onclick="setLanguage('en')" class="lang-btn active" id="lang-en">EN</button>
+        <span class="lang-sep">|</span>
+        <button onclick="setLanguage('es')" class="lang-btn" id="lang-es">ES</button>
+        <span class="lang-sep">|</span>
+        <button onclick="setLanguage('de')" class="lang-btn" id="lang-de">DE</button>
+      </div>
       <div class="nav-cta">
-        <a href="#booking" class="nav-book-btn">Book Now</a>
+        <a href="#booking" class="nav-book-btn" data-i18n="nav-book">Book Now</a>
         <button class="mobile-menu-btn" onclick="openNavDrawer()" aria-label="Menu">☰</button>
       </div>
     </div>
@@ -1331,14 +1353,21 @@ footer {
 <!-- Mobile nav drawer -->
 <div id="nav-drawer" onclick="if(event.target===this)closeNavDrawer()">
   <div class="nav-drawer-panel">
-    <a href="#about" onclick="closeNavDrawer()">The Villa</a>
-    <a href="#gallery" onclick="closeNavDrawer()">Gallery</a>
-    <a href="#facilities" onclick="closeNavDrawer()">Facilities</a>
-    <a href="#location" onclick="closeNavDrawer()">Location</a>
-    <a href="#booking" onclick="closeNavDrawer()">Booking</a>
-    <a href="#faq" onclick="closeNavDrawer()">FAQs</a>
-    <a href="#contact" onclick="closeNavDrawer()">Contact</a>
-    <a href="#booking" class="btn btn-primary" onclick="closeNavDrawer()">Book Now</a>
+    <a href="#about" onclick="closeNavDrawer()" data-i18n="nav-villa">The Villa</a>
+    <a href="#gallery" onclick="closeNavDrawer()" data-i18n="nav-gallery">Gallery</a>
+    <a href="#facilities" onclick="closeNavDrawer()" data-i18n="nav-facilities">Facilities</a>
+    <a href="#location" onclick="closeNavDrawer()" data-i18n="nav-location">Location</a>
+    <a href="#booking" onclick="closeNavDrawer()" data-i18n="nav-booking">Booking</a>
+    <a href="#faq" onclick="closeNavDrawer()" data-i18n="nav-faq">FAQs</a>
+    <a href="#contact" onclick="closeNavDrawer()" data-i18n="nav-contact">Contact</a>
+    <div class="lang-switcher" style="padding:14px 0;border-bottom:1px solid var(--sand);gap:8px;margin-bottom:4px">
+      <button onclick="setLanguage('en');closeNavDrawer()" class="lang-btn active" id="lang-en-m" style="color:var(--text-mid);font-size:13px;padding:6px 10px">EN</button>
+      <span class="lang-sep" style="color:var(--sand-dark)">|</span>
+      <button onclick="setLanguage('es');closeNavDrawer()" class="lang-btn" id="lang-es-m" style="color:var(--text-mid);font-size:13px;padding:6px 10px">ES</button>
+      <span class="lang-sep" style="color:var(--sand-dark)">|</span>
+      <button onclick="setLanguage('de');closeNavDrawer()" class="lang-btn" id="lang-de-m" style="color:var(--text-mid);font-size:13px;padding:6px 10px">DE</button>
+    </div>
+    <a href="#booking" class="btn btn-primary" onclick="closeNavDrawer()" data-i18n="nav-book">Book Now</a>
   </div>
 </div>
 
@@ -1352,42 +1381,36 @@ footer {
       <div class="hero-badge">
         📍 Las Buganvillas · Playa Blanca · Lanzarote
       </div>
-      <h1 class="hero-title">
-        Your Private<br>
+      <h1 class="hero-title" data-i18n="hero-title">Your Private<br>
         <em>Lanzarote</em><br>
-        Escape
-      </h1>
-      <p class="hero-sub">
-        Sun, privacy and pure relaxation in a stunning private villa.
-        Your own pool, warm sunshine and the beauty of Lanzarote —
-        all waiting for you at Villa Hola.
-      </p>
+        Escape</h1>
+      <p class="hero-sub" data-i18n="hero-sub">Sun, privacy and pure relaxation in a stunning private villa. Your own pool, warm sunshine and the beauty of Lanzarote — all waiting for you at Villa Hola.</p>
       <div class="hero-actions">
-        <a href="#booking" class="btn btn-primary btn-lg">Check Availability</a>
-        <a href="#gallery" class="btn btn-secondary btn-lg">View Gallery</a>
+        <a href="#booking" class="btn btn-primary btn-lg" data-i18n="hero-cta1">Check Availability</a>
+        <a href="#gallery" class="btn btn-secondary btn-lg" data-i18n="hero-cta2">View Gallery</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat">
           <span class="hero-stat-num">8</span>
-          <span class="hero-stat-label">Guests</span>
+          <span class="hero-stat-label" data-i18n="hero-stat-guests">Guests</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-num">4</span>
-          <span class="hero-stat-label">Bedrooms</span>
+          <span class="hero-stat-label" data-i18n="hero-stat-bedrooms">Bedrooms</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-num">3</span>
-          <span class="hero-stat-label">Bathrooms</span>
+          <span class="hero-stat-label" data-i18n="hero-stat-bathrooms">Bathrooms</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-num">☀️</span>
-          <span class="hero-stat-label">Private Pool</span>
+          <span class="hero-stat-label" data-i18n="hero-stat-pool">Private Pool</span>
         </div>
       </div>
     </div>
   </div>
   <div class="hero-scroll" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
-    <span>Scroll to explore</span>
+    <span data-i18n="hero-scroll">Scroll to explore</span>
     <span class="scroll-arrow"></span>
   </div>
 </section>
@@ -1400,8 +1423,8 @@ footer {
     <div class="direct-booking-text">
       <span class="direct-booking-icon">🏷️</span>
       <div>
-        <strong>Book direct &amp; save — no platform fees</strong>
-        <span class="direct-booking-sub">We're listed on Airbnb &amp; Booking.com — but book with us directly and keep the fees in your pocket.</span>
+        <strong data-i18n="banner-strong">Book direct &amp; save — no platform fees</strong>
+        <span class="direct-booking-sub" data-i18n="banner-sub">We're listed on Airbnb &amp; Booking.com — but book with us directly and keep the fees in your pocket.</span>
       </div>
     </div>
     <div class="direct-booking-actions">
@@ -1415,7 +1438,7 @@ footer {
          class="direct-booking-airbnb">
         Booking.com →
       </a>
-      <a href="#booking" class="direct-booking-cta">Book Direct &amp; Save</a>
+      <a href="#booking" class="direct-booking-cta" data-i18n="banner-cta">Book Direct &amp; Save</a>
     </div>
   </div>
 </div>
@@ -1427,23 +1450,23 @@ footer {
   <div class="features-grid">
     <div class="feature-item">
       <span class="feature-icon">🏊</span>
-      <div class="feature-title">Private Pool</div>
-      <div class="feature-desc">Your own private pool — solar-warmed with a thermal cover, reaching up to 33°C. No sharing, total privacy.</div>
+      <div class="feature-title" data-i18n="feat1-title">Private Pool</div>
+      <div class="feature-desc" data-i18n="feat1-desc">Your own private pool — solar-warmed with a thermal cover, reaching up to 33°C. No sharing, total privacy.</div>
     </div>
     <div class="feature-item">
       <span class="feature-icon">📍</span>
-      <div class="feature-title">Prime Location</div>
-      <div class="feature-desc">In the beautiful Las Buganvillas complex, moments from Playa Blanca.</div>
+      <div class="feature-title" data-i18n="feat2-title">Prime Location</div>
+      <div class="feature-desc" data-i18n="feat2-desc">In the beautiful Las Buganvillas complex, moments from Playa Blanca.</div>
     </div>
     <div class="feature-item">
       <span class="feature-icon">🌡️</span>
-      <div class="feature-title">Year-Round Sun</div>
-      <div class="feature-desc">Over 300 days of sunshine a year. Lanzarote is warm in every season.</div>
+      <div class="feature-title" data-i18n="feat3-title">Year-Round Sun</div>
+      <div class="feature-desc" data-i18n="feat3-desc">Over 300 days of sunshine a year. Lanzarote is warm in every season.</div>
     </div>
     <div class="feature-item">
       <span class="feature-icon">🔑</span>
-      <div class="feature-title">Book Direct & Save</div>
-      <div class="feature-desc">No platform fees. Book directly and get the best possible price.</div>
+      <div class="feature-title" data-i18n="feat4-title">Book Direct &amp; Save</div>
+      <div class="feature-desc" data-i18n="feat4-desc">No platform fees. Book directly and get the best possible price.</div>
     </div>
   </div>
 </div>
@@ -1459,30 +1482,25 @@ footer {
        <img src="/images/pool-terrace.jpg" alt="Villa Hola rooftop terrace with panoramic views" style="width:100%;height:500px;object-fit:cover;">
       </div>
       <div class="about-text">
-        <div class="section-label">Welcome to Villa Hola</div>
-        <h2 class="section-title">Family Friendly Paradise in Playa Blanca</h2>
+        <div class="section-label" data-i18n="about-label">Welcome to Villa Hola</div>
+        <h2 class="section-title" data-i18n="about-title">Family Friendly Paradise in Playa Blanca</h2>
         <p style="color:var(--text-mid);font-size:16px;margin-bottom:20px;line-height:1.75">
-          Nestled in the sought-after Las Buganvillas complex, Villa Hola offers everything
-          you need for the perfect Lanzarote holiday. Wake up to golden sunshine, spend your
-          days lounging by your private pool, and explore one of the Canary Islands' most
-          beautiful destinations — all at your own pace.
+          <span data-i18n="about-p1">Nestled in the sought-after Las Buganvillas complex, Villa Hola offers everything you need for the perfect Lanzarote holiday. Wake up to golden sunshine, spend your days lounging by your private pool, and explore one of the Canary Islands' most beautiful destinations — all at your own pace.</span>
         </p>
         <p style="color:var(--text-mid);font-size:16px;margin-bottom:28px;line-height:1.75">
-          Whether you're a family wanting space and comfort, a group of friends ready to
-          explore the island, or a couple seeking a luxurious retreat — Villa Hola, with
-          its four bedrooms, private pool and rooftop terrace, is your home away from home.
+          <span data-i18n="about-p2">Whether you're a family wanting space and comfort, a group of friends ready to explore the island, or a couple seeking a luxurious retreat — Villa Hola, with its four bedrooms, private pool and rooftop terrace, is your home away from home.</span>
         </p>
         <div class="about-features">
-          <div class="about-feature"><span class="about-feature-icon">✓</span> 4 bedrooms, sleeps up to 8</div>
-          <div class="about-feature"><span class="about-feature-icon">✓</span> Private swimming pool</div>
-          <div class="about-feature"><span class="about-feature-icon">✓</span> Fully equipped kitchen</div>
-          <div class="about-feature"><span class="about-feature-icon">✓</span> Air conditioning throughout</div>
-          <div class="about-feature"><span class="about-feature-icon">✓</span> Games room with pool table</div>
-          <div class="about-feature"><span class="about-feature-icon">✓</span> High-speed Wi-Fi</div>
-          <div class="about-feature"><span class="about-feature-icon">✓</span> Rooftop terrace with views</div>
-          <div class="about-feature"><span class="about-feature-icon">✓</span> 3 bathrooms</div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span><span data-i18n="about-f1"> 4 bedrooms, sleeps up to 8</span></div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span><span data-i18n="about-f2"> Private swimming pool</span></div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span><span data-i18n="about-f3"> Fully equipped kitchen</span></div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span><span data-i18n="about-f4"> Air conditioning throughout</span></div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span><span data-i18n="about-f5"> Games room with pool table</span></div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span><span data-i18n="about-f6"> High-speed Wi-Fi</span></div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span><span data-i18n="about-f7"> Rooftop terrace with views</span></div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span><span data-i18n="about-f8"> 3 bathrooms</span></div>
         </div>
-        <a href="#booking" class="btn btn-primary">Check Availability</a>
+        <a href="#booking" class="btn btn-primary" data-i18n="about-cta">Check Availability</a>
       </div>
     </div>
   </div>
@@ -1494,13 +1512,13 @@ footer {
 ════════════════════════════════════════════════════════════ -->
 <section id="gallery">
   <div class="container">
-    <div class="section-label">Photography</div>
-    <h2 class="section-title" style="color:var(--white)">Your Villa, Room by Room</h2>
-    <p class="section-intro" style="color:rgba(255,255,255,0.7)">A beautifully presented villa ready for your arrival.</p>
+    <div class="section-label" data-i18n="gallery-label">Photography</div>
+    <h2 class="section-title" style="color:var(--white)" data-i18n="gallery-title">Your Villa, Room by Room</h2>
+    <p class="section-intro" style="color:rgba(255,255,255,0.7)" data-i18n="gallery-intro">A beautifully presented villa ready for your arrival.</p>
 
     <div class="gallery-nav">
       <button class="gallery-arrow" id="gallery-prev" onclick="scrollGallery(-1)" aria-label="Previous photo">&#8592;</button>
-      <span class="gallery-hint">Swipe or scroll to explore all photos</span>
+      <span class="gallery-hint" data-i18n="gallery-hint">Swipe or scroll to explore all photos</span>
       <button class="gallery-arrow" id="gallery-next" onclick="scrollGallery(1)" aria-label="Next photo">&#8594;</button>
     </div>
 
@@ -1601,14 +1619,14 @@ footer {
 ════════════════════════════════════════════════════════════ -->
 <section id="facilities" class="section section-alt">
   <div class="container">
-    <div class="section-label text-center">Everything you need</div>
-    <h2 class="section-title text-center">Villa Facilities</h2>
-    <p class="section-intro center text-center">All the comforts of home — and then some.</p>
+    <div class="section-label text-center" data-i18n="fac-label">Everything you need</div>
+    <h2 class="section-title text-center" data-i18n="fac-title">Villa Facilities</h2>
+    <p class="section-intro center text-center" data-i18n="fac-intro">All the comforts of home — and then some.</p>
 
     <div class="facilities-grid">
       <div class="facility-card">
         <span class="facility-card-icon">🛏️</span>
-        <div class="facility-card-title">Bedrooms</div>
+        <div class="facility-card-title" data-i18n="fac-bed-title">Bedrooms</div>
         <ul class="facility-list">
           <li>4 bedrooms sleeping up to 8 guests</li>
           <li>Master bedroom with king-size bed & en suite</li>
@@ -1620,7 +1638,7 @@ footer {
       </div>
       <div class="facility-card">
         <span class="facility-card-icon">🚿</span>
-        <div class="facility-card-title">Bathrooms</div>
+        <div class="facility-card-title" data-i18n="fac-bath-title">Bathrooms</div>
         <ul class="facility-list">
           <li>3 bathrooms</li>
           <li>En-suite bathroom with walk-in shower to master bedroom</li>
@@ -1631,7 +1649,7 @@ footer {
       </div>
       <div class="facility-card">
         <span class="facility-card-icon">🍳</span>
-        <div class="facility-card-title">Kitchen & Dining</div>
+        <div class="facility-card-title" data-i18n="fac-kit-title">Kitchen & Dining</div>
         <ul class="facility-list">
           <li>Fully equipped kitchen</li>
           <li>Oven, hob and microwave</li>
@@ -1644,7 +1662,7 @@ footer {
       </div>
       <div class="facility-card">
         <span class="facility-card-icon">🛋️</span>
-        <div class="facility-card-title">Living Area</div>
+        <div class="facility-card-title" data-i18n="fac-liv-title">Living Area</div>
         <ul class="facility-list">
           <li>Spacious lounge with comfortable seating</li>
           <li>Smart TV with streaming apps</li>
@@ -1655,7 +1673,7 @@ footer {
       </div>
       <div class="facility-card">
         <span class="facility-card-icon">☀️</span>
-        <div class="facility-card-title">Outdoor Areas</div>
+        <div class="facility-card-title" data-i18n="fac-out-title">Outdoor Areas</div>
         <ul class="facility-list">
           <li>Private swimming pool</li>
           <li>Sun terrace with loungers</li>
@@ -1667,7 +1685,7 @@ footer {
       </div>
       <div class="facility-card">
         <span class="facility-card-icon">✅</span>
-        <div class="facility-card-title">Extras</div>
+        <div class="facility-card-title" data-i18n="fac-ext-title">Extras</div>
         <ul class="facility-list">
           <li>Games room with pool table, table tennis and air hockey</li>
           <li>Rooftop terrace with panoramic views</li>
@@ -1688,20 +1706,18 @@ footer {
     <img src="/images/dining-room-2.jpg" alt="Open-plan dining room with floor-to-ceiling doors to private pool">
   </div>
   <div class="pool-content">
-    <div class="section-label">Your Private Oasis</div>
-    <h2 class="section-title">Sun, Water & Total Privacy</h2>
+    <div class="section-label" data-i18n="pool-label">Your Private Oasis</div>
+    <h2 class="section-title" data-i18n="pool-title">Sun, Water &amp; Total Privacy</h2>
     <p>
-      Your private pool is the heart of Villa Hola — sunbathe in peace, take a dip
-      whenever you like, and dine al fresco on the terrace as the Lanzarote sun
-      goes down. No shared facilities, no schedules, just pure relaxation.
+      <span data-i18n="pool-desc">Your private pool is the heart of Villa Hola — sunbathe in peace, take a dip whenever you like, and dine al fresco on the terrace as the Lanzarote sun goes down. No shared facilities, no schedules, just pure relaxation.</span>
     </p>
     <div class="pool-specs">
-      <div class="pool-spec"><span class="pool-spec-icon">🏊</span> Private pool</div>
-      <div class="pool-spec"><span class="pool-spec-icon">☀️</span> Sun loungers</div>
-      <div class="pool-spec"><span class="pool-spec-icon">🍽️</span> Outdoor dining</div>
-      <div class="pool-spec"><span class="pool-spec-icon">🔥</span> BBQ</div>
-      <div class="pool-spec"><span class="pool-spec-icon">🔒</span> Gated & private</div>
-      <div class="pool-spec"><span class="pool-spec-icon">🌅</span> Terrace views</div>
+      <div class="pool-spec"><span class="pool-spec-icon">🏊</span><span data-i18n="pool-spec-1"> Private pool</span></div>
+      <div class="pool-spec"><span class="pool-spec-icon">☀️</span><span data-i18n="pool-spec-2"> Sun loungers</span></div>
+      <div class="pool-spec"><span class="pool-spec-icon">🍽️</span><span data-i18n="pool-spec-3"> Outdoor dining</span></div>
+      <div class="pool-spec"><span class="pool-spec-icon">🔥</span><span data-i18n="pool-spec-4"> BBQ</span></div>
+      <div class="pool-spec"><span class="pool-spec-icon">🔒</span><span data-i18n="pool-spec-5"> Gated & private</span></div>
+      <div class="pool-spec"><span class="pool-spec-icon">🌅</span><span data-i18n="pool-spec-6"> Terrace views</span></div>
     </div>
   </div>
 </div>
@@ -1714,61 +1730,59 @@ footer {
   <div class="container">
     <div class="location-grid">
       <div>
-        <div class="section-label">Where We Are</div>
-        <h2 class="section-title">Las Buganvillas, Playa Blanca</h2>
+        <div class="section-label" data-i18n="loc-label">Where We Are</div>
+        <h2 class="section-title" data-i18n="loc-title">Las Buganvillas, Playa Blanca</h2>
         <p style="color:var(--text-mid);font-size:16px;margin-bottom:28px;line-height:1.75">
-          Set in the Las Buganvillas complex in Playa Blanca, Villa Hola is perfectly
-          positioned to enjoy the very best of southern Lanzarote. Just minutes from
-          stunning beaches, excellent restaurants and the lively Playa Blanca marina.
+          <span data-i18n="loc-desc">Set in the Las Buganvillas complex in Playa Blanca, Villa Hola is perfectly positioned to enjoy the very best of southern Lanzarote. Just minutes from stunning beaches, excellent restaurants and the lively Playa Blanca marina.</span>
         </p>
         <div class="nearby-list">
           <div class="nearby-item">
             <span class="nearby-icon">🏖️</span>
             <div>
-              <div class="nearby-name">Playa Blanca Beach</div>
-              <div style="font-size:13px;color:var(--text-light)">The main promenade beach</div>
+              <div class="nearby-name" data-i18n="nearby-1-name">Playa Blanca Beach</div>
+              <div style="font-size:13px;color:var(--text-light)" data-i18n="nearby-1-sub">The main promenade beach</div>
             </div>
-            <span class="nearby-dist">~10 min walk</span>
+            <span class="nearby-dist" data-i18n="nearby-1-dist">~10 min walk</span>
           </div>
           <div class="nearby-item">
             <span class="nearby-icon">🏖️</span>
             <div>
-              <div class="nearby-name">Papagayo Beaches</div>
-              <div style="font-size:13px;color:var(--text-light)">Stunning natural beaches</div>
+              <div class="nearby-name" data-i18n="nearby-2-name">Papagayo Beaches</div>
+              <div style="font-size:13px;color:var(--text-light)" data-i18n="nearby-2-sub">Stunning natural beaches</div>
             </div>
-            <span class="nearby-dist">~10 min drive</span>
+            <span class="nearby-dist" data-i18n="nearby-2-dist">~10 min drive</span>
           </div>
           <div class="nearby-item">
             <span class="nearby-icon">⛵</span>
             <div>
-              <div class="nearby-name">Playa Blanca Marina</div>
-              <div style="font-size:13px;color:var(--text-light)">Restaurants, shops & ferry terminal</div>
+              <div class="nearby-name" data-i18n="nearby-3-name">Playa Blanca Marina</div>
+              <div style="font-size:13px;color:var(--text-light)" data-i18n="nearby-3-sub">Restaurants, shops & ferry terminal</div>
             </div>
-            <span class="nearby-dist">~5 min drive</span>
+            <span class="nearby-dist" data-i18n="nearby-3-dist">~5 min drive</span>
           </div>
           <div class="nearby-item">
             <span class="nearby-icon">🍽️</span>
             <div>
-              <div class="nearby-name">Restaurants & Bars</div>
-              <div style="font-size:13px;color:var(--text-light)">Wide selection nearby</div>
+              <div class="nearby-name" data-i18n="nearby-4-name">Restaurants & Bars</div>
+              <div style="font-size:13px;color:var(--text-light)" data-i18n="nearby-4-sub">Wide selection nearby</div>
             </div>
-            <span class="nearby-dist">~5–10 min walk</span>
+            <span class="nearby-dist" data-i18n="nearby-4-dist">~5–10 min walk</span>
           </div>
           <div class="nearby-item">
             <span class="nearby-icon">🛒</span>
             <div>
-              <div class="nearby-name">Supermarkets</div>
-              <div style="font-size:13px;color:var(--text-light)">Full grocery shopping</div>
+              <div class="nearby-name" data-i18n="nearby-5-name">Supermarkets</div>
+              <div style="font-size:13px;color:var(--text-light)" data-i18n="nearby-5-sub">Full grocery shopping</div>
             </div>
-            <span class="nearby-dist">~5 min drive</span>
+            <span class="nearby-dist" data-i18n="nearby-5-dist">~5 min drive</span>
           </div>
           <div class="nearby-item">
             <span class="nearby-icon">✈️</span>
             <div>
-              <div class="nearby-name">Lanzarote Airport (ACE)</div>
-              <div style="font-size:13px;color:var(--text-light)">Easy transfer</div>
+              <div class="nearby-name" data-i18n="nearby-6-name">Lanzarote Airport (ACE)</div>
+              <div style="font-size:13px;color:var(--text-light)" data-i18n="nearby-6-sub">Easy transfer</div>
             </div>
-            <span class="nearby-dist">~40 min drive</span>
+            <span class="nearby-dist" data-i18n="nearby-6-dist">~40 min drive</span>
           </div>
         </div>
       </div>
@@ -1786,16 +1800,12 @@ footer {
           <a href="https://maps.app.goo.gl/ucFkFFksmN4KmXeu9"
              target="_blank" rel="noopener noreferrer"
              style="font-size:13px;color:var(--text-mid);text-decoration:underline">
-            View larger map →
+            <span data-i18n="loc-map-link">View larger map →</span>
           </a>
         </div>
         <div style="margin-top:20px;padding:20px;background:var(--warm-white);border-radius:var(--radius)">
-          <div style="font-weight:600;margin-bottom:6px;font-size:15px">Getting Here</div>
-          <p style="font-size:14px;color:var(--text-mid);line-height:1.65">
-            Lanzarote Airport (ACE) is served by direct flights from most UK airports year-round.
-            A hire car is recommended for exploring the island, though taxis and transfers are
-            readily available from the airport to Playa Blanca.
-          </p>
+          <div style="font-weight:600;margin-bottom:6px;font-size:15px" data-i18n="loc-getting-title">Getting Here</div>
+          <p style="font-size:14px;color:var(--text-mid);line-height:1.65" data-i18n="loc-getting-desc">Lanzarote Airport (ACE) is served by direct flights from most UK airports year-round. A hire car is recommended for exploring the island, though taxis and transfers are readily available from the airport to Playa Blanca.</p>
         </div>
       </div>
     </div>
@@ -1816,8 +1826,8 @@ footer {
       <!-- Booking form -->
       <div class="booking-form-card">
         <div class="booking-form-header">
-          <h3>Book Villa Hola</h3>
-          <p>Select your dates and complete your booking in minutes</p>
+          <h3 data-i18n="book-form-title">Book Villa Hola</h3>
+          <p data-i18n="book-form-sub">Select your dates and complete your booking in minutes</p>
         </div>
         <div class="booking-form-body">
 
@@ -1825,15 +1835,15 @@ footer {
           <div class="booking-steps">
             <div class="booking-step active" id="step-indicator-1">
               <span class="step-num">1</span>
-              Dates
+              <span data-i18n="step-1-label">Dates</span>
             </div>
             <div class="booking-step" id="step-indicator-2">
               <span class="step-num">2</span>
-              Details
+              <span data-i18n="step-2-label">Details</span>
             </div>
             <div class="booking-step" id="step-indicator-3">
               <span class="step-num">3</span>
-              Payment
+              <span data-i18n="step-3-label">Payment</span>
             </div>
           </div>
 
@@ -1841,16 +1851,16 @@ footer {
           <div class="step-panel active" id="step-1">
             <div class="form-row">
               <div class="form-group">
-                <label>Check-in Date</label>
+                <label data-i18n="label-checkin">Check-in Date</label>
                 <input type="text" id="check-in" placeholder="Select date" readonly>
               </div>
               <div class="form-group">
-                <label>Check-out Date</label>
+                <label data-i18n="label-checkout">Check-out Date</label>
                 <input type="text" id="check-out" placeholder="Select date" readonly>
               </div>
             </div>
             <div class="form-group">
-              <label>Number of Guests</label>
+              <label data-i18n="label-guests">Number of Guests</label>
               <div class="guests-row">
                 <button class="guests-btn" onclick="changeGuests(-1)" type="button">−</button>
                 <span class="guests-val" id="guests-display">2</span>
@@ -1872,9 +1882,7 @@ footer {
             </div>
 
             <div class="form-actions">
-              <button class="btn btn-primary" onclick="checkAvailability()" id="check-btn">
-                Check Availability
-              </button>
+              <button class="btn btn-primary" onclick="checkAvailability()" id="check-btn" data-i18n="check-avail-btn">Check Availability</button>
             </div>
           </div>
 
@@ -1882,21 +1890,21 @@ footer {
           <div class="step-panel" id="step-2">
             <div class="form-row">
               <div class="form-group">
-                <label for="g-name">Full Name *</label>
+                <label for="g-name" data-i18n="label-name">Full Name *</label>
                 <input type="text" id="g-name" placeholder="Your full name" autocomplete="name">
               </div>
               <div class="form-group">
-                <label for="g-email">Email Address *</label>
+                <label for="g-email" data-i18n="label-email">Email Address *</label>
                 <input type="email" id="g-email" placeholder="your@email.com" autocomplete="email">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label for="g-phone">Phone Number</label>
+                <label for="g-phone" data-i18n="label-phone">Phone Number</label>
                 <input type="tel" id="g-phone" placeholder="+44 7700 000000" autocomplete="tel">
               </div>
               <div class="form-group">
-                <label for="g-country">Country</label>
+                <label for="g-country" data-i18n="label-country">Country</label>
                 <input type="text" id="g-country" placeholder="United Kingdom" autocomplete="country-name">
               </div>
             </div>
@@ -1904,22 +1912,22 @@ footer {
             <!-- Selected dates summary -->
             <div style="background:var(--warm-white);border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:14px">
               <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-                <span style="color:var(--text-mid)">Check-in</span>
+                <span style="color:var(--text-mid)" data-i18n="s2-checkin-label">Check-in</span>
                 <strong id="s2-checkin">—</strong>
               </div>
               <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-                <span style="color:var(--text-mid)">Check-out</span>
+                <span style="color:var(--text-mid)" data-i18n="s2-checkout-label">Check-out</span>
                 <strong id="s2-checkout">—</strong>
               </div>
               <div style="display:flex;justify-content:space-between;border-top:1px solid var(--sand-dark);padding-top:8px;margin-top:6px">
-                <span style="color:var(--terracotta);font-weight:600">Deposit to pay now</span>
+                <span style="color:var(--terracotta);font-weight:600" data-i18n="s2-deposit-label">Deposit to pay now</span>
                 <strong style="color:var(--terracotta)" id="s2-deposit">€—</strong>
               </div>
             </div>
 
             <div class="form-actions">
-              <button class="btn btn-primary" onclick="goToPayment()">Continue to Payment</button>
-              <button class="btn btn-outline" onclick="goToStep(1)" style="border-color:var(--sand-dark);color:var(--text-mid)">← Back</button>
+              <button class="btn btn-primary" onclick="goToPayment()" data-i18n="s2-continue">Continue to Payment</button>
+              <button class="btn btn-outline" onclick="goToStep(1)" style="border-color:var(--sand-dark);color:var(--text-mid)" data-i18n="s2-back">← Back</button>
             </div>
           </div>
 
@@ -1927,21 +1935,21 @@ footer {
           <div class="step-panel" id="step-3">
             <!-- Payment summary -->
             <div style="background:var(--warm-white);border-radius:8px;padding:16px;margin-bottom:20px;font-size:14px">
-              <div style="font-weight:700;margin-bottom:10px;font-size:15px">Booking Summary</div>
+              <div style="font-weight:700;margin-bottom:10px;font-size:15px" data-i18n="s3-summary-title">Booking Summary</div>
               <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-                <span style="color:var(--text-mid)">Dates</span>
+                <span style="color:var(--text-mid)" data-i18n="s3-dates-label">Dates</span>
                 <span id="s3-dates">—</span>
               </div>
               <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-                <span style="color:var(--text-mid)">Guest</span>
+                <span style="color:var(--text-mid)" data-i18n="s3-guest-label">Guest</span>
                 <span id="s3-guest">—</span>
               </div>
               <div style="display:flex;justify-content:space-between;margin-bottom:10px">
-                <span style="color:var(--text-mid)">Total price</span>
+                <span style="color:var(--text-mid)" data-i18n="s3-total-label">Total price</span>
                 <strong id="s3-total">€—</strong>
               </div>
               <div style="background:var(--terracotta);color:#fff;border-radius:6px;padding:10px 14px;display:flex;justify-content:space-between">
-                <span>🔒 Deposit to pay now</span>
+                <span data-i18n="s3-deposit-label">🔒 Deposit to pay now</span>
                 <strong id="s3-deposit">€—</strong>
               </div>
             </div>
@@ -1954,9 +1962,7 @@ footer {
                   <div id="card-element"></div>
                   <div id="card-errors" role="alert"></div>
                 </div>
-                <div class="stripe-note">
-                  🔒 Payments secured by Stripe. Your card details are never stored by us.
-                </div>
+                <div class="stripe-note" data-i18n="stripe-note">🔒 Payments secured by Stripe. Your card details are never stored by us.</div>
               </div>
               <div id="stripe-placeholder" class="stripe-placeholder">
                 <span class="sp-icon">💳</span>
@@ -1978,12 +1984,11 @@ footer {
             </div>
 
             <div style="margin-top:16px;padding:14px;background:#E3F2FD;border-radius:8px;font-size:13px;color:#1565C0">
-              <strong>💬 Remaining balance:</strong> After payment, we'll contact you on WhatsApp to
-              arrange the remaining balance and confirm all the details of your stay.
+              <span data-i18n="balance-note"><strong>💬 Remaining balance:</strong> After payment, we'll contact you on WhatsApp to arrange the remaining balance and confirm all the details of your stay.</span>
             </div>
 
             <div class="form-actions" style="margin-top:12px">
-              <button class="btn btn-outline" onclick="goToStep(2)" style="border-color:var(--sand-dark);color:var(--text-mid)">← Back</button>
+              <button class="btn btn-outline" onclick="goToStep(2)" style="border-color:var(--sand-dark);color:var(--text-mid)" data-i18n="s3-back">← Back</button>
             </div>
           </div>
 
@@ -1993,25 +1998,25 @@ footer {
       <!-- Sidebar -->
       <div class="booking-sidebar">
         <div class="sidebar-card">
-          <h4>What's Included</h4>
-          <div class="sidebar-feature"><span class="sidebar-feature-icon">🔑</span> Flexible check-in</div>
-          <div class="sidebar-feature"><span class="sidebar-feature-icon">🏊</span> Private pool access</div>
-          <div class="sidebar-feature"><span class="sidebar-feature-icon">📶</span> High-speed Wi-Fi</div>
-          <div class="sidebar-feature"><span class="sidebar-feature-icon">🛏️</span> Fresh linens & towels</div>
-          <div class="sidebar-feature"><span class="sidebar-feature-icon">🅿️</span> Private parking</div>
-          <div class="sidebar-feature"><span class="sidebar-feature-icon">✈️</span> Airport transfer advice</div>
+          <h4 data-i18n="sb-whats-title">What's Included</h4>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">🔑</span><span data-i18n="sb-feat-1"> Flexible check-in</span></div>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">🏊</span><span data-i18n="sb-feat-2"> Private pool access</span></div>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">📶</span><span data-i18n="sb-feat-3"> High-speed Wi-Fi</span></div>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">🛏️</span><span data-i18n="sb-feat-4"> Fresh linens & towels</span></div>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">🅿️</span><span data-i18n="sb-feat-5"> Private parking</span></div>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">✈️</span><span data-i18n="sb-feat-6"> Airport transfer advice</span></div>
         </div>
 
         <div class="sidebar-card">
-          <h4>Pricing Guide</h4>
+          <h4 data-i18n="sb-pricing-title">Pricing Guide</h4>
           <div class="sidebar-feature"><span class="sidebar-feature-icon">❄️</span>
-            <div><div>Low Season</div><div style="color:rgba(255,255,255,0.5);font-size:12px">from €325/night + 7% IGIC</div></div>
+            <div><div data-i18n="sb-low-season">Low Season</div><div style="color:rgba(255,255,255,0.5);font-size:12px" data-i18n="sb-low-price">from €325/night + 7% IGIC</div></div>
           </div>
           <div class="sidebar-feature"><span class="sidebar-feature-icon">🌸</span>
-            <div><div>Peak Season</div><div style="color:rgba(255,255,255,0.5);font-size:12px">from €395/night + 7% IGIC</div></div>
+            <div><div data-i18n="sb-peak-season">Peak Season</div><div style="color:rgba(255,255,255,0.5);font-size:12px" data-i18n="sb-peak-price">from €395/night + 7% IGIC</div></div>
           </div>
           <div class="sidebar-feature"><span class="sidebar-feature-icon">☀️</span>
-            <div><div>10% Early Booking Discount</div><div style="color:rgba(255,255,255,0.5);font-size:12px">Off-peak dates · 1+ year ahead</div></div>
+            <div><div data-i18n="sb-early-book">10% Early Booking Discount</div><div style="color:rgba(255,255,255,0.5);font-size:12px" data-i18n="sb-early-desc">Off-peak dates · 1+ year ahead</div></div>
           </div>
           <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);font-size:13px;color:rgba(255,255,255,0.5)">
             €80 cleaning fee (stays under 5 nights) · Weekly clean included for 5+ nights · Min. 2 nights
@@ -2019,11 +2024,9 @@ footer {
         </div>
 
         <div class="sidebar-card whatsapp-sidebar">
-          <h4>💬 Questions? Chat With Us</h4>
-          <p>Our team is on hand to answer any questions about the villa, the area, or your booking.</p>
-          <a id="wa-questions" href="#" class="btn btn-whatsapp" style="width:100%;justify-content:center">
-            Open WhatsApp
-          </a>
+          <h4 data-i18n="wa-sidebar-title">💬 Questions? Chat With Us</h4>
+          <p data-i18n="wa-sidebar-desc">Our team is on hand to answer any questions about the villa, the area, or your booking.</p>
+          <a id="wa-questions" href="#" class="btn btn-whatsapp" style="width:100%;justify-content:center" data-i18n="wa-sidebar-btn">Open WhatsApp</a>
         </div>
       </div>
     </div>
@@ -2036,8 +2039,8 @@ footer {
 ════════════════════════════════════════════════════════════ -->
 <section class="section section-alt">
   <div class="container">
-    <div class="section-label text-center">Guest Reviews</div>
-    <h2 class="section-title text-center">What Our Guests Say</h2>
+    <div class="section-label text-center" data-i18n="reviews-label">Guest Reviews</div>
+    <h2 class="section-title text-center" data-i18n="reviews-title">What Our Guests Say</h2>
     <div class="reviews-grid">
       <div class="review-card">
         <div class="review-stars">★★★★★</div>
@@ -2067,98 +2070,48 @@ footer {
 ════════════════════════════════════════════════════════════ -->
 <section id="faq" class="section">
   <div class="container">
-    <div class="section-label text-center">Got Questions?</div>
-    <h2 class="section-title text-center">Frequently Asked Questions</h2>
+    <div class="section-label text-center" data-i18n="faq-label">Got Questions?</div>
+    <h2 class="section-title text-center" data-i18n="faq-title">Frequently Asked Questions</h2>
     <div class="faq-grid">
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What are the check-in and check-out times?
-          <span class="faq-arrow">⌄</span>
-        </button>
-        <div class="faq-answer">
-          Check-in is from 3:00pm and check-out is by 10:00am. Early check-in and late check-out may be available — please ask us via WhatsApp when making your booking.
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q1">What are the check-in and check-out times?</span><span class="faq-arrow">⌄</span></button>
+        <div class="faq-answer" data-i18n="faq-a1">Check-in is from 3:00pm and check-out is by 10:00am. Early check-in and late check-out may be available — please ask us via WhatsApp when making your booking.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How does the deposit and balance work?
-          <span class="faq-arrow">⌄</span>
-        </button>
-        <div class="faq-answer">
-          When you book online, you pay a 20% deposit to secure your dates. The remaining 80% balance is due 30 days before your check-in date and is arranged with us directly via WhatsApp. We will contact you shortly after your booking to confirm the details and arrange the balance payment.
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q2">How does the deposit and balance work?</span><span class="faq-arrow">⌄</span></button>
+        <div class="faq-answer" data-i18n="faq-a2">When you book online, you pay a 20% deposit to secure your dates. The remaining 80% balance is due 30 days before your check-in date and is arranged with us directly via WhatsApp. We will contact you shortly after your booking to confirm the details and arrange the balance payment.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Is there a minimum stay?
-          <span class="faq-arrow">⌄</span>
-        </button>
-        <div class="faq-answer">
-          Our minimum stay is 2 nights year-round. Please check availability for your preferred dates and the booking form will advise you of any minimum.
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q3">Is there a minimum stay?</span><span class="faq-arrow">⌄</span></button>
+        <div class="faq-answer" data-i18n="faq-a3">Our minimum stay is 2 nights year-round. Please check availability for your preferred dates and the booking form will advise you of any minimum.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Is the pool heated?
-          <span class="faq-arrow">⌄</span>
-        </button>
-        <div class="faq-answer">
-          The pool is not heated, but it is fitted with a thermal cover that retains heat from the sun. Lanzarote's warm climate means the pool benefits from solar energy throughout the year, and water temperatures can reach up to 33°C during warmer months. The pool is generally very pleasant for swimming.
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q4">Is the pool heated?</span><span class="faq-arrow">⌄</span></button>
+        <div class="faq-answer" data-i18n="faq-a4">The pool is not heated, but it is fitted with a thermal cover that retains heat from the sun. Lanzarote's warm climate means the pool benefits from solar energy throughout the year, and water temperatures can reach up to 33°C during warmer months. The pool is generally very pleasant for swimming.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Is the villa suitable for children?
-          <span class="faq-arrow">⌄</span>
-        </button>
-        <div class="faq-answer">
-          Yes — Villa Hola is a great choice for families. Please note that children must always be supervised around the pool area. A travel cot and high chair can be provided on request — please let us know in advance.
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q5">Is the villa suitable for children?</span><span class="faq-arrow">⌄</span></button>
+        <div class="faq-answer" data-i18n="faq-a5">Yes — Villa Hola is a great choice for families. Please note that children must always be supervised around the pool area. A travel cot and high chair can be provided on request — please let us know in advance.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Are pets allowed?
-          <span class="faq-arrow">⌄</span>
-        </button>
-        <div class="faq-answer">
-          Unfortunately pets are not permitted at Villa Hola. This is to ensure the comfort of all guests and to meet the requirements of the complex.
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q6">Are pets allowed?</span><span class="faq-arrow">⌄</span></button>
+        <div class="faq-answer" data-i18n="faq-a6">Unfortunately pets are not permitted at Villa Hola. This is to ensure the comfort of all guests and to meet the requirements of the complex.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What is your cancellation policy?
-          <span class="faq-arrow">⌄</span>
-        </button>
-        <div class="faq-answer">
-          Cancellations made more than 60 days before check-in will receive a full deposit refund. Cancellations within 60 days of check-in are non-refundable. Full terms and conditions are provided on booking.
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q7">What is your cancellation policy?</span><span class="faq-arrow">⌄</span></button>
+        <div class="faq-answer" data-i18n="faq-a7">Cancellations made more than 60 days before check-in will receive a full deposit refund. Cancellations within 60 days of check-in are non-refundable. Full terms and conditions are provided on booking.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Is Wi-Fi available at the villa?
-          <span class="faq-arrow">⌄</span>
-        </button>
-        <div class="faq-answer">
-          Yes, high-speed Wi-Fi is included with every booking at no extra charge.
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q8">Is Wi-Fi available at the villa?</span><span class="faq-arrow">⌄</span></button>
+        <div class="faq-answer" data-i18n="faq-a8">Yes, high-speed Wi-Fi is included with every booking at no extra charge.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What is the maximum number of guests?
-          <span class="faq-arrow">⌄</span>
-        </button>
-        <div class="faq-answer">
-          Villa Hola accommodates a maximum of 8 guests across 4 bedrooms. This limit must be respected — the number of guests stated at booking is the maximum permitted to stay at the property.
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q9">What is the maximum number of guests?</span><span class="faq-arrow">⌄</span></button>
+        <div class="faq-answer" data-i18n="faq-a9">Villa Hola accommodates a maximum of 8 guests across 4 bedrooms. This limit must be respected — the number of guests stated at booking is the maximum permitted to stay at the property.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Do I need a hire car?
-          <span class="faq-arrow">⌄</span>
-        </button>
-        <div class="faq-answer">
-          A hire car is highly recommended for exploring Lanzarote — the island has incredible scenery, volcanic landscapes and beaches that are best discovered by car. That said, Playa Blanca itself has a good range of restaurants, beaches and shops within walking distance. Taxis are also available.
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q10">Do I need a hire car?</span><span class="faq-arrow">⌄</span></button>
+        <div class="faq-answer" data-i18n="faq-a10">A hire car is highly recommended for exploring Lanzarote — the island has incredible scenery, volcanic landscapes and beaches that are best discovered by car. That said, Playa Blanca itself has a good range of restaurants, beaches and shops within walking distance. Taxis are also available.</div>
       </div>
     </div>
   </div>
@@ -2180,16 +2133,16 @@ footer {
         </div>
       </div>
       <div class="host-text">
-        <div class="section-label">Your Host</div>
+        <div class="section-label" data-i18n="host-label">Your Host</div>
         <h2>Millie Dennis</h2>
         <div class="host-location">📍 Playa Blanca local</div>
-        <p>I grew up in Playa Blanca and have lived in Lanzarote my whole life. I know this part of the island pretty well — the good beaches, the restaurants that are actually worth it, where to hire a car, all that sort of thing.</p>
-        <p>My job is to make your stay as good as it can be. Any questions about the villa, the area, or just Playa Blanca in general — just message me and I'll do my best.</p>
-        <a id="wa-host" href="#" class="btn btn-whatsapp" style="display:inline-flex">💬 Message Millie</a>
+        <p data-i18n="host-p1">I grew up in Playa Blanca and have lived in Lanzarote my whole life. I know this part of the island pretty well — the good beaches, the restaurants that are actually worth it, where to hire a car, all that sort of thing.</p>
+        <p data-i18n="host-p2">My job is to make your stay as good as it can be. Any questions about the villa, the area, or just Playa Blanca in general — just message me and I'll do my best.</p>
+        <a id="wa-host" href="#" class="btn btn-whatsapp" style="display:inline-flex" data-i18n="host-wa-btn">💬 Message Millie</a>
         <div class="host-emergency">
           <span style="font-size:20px">📞</span>
           <div>
-            <div class="host-emergency-label">Emergency Contact</div>
+            <div class="host-emergency-label" data-i18n="host-emergency-label">Emergency Contact</div>
             <div class="host-emergency-number"><a href="tel:+34633715010">+34 633 715 010</a></div>
           </div>
         </div>
@@ -2201,11 +2154,11 @@ footer {
 
 <section id="contact">
   <div class="container">
-    <h2 class="section-title">Ready to Book Your<br>Lanzarote Holiday?</h2>
-    <p>Secure your dates today with just a 10% deposit.<br>Questions? We're always happy to chat.</p>
+    <h2 class="section-title" data-i18n="contact-title">Ready to Book Your<br>Lanzarote Holiday?</h2>
+    <p data-i18n="contact-desc">Secure your dates today with just a 10% deposit.<br>Questions? We're always happy to chat.</p>
     <div class="contact-buttons">
-      <a href="#booking" class="btn btn-white btn-lg">Check Availability</a>
-      <a id="wa-cta" href="#" class="btn btn-whatsapp btn-lg">💬 WhatsApp Us</a>
+      <a href="#booking" class="btn btn-white btn-lg" data-i18n="contact-cta1">Check Availability</a>
+      <a id="wa-cta" href="#" class="btn btn-whatsapp btn-lg" data-i18n="contact-wa">💬 WhatsApp Us</a>
     </div>
   </div>
 </section>
@@ -2219,34 +2172,30 @@ footer {
     <div class="footer-grid">
       <div>
         <div class="footer-logo">🏡 Villa Hola</div>
-        <p class="footer-desc">
-          A beautiful private holiday villa in Las Buganvillas, Playa Blanca,
-          Lanzarote — the perfect escape for families, couples and groups
-          looking for sun, relaxation and a home away from home.
-        </p>
+        <p class="footer-desc" data-i18n="footer-desc">A beautiful private holiday villa in Las Buganvillas, Playa Blanca, Lanzarote — the perfect escape for families, couples and groups looking for sun, relaxation and a home away from home.</p>
       </div>
       <div class="footer-col">
-        <h4>Quick Links</h4>
+        <h4 data-i18n="footer-links-title">Quick Links</h4>
         <ul class="footer-links">
-          <li><a href="#about">The Villa</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#facilities">Facilities</a></li>
-          <li><a href="#location">Location</a></li>
-          <li><a href="#booking">Book Now</a></li>
-          <li><a href="#faq">FAQs</a></li>
+          <li><a href="#about" data-i18n="footer-link-villa">The Villa</a></li>
+          <li><a href="#gallery" data-i18n="footer-link-gallery">Gallery</a></li>
+          <li><a href="#facilities" data-i18n="footer-link-fac">Facilities</a></li>
+          <li><a href="#location" data-i18n="footer-link-location">Location</a></li>
+          <li><a href="#booking" data-i18n="footer-link-book">Book Now</a></li>
+          <li><a href="#faq" data-i18n="footer-link-faq">FAQs</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contact</h4>
+        <h4 data-i18n="footer-contact-title">Contact</h4>
         <ul class="footer-links">
-          <li><a id="footer-wa" href="#">💬 WhatsApp</a></li>
+          <li><a id="footer-wa" href="#" data-i18n="footer-wa-link">💬 WhatsApp</a></li>
           <li><a href="mailto:bookings@villahola.es">📧 bookings@villahola.es</a></li>
-          <li><a href="#booking">Book Online</a></li>
-          <li><a href="/admin">Owner Login</a></li>
+          <li><a href="#booking" data-i18n="footer-book-online">Book Online</a></li>
+          <li><a href="/admin" data-i18n="footer-owner-login">Owner Login</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Find Us Online</h4>
+        <h4 data-i18n="footer-find-title">Find Us Online</h4>
         <ul class="footer-links">
           <li>
             <a href="https://www.facebook.com/profile.php?id=61594140615895" target="_blank" rel="noopener noreferrer">
@@ -2281,6 +2230,424 @@ footer {
      JAVASCRIPT
 ════════════════════════════════════════════════════════════ -->
 <script>
+
+// ── i18n Translations ────────────────────────────────────────────────────────
+const translations = {
+  en: {
+    // Nav
+    'nav-villa': 'The Villa', 'nav-gallery': 'Gallery', 'nav-facilities': 'Facilities',
+    'nav-location': 'Location', 'nav-booking': 'Booking', 'nav-faq': 'FAQs',
+    'nav-book': 'Book Now', 'nav-contact': 'Contact',
+    // Hero
+    'hero-title': 'Your Private<br><em>Lanzarote</em><br>Escape',
+    'hero-sub': 'Sun, privacy and pure relaxation in a stunning private villa. Your own pool, warm sunshine and the beauty of Lanzarote — all waiting for you at Villa Hola.',
+    'hero-cta1': 'Check Availability', 'hero-cta2': 'View Gallery',
+    'hero-stat-guests': 'Guests', 'hero-stat-bedrooms': 'Bedrooms',
+    'hero-stat-bathrooms': 'Bathrooms', 'hero-stat-pool': 'Private Pool',
+    'hero-scroll': 'Scroll to explore',
+    // Banner
+    'banner-strong': 'Book direct &amp; save — no platform fees',
+    'banner-sub': "We're listed on Airbnb &amp; Booking.com — but book with us directly and keep the fees in your pocket.",
+    'banner-cta': 'Book Direct &amp; Save',
+    // Features
+    'feat1-title': 'Private Pool', 'feat1-desc': 'Your own private pool — solar-warmed with a thermal cover, reaching up to 33°C. No sharing, total privacy.',
+    'feat2-title': 'Prime Location', 'feat2-desc': 'In the beautiful Las Buganvillas complex, moments from Playa Blanca.',
+    'feat3-title': 'Year-Round Sun', 'feat3-desc': 'Over 300 days of sunshine a year. Lanzarote is warm in every season.',
+    'feat4-title': 'Book Direct &amp; Save', 'feat4-desc': 'No platform fees. Book directly and get the best possible price.',
+    // About
+    'about-label': 'Welcome to Villa Hola', 'about-title': 'Family Friendly Paradise in Playa Blanca',
+    'about-p1': "Nestled in the sought-after Las Buganvillas complex, Villa Hola offers everything you need for the perfect Lanzarote holiday. Wake up to golden sunshine, spend your days lounging by your private pool, and explore one of the Canary Islands' most beautiful destinations — all at your own pace.",
+    'about-p2': "Whether you're a family wanting space and comfort, a group of friends ready to explore the island, or a couple seeking a luxurious retreat — Villa Hola, with its four bedrooms, private pool and rooftop terrace, is your home away from home.",
+    'about-f1': ' 4 bedrooms, sleeps up to 8', 'about-f2': ' Private swimming pool',
+    'about-f3': ' Fully equipped kitchen', 'about-f4': ' Air conditioning throughout',
+    'about-f5': ' Games room with pool table', 'about-f6': ' High-speed Wi-Fi',
+    'about-f7': ' Rooftop terrace with views', 'about-f8': ' 3 bathrooms',
+    'about-cta': 'Check Availability',
+    // Gallery
+    'gallery-label': 'Photography', 'gallery-title': 'Your Villa, Room by Room',
+    'gallery-intro': 'A beautifully presented villa ready for your arrival.',
+    'gallery-hint': 'Swipe or scroll to explore all photos',
+    // Facilities
+    'fac-label': 'Everything you need', 'fac-title': 'Villa Facilities',
+    'fac-intro': 'All the comforts of home — and then some.',
+    'fac-bed-title': 'Bedrooms', 'fac-bath-title': 'Bathrooms',
+    'fac-kit-title': 'Kitchen &amp; Dining', 'fac-liv-title': 'Living Area',
+    'fac-out-title': 'Outdoor Areas', 'fac-ext-title': 'Extras',
+    // Pool
+    'pool-label': 'Your Private Oasis', 'pool-title': 'Sun, Water &amp; Total Privacy',
+    'pool-desc': 'Your private pool is the heart of Villa Hola — sunbathe in peace, take a dip whenever you like, and dine al fresco on the terrace as the Lanzarote sun goes down. No shared facilities, no schedules, just pure relaxation.',
+    'pool-spec-1': ' Private pool', 'pool-spec-2': ' Sun loungers',
+    'pool-spec-3': ' Outdoor dining', 'pool-spec-4': ' BBQ',
+    'pool-spec-5': ' Gated &amp; private', 'pool-spec-6': ' Terrace views',
+    // Location
+    'loc-label': 'Where We Are', 'loc-title': 'Las Buganvillas, Playa Blanca',
+    'loc-desc': 'Set in the Las Buganvillas complex in Playa Blanca, Villa Hola is perfectly positioned to enjoy the very best of southern Lanzarote. Just minutes from stunning beaches, excellent restaurants and the lively Playa Blanca marina.',
+    'nearby-1-name': 'Playa Blanca Beach', 'nearby-1-sub': 'The main promenade beach', 'nearby-1-dist': '~10 min walk',
+    'nearby-2-name': 'Papagayo Beaches', 'nearby-2-sub': 'Stunning natural beaches', 'nearby-2-dist': '~10 min drive',
+    'nearby-3-name': 'Playa Blanca Marina', 'nearby-3-sub': 'Restaurants, shops &amp; ferry terminal', 'nearby-3-dist': '~5 min drive',
+    'nearby-4-name': 'Restaurants &amp; Bars', 'nearby-4-sub': 'Wide selection nearby', 'nearby-4-dist': '~5–10 min walk',
+    'nearby-5-name': 'Supermarkets', 'nearby-5-sub': 'Full grocery shopping', 'nearby-5-dist': '~5 min drive',
+    'nearby-6-name': 'Lanzarote Airport (ACE)', 'nearby-6-sub': 'Easy transfer', 'nearby-6-dist': '~40 min drive',
+    'loc-map-link': 'View larger map →',
+    'loc-getting-title': 'Getting Here',
+    'loc-getting-desc': 'Lanzarote Airport (ACE) is served by direct flights from most UK airports year-round. A hire car is recommended for exploring the island, though taxis and transfers are readily available from the airport to Playa Blanca.',
+    // Booking
+    'book-label': 'Direct Booking', 'book-title': 'Check Availability &amp; Book',
+    'book-intro': 'No booking fees. Pay just a 10% deposit to secure your dates — the balance is arranged with us directly.',
+    'book-form-title': 'Book Villa Hola', 'book-form-sub': 'Select your dates and complete your booking in minutes',
+    'step-1-label': 'Dates', 'step-2-label': 'Details', 'step-3-label': 'Payment',
+    'label-checkin': 'Check-in Date', 'label-checkout': 'Check-out Date',
+    'label-guests': 'Number of Guests', 'label-name': 'Full Name *',
+    'label-email': 'Email Address *', 'label-phone': 'Phone Number', 'label-country': 'Country',
+    'check-avail-btn': 'Check Availability',
+    's2-checkin-label': 'Check-in', 's2-checkout-label': 'Check-out', 's2-deposit-label': 'Deposit to pay now',
+    's2-continue': 'Continue to Payment', 's2-back': '← Back',
+    's3-summary-title': 'Booking Summary',
+    's3-dates-label': 'Dates', 's3-guest-label': 'Guest', 's3-total-label': 'Total price',
+    's3-deposit-label': '🔒 Deposit to pay now', 's3-back': '← Back',
+    'stripe-note': '🔒 Payments secured by Stripe. Your card details are never stored by us.',
+    'balance-note': "<strong>💬 Remaining balance:</strong> After payment, we'll contact you on WhatsApp to arrange the remaining balance and confirm all the details of your stay.",
+    // Sidebar
+    'sb-whats-title': "What's Included",
+    'sb-feat-1': ' Flexible check-in', 'sb-feat-2': ' Private pool access',
+    'sb-feat-3': ' High-speed Wi-Fi', 'sb-feat-4': ' Fresh linens &amp; towels',
+    'sb-feat-5': ' Private parking', 'sb-feat-6': ' Airport transfer advice',
+    'sb-pricing-title': 'Pricing Guide',
+    'sb-low-season': 'Low Season', 'sb-low-price': 'from €325/night + 7% IGIC',
+    'sb-peak-season': 'Peak Season', 'sb-peak-price': 'from €395/night + 7% IGIC',
+    'sb-early-book': '10% Early Booking Discount', 'sb-early-desc': 'Off-peak dates · 1+ year ahead',
+    'wa-sidebar-title': '💬 Questions? Chat With Us',
+    'wa-sidebar-desc': 'Our team is on hand to answer any questions about the villa, the area, or your booking.',
+    'wa-sidebar-btn': 'Open WhatsApp',
+    // Reviews
+    'reviews-label': 'Guest Reviews', 'reviews-title': 'What Our Guests Say',
+    // FAQ
+    'faq-label': 'Got Questions?', 'faq-title': 'Frequently Asked Questions',
+    'faq-q1': 'What are the check-in and check-out times?',
+    'faq-q2': 'How does the deposit and balance work?',
+    'faq-q3': 'Is there a minimum stay?',
+    'faq-q4': 'Is the pool heated?',
+    'faq-q5': 'Is the villa suitable for children?',
+    'faq-q6': 'Are pets allowed?',
+    'faq-q7': 'What is your cancellation policy?',
+    'faq-q8': 'Is Wi-Fi available at the villa?',
+    'faq-q9': 'What is the maximum number of guests?',
+    'faq-q10': 'Do I need a hire car?',
+    'faq-a1': 'Check-in is from 3:00pm and check-out is by 10:00am. Early check-in and late check-out may be available — please ask us via WhatsApp when making your booking.',
+    'faq-a2': 'When you book online, you pay a 20% deposit to secure your dates. The remaining 80% balance is due 30 days before your check-in date and is arranged with us directly via WhatsApp. We will contact you shortly after your booking to confirm the details and arrange the balance payment.',
+    'faq-a3': 'Our minimum stay is 2 nights year-round. Please check availability for your preferred dates and the booking form will advise you of any minimum.',
+    'faq-a4': "The pool is not heated, but it is fitted with a thermal cover that retains heat from the sun. Lanzarote's warm climate means the pool benefits from solar energy throughout the year, and water temperatures can reach up to 33°C during warmer months. The pool is generally very pleasant for swimming.",
+    'faq-a5': 'Yes — Villa Hola is a great choice for families. Please note that children must always be supervised around the pool area. A travel cot and high chair can be provided on request — please let us know in advance.',
+    'faq-a6': 'Unfortunately pets are not permitted at Villa Hola. This is to ensure the comfort of all guests and to meet the requirements of the complex.',
+    'faq-a7': 'Cancellations made more than 60 days before check-in will receive a full deposit refund. Cancellations within 60 days of check-in are non-refundable. Full terms and conditions are provided on booking.',
+    'faq-a8': 'Yes, high-speed Wi-Fi is included with every booking at no extra charge.',
+    'faq-a9': 'Villa Hola accommodates a maximum of 8 guests across 4 bedrooms. This limit must be respected — the number of guests stated at booking is the maximum permitted to stay at the property.',
+    'faq-a10': 'A hire car is highly recommended for exploring Lanzarote — the island has incredible scenery, volcanic landscapes and beaches that are best discovered by car. That said, Playa Blanca itself has a good range of restaurants, beaches and shops within walking distance. Taxis are also available.',
+    // Host
+    'host-label': 'Your Host',
+    'host-p1': "I grew up in Playa Blanca and have lived in Lanzarote my whole life. I know this part of the island pretty well — the good beaches, the restaurants that are actually worth it, where to hire a car, all that sort of thing.",
+    'host-p2': "My job is to make your stay as good as it can be. Any questions about the villa, the area, or just Playa Blanca in general — just message me and I'll do my best.",
+    'host-wa-btn': '💬 Message Millie', 'host-emergency-label': 'Emergency Contact',
+    // Contact
+    'contact-title': 'Ready to Book Your<br>Lanzarote Holiday?',
+    'contact-desc': "Secure your dates today with just a 10% deposit.<br>Questions? We're always happy to chat.",
+    'contact-cta1': 'Check Availability', 'contact-wa': '💬 WhatsApp Us',
+    // Footer
+    'footer-desc': 'A beautiful private holiday villa in Las Buganvillas, Playa Blanca, Lanzarote — the perfect escape for families, couples and groups looking for sun, relaxation and a home away from home.',
+    'footer-links-title': 'Quick Links',
+    'footer-link-villa': 'The Villa', 'footer-link-gallery': 'Gallery',
+    'footer-link-fac': 'Facilities', 'footer-link-location': 'Location',
+    'footer-link-book': 'Book Now', 'footer-link-faq': 'FAQs',
+    'footer-contact-title': 'Contact',
+    'footer-wa-link': '💬 WhatsApp', 'footer-book-online': 'Book Online',
+    'footer-owner-login': 'Owner Login', 'footer-find-title': 'Find Us Online',
+  },
+
+  es: {
+    // Nav
+    'nav-villa': 'La Villa', 'nav-gallery': 'Galería', 'nav-facilities': 'Instalaciones',
+    'nav-location': 'Ubicación', 'nav-booking': 'Reservas', 'nav-faq': 'Preguntas',
+    'nav-book': 'Reservar', 'nav-contact': 'Contacto',
+    // Hero
+    'hero-title': 'Tu Escapada<br>Privada en<br><em>Lanzarote</em>',
+    'hero-sub': 'Sol, privacidad y relajación total en una villa privada excepcional. Tu propia piscina, sol cálido y la belleza de Lanzarote — todo esperándote en Villa Hola.',
+    'hero-cta1': 'Comprobar Disponibilidad', 'hero-cta2': 'Ver Galería',
+    'hero-stat-guests': 'Huéspedes', 'hero-stat-bedrooms': 'Dormitorios',
+    'hero-stat-bathrooms': 'Baños', 'hero-stat-pool': 'Piscina Privada',
+    'hero-scroll': 'Desplázate para explorar',
+    // Banner
+    'banner-strong': 'Reserva directa — sin comisiones de plataforma',
+    'banner-sub': 'Estamos en Airbnb y Booking.com, pero si reservas directamente con nosotros te ahorras las comisiones.',
+    'banner-cta': 'Reserva Directa y Ahorra',
+    // Features
+    'feat1-title': 'Piscina Privada', 'feat1-desc': 'Tu propia piscina privada — calentada por el sol con cubierta térmica, alcanzando hasta 33°C. Sin compartir, total privacidad.',
+    'feat2-title': 'Ubicación Privilegiada', 'feat2-desc': 'En el bello complejo Las Buganvillas, a poca distancia de Playa Blanca.',
+    'feat3-title': 'Sol Todo el Año', 'feat3-desc': 'Más de 300 días de sol al año. Lanzarote tiene buen clima en todas las estaciones.',
+    'feat4-title': 'Reserva Directa y Ahorra', 'feat4-desc': 'Sin comisiones de plataforma. Reserva directamente y obtén el mejor precio posible.',
+    // About
+    'about-label': 'Bienvenido a Villa Hola', 'about-title': 'Paraíso Familiar en Playa Blanca',
+    'about-p1': 'Ubicada en el codiciado complejo Las Buganvillas, Villa Hola ofrece todo lo que necesitas para unas vacaciones perfectas en Lanzarote. Despierta con el sol dorado, relájate junto a tu piscina privada y explora uno de los destinos más hermosos de las Islas Canarias.',
+    'about-p2': 'Tanto si eres una familia que busca espacio y comodidad, un grupo de amigos dispuesto a explorar la isla, o una pareja en busca de un retiro de lujo — Villa Hola, con sus cuatro dormitorios, piscina privada y terraza en la azotea, es tu hogar lejos del hogar.',
+    'about-f1': ' 4 dormitorios, hasta 8 huéspedes', 'about-f2': ' Piscina privada',
+    'about-f3': ' Cocina totalmente equipada', 'about-f4': ' Aire acondicionado en toda la villa',
+    'about-f5': ' Sala de juegos con billar', 'about-f6': ' Wi-Fi de alta velocidad',
+    'about-f7': ' Terraza en la azotea con vistas', 'about-f8': ' 3 baños',
+    'about-cta': 'Comprobar Disponibilidad',
+    // Gallery
+    'gallery-label': 'Fotografía', 'gallery-title': 'La Villa, Habitación por Habitación',
+    'gallery-intro': 'Una villa preciosa lista para tu llegada.',
+    'gallery-hint': 'Desliza o desplázate para ver todas las fotos',
+    // Facilities
+    'fac-label': 'Todo lo que necesitas', 'fac-title': 'Instalaciones de la Villa',
+    'fac-intro': 'Todas las comodidades del hogar — y más.',
+    'fac-bed-title': 'Dormitorios', 'fac-bath-title': 'Baños',
+    'fac-kit-title': 'Cocina y Comedor', 'fac-liv-title': 'Salón',
+    'fac-out-title': 'Zonas Exteriores', 'fac-ext-title': 'Extras',
+    // Pool
+    'pool-label': 'Tu Oasis Privado', 'pool-title': 'Sol, Agua y Total Privacidad',
+    'pool-desc': 'Tu piscina privada es el corazón de Villa Hola — toma el sol con tranquilidad, date un chapuzón cuando quieras y cena al aire libre en la terraza mientras el sol de Lanzarote se pone. Sin instalaciones compartidas, sin horarios, solo pura relajación.',
+    'pool-spec-1': ' Piscina privada', 'pool-spec-2': ' Tumbonas',
+    'pool-spec-3': ' Comedor exterior', 'pool-spec-4': ' Barbacoa',
+    'pool-spec-5': ' Vallada y privada', 'pool-spec-6': ' Vistas desde la terraza',
+    // Location
+    'loc-label': 'Dónde Estamos', 'loc-title': 'Las Buganvillas, Playa Blanca',
+    'loc-desc': 'Situada en el complejo Las Buganvillas en Playa Blanca, Villa Hola está perfectamente ubicada para disfrutar de lo mejor del sur de Lanzarote. A pocos minutos de playas espectaculares, excelentes restaurantes y el animado puerto de Playa Blanca.',
+    'nearby-1-name': 'Playa Blanca', 'nearby-1-sub': 'La playa del paseo marítimo', 'nearby-1-dist': '~10 min a pie',
+    'nearby-2-name': 'Playas de Papagayo', 'nearby-2-sub': 'Playas naturales espectaculares', 'nearby-2-dist': '~10 min en coche',
+    'nearby-3-name': 'Puerto de Playa Blanca', 'nearby-3-sub': 'Restaurantes, tiendas y terminal de ferry', 'nearby-3-dist': '~5 min en coche',
+    'nearby-4-name': 'Restaurantes y Bares', 'nearby-4-sub': 'Amplia selección en las inmediaciones', 'nearby-4-dist': '~5–10 min a pie',
+    'nearby-5-name': 'Supermercados', 'nearby-5-sub': 'Compras de alimentación completas', 'nearby-5-dist': '~5 min en coche',
+    'nearby-6-name': 'Aeropuerto de Lanzarote (ACE)', 'nearby-6-sub': 'Traslado fácil', 'nearby-6-dist': '~40 min en coche',
+    'loc-map-link': 'Ver mapa más grande →',
+    'loc-getting-title': 'Cómo Llegar',
+    'loc-getting-desc': 'El aeropuerto de Lanzarote (ACE) tiene vuelos directos desde los principales aeropuertos europeos durante todo el año. Se recomienda alquilar un coche para explorar la isla, aunque hay taxis y traslados disponibles desde el aeropuerto a Playa Blanca.',
+    // Booking
+    'book-label': 'Reserva Directa', 'book-title': 'Comprobar Disponibilidad y Reservar',
+    'book-intro': 'Sin comisiones de reserva. Paga solo un 10% de depósito para asegurar tus fechas — el saldo se gestiona directamente con nosotros.',
+    'book-form-title': 'Reservar Villa Hola', 'book-form-sub': 'Selecciona tus fechas y completa tu reserva en minutos',
+    'step-1-label': 'Fechas', 'step-2-label': 'Datos', 'step-3-label': 'Pago',
+    'label-checkin': 'Fecha de entrada', 'label-checkout': 'Fecha de salida',
+    'label-guests': 'Número de huéspedes', 'label-name': 'Nombre completo *',
+    'label-email': 'Correo electrónico *', 'label-phone': 'Teléfono', 'label-country': 'País',
+    'check-avail-btn': 'Comprobar Disponibilidad',
+    's2-checkin-label': 'Entrada', 's2-checkout-label': 'Salida', 's2-deposit-label': 'Depósito a pagar ahora',
+    's2-continue': 'Continuar al Pago', 's2-back': '← Volver',
+    's3-summary-title': 'Resumen de Reserva',
+    's3-dates-label': 'Fechas', 's3-guest-label': 'Huésped', 's3-total-label': 'Precio total',
+    's3-deposit-label': '🔒 Depósito a pagar ahora', 's3-back': '← Volver',
+    'stripe-note': '🔒 Pagos gestionados de forma segura por Stripe. Tus datos de tarjeta nunca se almacenan con nosotros.',
+    'balance-note': '<strong>💬 Saldo restante:</strong> Tras el pago, nos pondremos en contacto contigo por WhatsApp para gestionar el saldo restante y confirmar todos los detalles de tu estancia.',
+    // Sidebar
+    'sb-whats-title': 'Qué Incluye',
+    'sb-feat-1': ' Entrada flexible', 'sb-feat-2': ' Acceso a piscina privada',
+    'sb-feat-3': ' Wi-Fi de alta velocidad', 'sb-feat-4': ' Ropa de cama y toallas',
+    'sb-feat-5': ' Aparcamiento privado', 'sb-feat-6': ' Información sobre traslados',
+    'sb-pricing-title': 'Guía de Precios',
+    'sb-low-season': 'Temporada Baja', 'sb-low-price': 'desde €325/noche + 7% IGIC',
+    'sb-peak-season': 'Temporada Alta', 'sb-peak-price': 'desde €395/noche + 7% IGIC',
+    'sb-early-book': '10% Descuento por Reserva Anticipada', 'sb-early-desc': 'Fechas fuera de temporada · 1+ año de antelación',
+    'wa-sidebar-title': '💬 ¿Preguntas? Chatea con Nosotros',
+    'wa-sidebar-desc': 'Nuestro equipo está disponible para responder cualquier pregunta sobre la villa, la zona o tu reserva.',
+    'wa-sidebar-btn': 'Abrir WhatsApp',
+    // Reviews
+    'reviews-label': 'Opiniones de Huéspedes', 'reviews-title': 'Lo Que Dicen Nuestros Huéspedes',
+    // FAQ
+    'faq-label': '¿Tienes preguntas?', 'faq-title': 'Preguntas Frecuentes',
+    'faq-q1': '¿Cuáles son los horarios de entrada y salida?',
+    'faq-q2': '¿Cómo funciona el depósito y el saldo?',
+    'faq-q3': '¿Hay una estancia mínima?',
+    'faq-q4': '¿Está climatizada la piscina?',
+    'faq-q5': '¿Es la villa adecuada para niños?',
+    'faq-q6': '¿Se admiten mascotas?',
+    'faq-q7': '¿Cuál es la política de cancelación?',
+    'faq-q8': '¿Hay Wi-Fi disponible en la villa?',
+    'faq-q9': '¿Cuál es el número máximo de huéspedes?',
+    'faq-q10': '¿Necesito alquilar un coche?',
+    'faq-a1': 'La entrada es a partir de las 15:00h y la salida antes de las 10:00h. La entrada anticipada y la salida tardía pueden estar disponibles — consúltanos por WhatsApp al hacer tu reserva.',
+    'faq-a2': 'Al reservar online, pagas un depósito del 20% para asegurar tus fechas. El 80% restante vence 30 días antes de tu fecha de entrada y se gestiona directamente con nosotros por WhatsApp.',
+    'faq-a3': 'La estancia mínima es de 2 noches durante todo el año. Comprueba la disponibilidad para tus fechas preferidas y el formulario de reserva te indicará cualquier mínimo aplicable.',
+    'faq-a4': 'La piscina no está climatizada, pero dispone de una cubierta térmica que retiene el calor del sol. El cálido clima de Lanzarote hace que la piscina sea muy agradable para bañarse durante todo el año.',
+    'faq-a5': 'Sí — Villa Hola es una excelente opción para familias. Ten en cuenta que los niños deben estar siempre supervisados en la zona de la piscina. Se puede proporcionar cuna de viaje y trona bajo petición.',
+    'faq-a6': 'Lamentablemente no se admiten mascotas en Villa Hola. Esto garantiza la comodidad de todos los huéspedes y cumple con los requisitos del complejo.',
+    'faq-a7': 'Las cancelaciones realizadas con más de 60 días de antelación a la fecha de entrada recibirán el reembolso total del depósito. Las cancelaciones dentro de los 60 días anteriores a la entrada no son reembolsables.',
+    'faq-a8': 'Sí, el Wi-Fi de alta velocidad está incluido en todas las reservas sin coste adicional.',
+    'faq-a9': 'Villa Hola tiene capacidad para un máximo de 8 huéspedes en 4 dormitorios. Este límite debe respetarse.',
+    'faq-a10': 'Se recomienda encarecidamente alquilar un coche para explorar Lanzarote — la isla tiene paisajes volcánicos y playas increíbles que se descubren mejor en coche. Dicho esto, Playa Blanca tiene una buena oferta de restaurantes, playas y tiendas a poca distancia a pie.',
+    // Host
+    'host-label': 'Tu Anfitriona',
+    'host-p1': 'Crecí en Playa Blanca y he vivido en Lanzarote toda mi vida. Conozco bien esta parte de la isla — las mejores playas, los restaurantes que realmente valen la pena, dónde alquilar un coche y mucho más.',
+    'host-p2': 'Mi objetivo es que tu estancia sea lo mejor posible. Cualquier pregunta sobre la villa, la zona o Playa Blanca en general — escríbeme y haré todo lo posible por ayudarte.',
+    'host-wa-btn': '💬 Mensaje a Millie', 'host-emergency-label': 'Contacto de Emergencia',
+    // Contact
+    'contact-title': '¿Listo para Reservar tus<br>Vacaciones en Lanzarote?',
+    'contact-desc': 'Asegura tus fechas hoy con solo un 10% de depósito.<br>¿Tienes preguntas? Estaremos encantados de chatear.',
+    'contact-cta1': 'Comprobar Disponibilidad', 'contact-wa': '💬 WhatsApp',
+    // Footer
+    'footer-desc': 'Una hermosa villa privada de vacaciones en Las Buganvillas, Playa Blanca, Lanzarote — el escape perfecto para familias, parejas y grupos en busca de sol, relajación y un hogar lejos del hogar.',
+    'footer-links-title': 'Enlaces Rápidos',
+    'footer-link-villa': 'La Villa', 'footer-link-gallery': 'Galería',
+    'footer-link-fac': 'Instalaciones', 'footer-link-location': 'Ubicación',
+    'footer-link-book': 'Reservar', 'footer-link-faq': 'Preguntas',
+    'footer-contact-title': 'Contacto',
+    'footer-wa-link': '💬 WhatsApp', 'footer-book-online': 'Reservar Online',
+    'footer-owner-login': 'Acceso Propietario', 'footer-find-title': 'Encuéntranos Online',
+  },
+
+  de: {
+    // Nav
+    'nav-villa': 'Die Villa', 'nav-gallery': 'Galerie', 'nav-facilities': 'Ausstattung',
+    'nav-location': 'Lage', 'nav-booking': 'Buchung', 'nav-faq': 'FAQ',
+    'nav-book': 'Jetzt Buchen', 'nav-contact': 'Kontakt',
+    // Hero
+    'hero-title': 'Ihr privates<br><em>Lanzarote</em><br>Erlebnis',
+    'hero-sub': 'Sonne, Privatsphäre und pure Entspannung in einer wunderschönen privaten Villa. Ihr eigener Pool, warmes Sonnenlicht und die Schönheit Lanzarotes — alles wartet auf Sie in der Villa Hola.',
+    'hero-cta1': 'Verfügbarkeit prüfen', 'hero-cta2': 'Galerie ansehen',
+    'hero-stat-guests': 'Gäste', 'hero-stat-bedrooms': 'Schlafzimmer',
+    'hero-stat-bathrooms': 'Bäder', 'hero-stat-pool': 'Privater Pool',
+    'hero-scroll': 'Scrollen zum Erkunden',
+    // Banner
+    'banner-strong': 'Direkt buchen &amp; sparen — keine Plattformgebühren',
+    'banner-sub': 'Wir sind auf Airbnb und Booking.com vertreten — aber buchen Sie direkt bei uns und behalten Sie die Gebühren in der Tasche.',
+    'banner-cta': 'Direkt Buchen &amp; Sparen',
+    // Features
+    'feat1-title': 'Privater Pool', 'feat1-desc': 'Ihr eigener privater Pool — solar erwärmt mit Thermoabdeckung, bis zu 33°C. Kein Teilen, totale Privatsphäre.',
+    'feat2-title': 'Erstklassige Lage', 'feat2-desc': 'Im schönen Las Buganvillas Komplex, nur wenige Schritte von Playa Blanca entfernt.',
+    'feat3-title': 'Sonne das ganze Jahr', 'feat3-desc': 'Über 300 Sonnentage pro Jahr. Lanzarote ist in jeder Jahreszeit warm.',
+    'feat4-title': 'Direkt Buchen &amp; Sparen', 'feat4-desc': 'Keine Plattformgebühren. Buchen Sie direkt und erhalten Sie den bestmöglichen Preis.',
+    // About
+    'about-label': 'Willkommen in der Villa Hola', 'about-title': 'Familienparadies in Playa Blanca',
+    'about-p1': 'Im begehrten Las Buganvillas Komplex gelegen, bietet die Villa Hola alles, was Sie für einen perfekten Lanzarote-Urlaub benötigen. Wachen Sie im goldenen Sonnenlicht auf, entspannen Sie an Ihrem privaten Pool und erkunden Sie eines der schönsten Reiseziele der Kanarischen Inseln.',
+    'about-p2': 'Ob Familie auf der Suche nach Platz und Komfort, Freundesgruppe zum Erkunden der Insel oder Pärchen für einen Luxusrückzug — die Villa Hola mit ihren vier Schlafzimmern, dem privaten Pool und der Dachterrasse ist Ihr Zuhause fernab von zu Hause.',
+    'about-f1': ' 4 Schlafzimmer, bis zu 8 Gäste', 'about-f2': ' Privater Swimmingpool',
+    'about-f3': ' Voll ausgestattete Küche', 'about-f4': ' Klimaanlage im gesamten Haus',
+    'about-f5': ' Spielzimmer mit Billardtisch', 'about-f6': ' Schnelles WLAN',
+    'about-f7': ' Dachterrasse mit Ausblick', 'about-f8': ' 3 Bäder',
+    'about-cta': 'Verfügbarkeit prüfen',
+    // Gallery
+    'gallery-label': 'Fotografie', 'gallery-title': 'Die Villa, Zimmer für Zimmer',
+    'gallery-intro': 'Eine wunderschön eingerichtete Villa, bereit für Ihre Ankunft.',
+    'gallery-hint': 'Wischen oder scrollen Sie, um alle Fotos zu sehen',
+    // Facilities
+    'fac-label': 'Alles was Sie brauchen', 'fac-title': 'Villa Ausstattung',
+    'fac-intro': 'Alle Annehmlichkeiten eines Zuhauses — und mehr.',
+    'fac-bed-title': 'Schlafzimmer', 'fac-bath-title': 'Badezimmer',
+    'fac-kit-title': 'Küche &amp; Esszimmer', 'fac-liv-title': 'Wohnbereich',
+    'fac-out-title': 'Außenbereiche', 'fac-ext-title': 'Extras',
+    // Pool
+    'pool-label': 'Ihre private Oase', 'pool-title': 'Sonne, Wasser &amp; totale Privatsphäre',
+    'pool-desc': 'Ihr privater Pool ist das Herzstück der Villa Hola — sonnen Sie sich in Ruhe, springen Sie wann immer Sie möchten ins Wasser und essen Sie al fresco auf der Terrasse, während die Lanzarote-Sonne untergeht. Keine gemeinsam genutzten Einrichtungen, keine festen Zeiten, nur pure Entspannung.',
+    'pool-spec-1': ' Privater Pool', 'pool-spec-2': ' Sonnenliegen',
+    'pool-spec-3': ' Außenterrasse zum Essen', 'pool-spec-4': ' Grill',
+    'pool-spec-5': ' Eingezäunt &amp; privat', 'pool-spec-6': ' Terrassenblick',
+    // Location
+    'loc-label': 'Wo Wir Sind', 'loc-title': 'Las Buganvillas, Playa Blanca',
+    'loc-desc': 'Im Las Buganvillas Komplex in Playa Blanca gelegen, ist die Villa Hola perfekt positioniert, um das Beste des südlichen Lanzarotes zu genießen. Nur wenige Minuten von wunderschönen Stränden, exzellenten Restaurants und dem lebhaften Hafen von Playa Blanca.',
+    'nearby-1-name': 'Playa Blanca Strand', 'nearby-1-sub': 'Der Hauptpromenadenstrand', 'nearby-1-dist': '~10 Min. zu Fuß',
+    'nearby-2-name': 'Papagayo Strände', 'nearby-2-sub': 'Atemberaubende Naturstrände', 'nearby-2-dist': '~10 Min. mit dem Auto',
+    'nearby-3-name': 'Hafen Playa Blanca', 'nearby-3-sub': 'Restaurants, Geschäfte &amp; Fährterminal', 'nearby-3-dist': '~5 Min. mit dem Auto',
+    'nearby-4-name': 'Restaurants &amp; Bars', 'nearby-4-sub': 'Große Auswahl in der Nähe', 'nearby-4-dist': '~5–10 Min. zu Fuß',
+    'nearby-5-name': 'Supermärkte', 'nearby-5-sub': 'Vollständige Lebensmitteleinkäufe', 'nearby-5-dist': '~5 Min. mit dem Auto',
+    'nearby-6-name': 'Flughafen Lanzarote (ACE)', 'nearby-6-sub': 'Einfacher Transfer', 'nearby-6-dist': '~40 Min. mit dem Auto',
+    'loc-map-link': 'Größere Karte anzeigen →',
+    'loc-getting-title': 'Anreise',
+    'loc-getting-desc': 'Der Flughafen Lanzarote (ACE) wird ganzjährig von Direktflügen aus den meisten europäischen Flughäfen bedient. Ein Mietwagen wird zum Erkunden der Insel empfohlen, obwohl Taxis und Transfers vom Flughafen nach Playa Blanca leicht verfügbar sind.',
+    // Booking
+    'book-label': 'Direktbuchung', 'book-title': 'Verfügbarkeit prüfen &amp; Buchen',
+    'book-intro': 'Keine Buchungsgebühren. Zahlen Sie nur 10% Anzahlung, um Ihre Termine zu sichern — der Rest wird direkt mit uns vereinbart.',
+    'book-form-title': 'Villa Hola Buchen', 'book-form-sub': 'Wählen Sie Ihre Termine und schließen Sie die Buchung in Minuten ab',
+    'step-1-label': 'Termine', 'step-2-label': 'Details', 'step-3-label': 'Zahlung',
+    'label-checkin': 'Anreisedatum', 'label-checkout': 'Abreisedatum',
+    'label-guests': 'Anzahl der Gäste', 'label-name': 'Vollständiger Name *',
+    'label-email': 'E-Mail-Adresse *', 'label-phone': 'Telefonnummer', 'label-country': 'Land',
+    'check-avail-btn': 'Verfügbarkeit Prüfen',
+    's2-checkin-label': 'Anreise', 's2-checkout-label': 'Abreise', 's2-deposit-label': 'Anzahlung jetzt fällig',
+    's2-continue': 'Weiter zur Zahlung', 's2-back': '← Zurück',
+    's3-summary-title': 'Buchungsübersicht',
+    's3-dates-label': 'Termine', 's3-guest-label': 'Gast', 's3-total-label': 'Gesamtpreis',
+    's3-deposit-label': '🔒 Anzahlung jetzt fällig', 's3-back': '← Zurück',
+    'stripe-note': '🔒 Zahlungen werden sicher über Stripe abgewickelt. Ihre Kartendaten werden nie bei uns gespeichert.',
+    'balance-note': '<strong>💬 Restbetrag:</strong> Nach der Zahlung werden wir Sie über WhatsApp kontaktieren, um den Restbetrag zu arrangieren und alle Details Ihres Aufenthalts zu bestätigen.',
+    // Sidebar
+    'sb-whats-title': 'Im Preis Enthalten',
+    'sb-feat-1': ' Flexibler Check-in', 'sb-feat-2': ' Privater Poolzugang',
+    'sb-feat-3': ' Schnelles WLAN', 'sb-feat-4': ' Frische Bettwäsche &amp; Handtücher',
+    'sb-feat-5': ' Privater Parkplatz', 'sb-feat-6': ' Informationen zu Transfers',
+    'sb-pricing-title': 'Preisübersicht',
+    'sb-low-season': 'Nebensaison', 'sb-low-price': 'ab €325/Nacht + 7% IGIC',
+    'sb-peak-season': 'Hochsaison', 'sb-peak-price': 'ab €395/Nacht + 7% IGIC',
+    'sb-early-book': '10% Frühbucherrabatt', 'sb-early-desc': 'Nebensaisontermine · 1+ Jahr im Voraus',
+    'wa-sidebar-title': '💬 Fragen? Schreiben Sie uns',
+    'wa-sidebar-desc': 'Unser Team beantwortet gerne alle Fragen zur Villa, zur Gegend oder zu Ihrer Buchung.',
+    'wa-sidebar-btn': 'WhatsApp öffnen',
+    // Reviews
+    'reviews-label': 'Gästebewertungen', 'reviews-title': 'Was Unsere Gäste Sagen',
+    // FAQ
+    'faq-label': 'Haben Sie Fragen?', 'faq-title': 'Häufig Gestellte Fragen',
+    'faq-q1': 'Was sind die Check-in- und Check-out-Zeiten?',
+    'faq-q2': 'Wie funktionieren Anzahlung und Restzahlung?',
+    'faq-q3': 'Gibt es einen Mindestaufenthalt?',
+    'faq-q4': 'Ist der Pool beheizt?',
+    'faq-q5': 'Ist die Villa für Kinder geeignet?',
+    'faq-q6': 'Sind Haustiere erlaubt?',
+    'faq-q7': 'Was ist die Stornierungsrichtlinie?',
+    'faq-q8': 'Ist WLAN in der Villa verfügbar?',
+    'faq-q9': 'Was ist die maximale Gästeanzahl?',
+    'faq-q10': 'Brauche ich ein Mietauto?',
+    'faq-a1': 'Der Check-in ist ab 15:00 Uhr und der Check-out bis 10:00 Uhr. Früher Check-in und später Check-out können verfügbar sein — bitte fragen Sie uns per WhatsApp bei der Buchung.',
+    'faq-a2': 'Bei der Online-Buchung zahlen Sie eine Anzahlung von 20%, um Ihre Termine zu sichern. Die restlichen 80% sind 30 Tage vor Ihrem Check-in-Datum fällig und werden direkt mit uns per WhatsApp abgewickelt.',
+    'faq-a3': 'Der Mindestaufenthalt beträgt ganzjährig 2 Nächte. Prüfen Sie die Verfügbarkeit für Ihre bevorzugten Termine.',
+    'faq-a4': 'Der Pool wird nicht beheizt, ist aber mit einer Thermoabdeckung ausgestattet, die die Sonnenwärme speichert. Das warme Klima Lanzarotes sorgt dafür, dass der Pool das ganze Jahr über angenehm zum Baden ist.',
+    'faq-a5': 'Ja — die Villa Hola ist eine ausgezeichnete Wahl für Familien. Bitte beachten Sie, dass Kinder immer im Poolbereich beaufsichtigt werden müssen. Ein Reisebettchen und ein Hochstuhl können auf Anfrage bereitgestellt werden.',
+    'faq-a6': 'Leider sind in der Villa Hola keine Haustiere erlaubt. Dies gewährleistet den Komfort aller Gäste und erfüllt die Anforderungen des Komplexes.',
+    'faq-a7': 'Stornierungen mehr als 60 Tage vor dem Check-in erhalten eine vollständige Anzahlungsrückerstattung. Stornierungen innerhalb von 60 Tagen vor dem Check-in sind nicht erstattungsfähig.',
+    'faq-a8': 'Ja, schnelles WLAN ist bei jeder Buchung ohne Aufpreis enthalten.',
+    'faq-a9': 'Die Villa Hola bietet Platz für maximal 8 Gäste in 4 Schlafzimmern. Dieses Limit muss eingehalten werden.',
+    'faq-a10': 'Ein Mietauto wird sehr empfohlen, um Lanzarote zu erkunden — die Insel hat unglaubliche Vulkanlandschaften und Strände, die man am besten mit dem Auto entdeckt. Allerdings hat Playa Blanca selbst eine gute Auswahl an Restaurants, Stränden und Einkaufsmöglichkeiten in Gehweite.',
+    // Host
+    'host-label': 'Ihre Gastgeberin',
+    'host-p1': 'Ich bin in Playa Blanca aufgewachsen und habe mein ganzes Leben auf Lanzarote gelebt. Ich kenne diesen Teil der Insel ziemlich gut — die guten Strände, die Restaurants, die es wirklich wert sind, wo man ein Auto mieten kann, all das.',
+    'host-p2': 'Meine Aufgabe ist es, Ihren Aufenthalt so gut wie möglich zu machen. Bei Fragen zur Villa, zur Gegend oder zu Playa Blanca im Allgemeinen — schreiben Sie mir einfach und ich werde mein Bestes tun.',
+    'host-wa-btn': '💬 Millie anschreiben', 'host-emergency-label': 'Notfallkontakt',
+    // Contact
+    'contact-title': 'Bereit für Ihren<br>Lanzarote-Urlaub?',
+    'contact-desc': 'Sichern Sie sich Ihre Termine noch heute mit nur 10% Anzahlung.<br>Fragen? Wir freuen uns auf Ihre Nachricht.',
+    'contact-cta1': 'Verfügbarkeit Prüfen', 'contact-wa': '💬 WhatsApp',
+    // Footer
+    'footer-desc': 'Eine wunderschöne private Ferienvilla in Las Buganvillas, Playa Blanca, Lanzarote — der perfekte Rückzugsort für Familien, Paare und Gruppen, die Sonne, Entspannung und ein Zuhause fernab von zu Hause suchen.',
+    'footer-links-title': 'Schnelllinks',
+    'footer-link-villa': 'Die Villa', 'footer-link-gallery': 'Galerie',
+    'footer-link-fac': 'Ausstattung', 'footer-link-location': 'Lage',
+    'footer-link-book': 'Jetzt Buchen', 'footer-link-faq': 'FAQ',
+    'footer-contact-title': 'Kontakt',
+    'footer-wa-link': '💬 WhatsApp', 'footer-book-online': 'Online Buchen',
+    'footer-owner-login': 'Eigentümer-Login', 'footer-find-title': 'Finden Sie Uns Online',
+  },
+};
+
+let currentLang = 'en';
+
+function setLanguage(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key] !== undefined) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (translations[lang] && translations[lang][key] !== undefined) el.placeholder = translations[lang][key];
+  });
+  ['en','es','de'].forEach(l => {
+    const btn = document.getElementById('lang-' + l);
+    const btnM = document.getElementById('lang-' + l + '-m');
+    if (btn) btn.classList.toggle('active', l === lang);
+    if (btnM) btnM.classList.toggle('active', l === lang);
+  });
+  try { localStorage.setItem('vh-lang', lang); } catch(e) {}
+}
+
 // ── Globals ────────────────────────────────────────────────────────────────
 let config   = {};
 let pricing  = null;
@@ -2670,7 +3037,11 @@ function showToast(msg, type = '') {
 }
 
 // ── Start ────────────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+  const savedLang = (() => { try { return localStorage.getItem('vh-lang'); } catch(e) { return null; } })();
+  if (savedLang && ['en','es','de'].includes(savedLang)) setLanguage(savedLang);
+});
 </script>
 </body>
 </html>
