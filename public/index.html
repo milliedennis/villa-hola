@@ -199,7 +199,7 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   display: flex;
   align-items: center;
-  background: url('/images/living-room-1.jpg') center/cover no-repeat;
+  background: url('/images/pool-hero.jpg') center/cover no-repeat;
   overflow: hidden;
 }
 
@@ -471,6 +471,36 @@ a { color: inherit; text-decoration: none; }
   color: var(--white);
   font-weight: 500;
 }
+
+/* ── Gallery Nav ─────────────────────────────────────────────── */
+.gallery-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  margin-bottom: -24px;
+}
+.gallery-hint {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.02em;
+}
+.gallery-arrow {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--white);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.gallery-arrow:hover { background: rgba(255,255,255,0.25); }
 
 /* ── About Host ───────────────────────────────────────────────── */
 #about-host { background: var(--text-dark); padding: 96px 0; }
@@ -1381,7 +1411,13 @@ footer {
     <h2 class="section-title" style="color:var(--white)">Your Villa, Room by Room</h2>
     <p class="section-intro" style="color:rgba(255,255,255,0.7)">A beautifully presented villa ready for your arrival.</p>
 
-    <div class="gallery-grid">
+    <div class="gallery-nav">
+      <button class="gallery-arrow" id="gallery-prev" onclick="scrollGallery(-1)" aria-label="Previous photo">&#8592;</button>
+      <span class="gallery-hint">Swipe or scroll to explore all photos</span>
+      <button class="gallery-arrow" id="gallery-next" onclick="scrollGallery(1)" aria-label="Next photo">&#8594;</button>
+    </div>
+
+    <div class="gallery-grid" id="gallery-grid">
       <div class="gallery-item" onclick="openLightbox(this)">
         <img src="/images/dining-room-1.jpg" alt="Dining room with large table opening to private pool">
         <div class="gallery-overlay"><span class="gallery-label">Dining Room & Pool Views</span></div>
@@ -1657,16 +1693,20 @@ footer {
       </div>
       <div>
         <div class="location-map">
-          <!-- Replace with actual Google Maps embed when ready:
-          <iframe src="https://www.google.com/maps/embed?pb=..." allowfullscreen></iframe>
-          -->
-          <div class="map-placeholder">
-            <div class="map-placeholder-icon">🗺️</div>
-            <p style="font-size:14px;text-align:center;padding:0 24px;color:var(--text-mid)">
-              Map will be added here.<br>
-              <small>Las Buganvillas, Playa Blanca, Lanzarote, Spain</small>
-            </p>
-          </div>
+          <iframe
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-13.8500%2C28.8560%2C-13.8200%2C28.8700&layer=mapnik&marker=28.8627%2C-13.8317"
+            style="border:0;width:100%;height:100%;border-radius:var(--radius)"
+            allowfullscreen
+            loading="lazy"
+            title="Villa Hola location — Las Buganvillas, Playa Blanca, Lanzarote">
+          </iframe>
+        </div>
+        <div style="margin-top:10px;text-align:center">
+          <a href="https://www.openstreetmap.org/?mlat=28.8627&mlon=-13.8317#map=15/28.8627/-13.8317"
+             target="_blank" rel="noopener noreferrer"
+             style="font-size:13px;color:var(--text-mid);text-decoration:underline">
+            View larger map →
+          </a>
         </div>
         <div style="margin-top:20px;padding:20px;background:var(--warm-white);border-radius:var(--radius)">
           <div style="font-weight:600;margin-bottom:6px;font-size:15px">Getting Here</div>
@@ -2501,6 +2541,15 @@ function toggleFaq(btn) {
     btn.classList.add('open');
     answer.style.display = 'block';
   }
+}
+
+// ── Gallery scroll arrows ────────────────────────────────────────────────────
+function scrollGallery(dir) {
+  const grid = document.getElementById('gallery-grid');
+  if (!grid) return;
+  const item = grid.querySelector('.gallery-item');
+  const scrollAmount = item ? item.offsetWidth + 12 : 320;
+  grid.scrollBy({ left: dir * scrollAmount, behavior: 'smooth' });
 }
 
 // ── Gallery lightbox ─────────────────────────────────────────────────────────
