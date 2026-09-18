@@ -18,19 +18,19 @@
 ═══════════════════════════════════════════════════════════════ */
 
 :root {
-  --cream:      #FFFDF9;
-  --warm-white: #FFF9F2;
-  --sand:       #F0E8DA;
-  --sand-dark:  #E5DDD0;
-  --terracotta: #C4622D;
-  --terra-dark: #A8521F;
-  --terra-light:#F0916A;
-  --ocean:      #1B6CA8;
-  --ocean-light:#2C8AC8;
+  --cream:      #FAF8F6;
+  --warm-white: #FAF8F6;
+  --sand:       #E8E4E3;
+  --sand-dark:  #DAD5D3;
+  --terracotta: #D9A6B0;
+  --terra-dark: #C08898;
+  --terra-light:#B9A9C9;
+  --ocean:      #527F96;
+  --ocean-light:#A9C8D6;
   --green:      #4A7C59;
-  --text-dark:  #1C1C1C;
-  --text-mid:   #4A4A4A;
-  --text-light: #888;
+  --text-dark:  #4B3D50;
+  --text-mid:   #6B5A70;
+  --text-light: #9E8FA4;
   --white:      #FFFFFF;
   --shadow-sm:  0 2px 8px rgba(0,0,0,0.07);
   --shadow-md:  0 4px 20px rgba(0,0,0,0.09);
@@ -101,7 +101,7 @@ a { color: inherit; text-decoration: none; }
   background: var(--terracotta);
   color: var(--white);
 }
-.btn-primary:hover { background: var(--terra-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(196,98,45,0.35); }
+.btn-primary:hover { background: var(--terra-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(217,166,176,0.4); }
 .btn-secondary {
   background: transparent;
   color: var(--white);
@@ -130,7 +130,7 @@ a { color: inherit; text-decoration: none; }
   transition: all .35s ease;
 }
 #navbar.scrolled {
-  background: rgba(255,253,249,0.97);
+  background: rgba(250,248,246,0.97);
   backdrop-filter: blur(12px);
   box-shadow: var(--shadow-sm);
   padding: 14px 0;
@@ -258,7 +258,7 @@ a { color: inherit; text-decoration: none; }
 }
 .hero-title em {
   font-style: italic;
-  color: #FFD4B8;
+  color: #F2D0D7;
 }
 .hero-sub {
   font-size: clamp(16px, 2vw, 20px);
@@ -323,6 +323,67 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ── Feature strip ───────────────────────────────────────────── */
+/* ── Direct Booking Banner ───────────────────────────────────── */
+.direct-booking-banner {
+  background: linear-gradient(135deg, #4B3D50 0%, #527F96 100%);
+  padding: 20px 24px;
+}
+.direct-booking-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.direct-booking-text {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--white);
+}
+.direct-booking-icon { font-size: 24px; flex-shrink: 0; }
+.direct-booking-text strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.direct-booking-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+}
+.direct-booking-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.direct-booking-airbnb {
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+.direct-booking-airbnb:hover { color: var(--white); }
+.direct-booking-cta {
+  background: var(--white);
+  color: #4B3D50;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: all .2s;
+}
+.direct-booking-cta:hover { background: var(--sand); }
+@media (max-width: 640px) {
+  .direct-booking-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .direct-booking-actions { width: 100%; }
+  .direct-booking-cta { flex: 1; text-align: center; }
+}
+
 #features {
   background: var(--white);
   padding: 0;
@@ -372,7 +433,7 @@ a { color: inherit; text-decoration: none; }
   aspect-ratio: 4/3;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: linear-gradient(135deg, #C4622D 0%, #1B6CA8 100%);
+  background: linear-gradient(135deg, #D9A6B0 0%, #527F96 100%);
   position: relative;
 }
 .about-photo-placeholder {
@@ -799,7 +860,7 @@ a { color: inherit; text-decoration: none; }
 }
 .form-group input:focus, .form-group select:focus {
   border-color: var(--terracotta);
-  box-shadow: 0 0 0 3px rgba(196,98,45,0.12);
+  box-shadow: 0 0 0 3px rgba(217,166,176,0.18);
 }
 .form-group input.error { border-color: #E53935; }
 
@@ -1019,7 +1080,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Contact / CTA strip ─────────────────────────────────────── */
 #contact {
-  background: linear-gradient(135deg, var(--terracotta) 0%, #A8521F 100%);
+  background: linear-gradient(135deg, #4B3D50 0%, #527F96 100%);
   padding: 80px 0;
   text-align: center;
 }
@@ -1028,7 +1089,7 @@ a { color: inherit; text-decoration: none; }
 .contact-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 .btn-white {
   background: var(--white);
-  color: var(--terracotta);
+  color: #4B3D50;
 }
 .btn-white:hover { background: var(--warm-white); }
 
@@ -1040,7 +1101,7 @@ footer {
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 48px;
   padding-bottom: 40px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -1109,8 +1170,8 @@ footer {
   border-color: var(--terracotta) !important;
 }
 .flatpickr-day.inRange {
-  background: rgba(196,98,45,0.15) !important;
-  border-color: rgba(196,98,45,0.15) !important;
+  background: rgba(217,166,176,0.15) !important;
+  border-color: rgba(217,166,176,0.15) !important;
 }
 .flatpickr-calendar { font-family: 'Inter', sans-serif !important; }
 
@@ -1331,6 +1392,33 @@ footer {
   </div>
 </section>
 
+<!-- ════════════════════════════════════════════════════════════
+     DIRECT BOOKING BANNER
+════════════════════════════════════════════════════════════ -->
+<div class="direct-booking-banner">
+  <div class="direct-booking-inner">
+    <div class="direct-booking-text">
+      <span class="direct-booking-icon">🏷️</span>
+      <div>
+        <strong>Book direct &amp; save — no platform fees</strong>
+        <span class="direct-booking-sub">We're listed on Airbnb &amp; Booking.com — but book with us directly and keep the fees in your pocket.</span>
+      </div>
+    </div>
+    <div class="direct-booking-actions">
+      <a href="https://www.airbnb.com/rooms/1777533504078101076?guests=1&adults=1&s=67&unique_share_id=bec5eb84-e113-4857-a018-02db7e3629f6"
+         target="_blank" rel="noopener noreferrer"
+         class="direct-booking-airbnb">
+        Airbnb →
+      </a>
+      <a href="https://www.booking.com/hotel/es/villa-hola-yaiza.en-gb.html?label=gen173nr-10CAsoRkIQdmlsbGEtaG9sYS15YWl6YUgzWARoRogBAZgBM7gBB8gBDNgBA-gBAfgBAYgCAagCAbgC18e11QbAAgHSAiRjOTBkNTUxMi1lNzQwLTQ0OTQtYWU4OS02NTJhZDI5YmFlYTbYAgHgAgE&sid=1ef85e07a03294feff1172100749b9f9&dist=0&keep_landing=1&sb_price_type=total&type=total&"
+         target="_blank" rel="noopener noreferrer"
+         class="direct-booking-airbnb">
+        Booking.com →
+      </a>
+      <a href="#booking" class="direct-booking-cta">Book Direct &amp; Save</a>
+    </div>
+  </div>
+</div>
 
 <!-- ════════════════════════════════════════════════════════════
      FEATURE STRIP
@@ -1368,7 +1456,7 @@ footer {
   <div class="container">
     <div class="about-grid">
       <div class="about-photo">
-        <img src="/images/rooftop-terrace.jpg" alt="Villa Hola rooftop terrace with panoramic views">
+        <img src="/images/dining-room-2.jpg" alt="Villa Hola dining room with large table and doors opening to private pool">
       </div>
       <div class="about-text">
         <div class="section-label">Welcome to Villa Hola</div>
@@ -2164,6 +2252,26 @@ footer {
           <li><a href="mailto:bookings@villahola.es">📧 bookings@villahola.es</a></li>
           <li><a href="#booking">Book Online</a></li>
           <li><a href="/admin">Owner Login</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Find Us Online</h4>
+        <ul class="footer-links">
+          <li>
+            <a href="https://www.facebook.com/profile.php?id=61594140615895" target="_blank" rel="noopener noreferrer">
+              📘 Facebook
+            </a>
+          </li>
+          <li>
+            <a href="https://www.airbnb.com/rooms/1777533504078101076?guests=1&adults=1&s=67&unique_share_id=bec5eb84-e113-4857-a018-02db7e3629f6" target="_blank" rel="noopener noreferrer">
+              🏠 Airbnb
+            </a>
+          </li>
+          <li>
+            <a href="https://www.booking.com/hotel/es/villa-hola-yaiza.en-gb.html?label=gen173nr-10CAsoRkIQdmlsbGEtaG9sYS15YWl6YUgzWARoRogBAZgBM7gBB8gBDNgBA-gBAfgBAYgCAagCAbgC18e11QbAAgHSAiRjOTBkNTUxMi1lNzQwLTQ0OTQtYWU4OS02NTJhZDI5YmFlYTbYAgHgAgE&sid=1ef85e07a03294feff1172100749b9f9&dist=0&keep_landing=1&sb_price_type=total&type=total&" target="_blank" rel="noopener noreferrer">
+              🔵 Booking.com
+            </a>
+          </li>
         </ul>
       </div>
     </div>
