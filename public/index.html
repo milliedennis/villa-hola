@@ -18,19 +18,19 @@
 ═══════════════════════════════════════════════════════════════ */
 
 :root {
-  --cream:      #FAF8F6;
-  --warm-white: #FAF8F6;
-  --sand:       #E8E4E3;
-  --sand-dark:  #DAD5D3;
-  --terracotta: #D9A6B0;
-  --terra-dark: #C08898;
-  --terra-light:#B9A9C9;
-  --ocean:      #527F96;
-  --ocean-light:#A9C8D6;
+  --cream:      #FFFDF9;
+  --warm-white: #FFF9F2;
+  --sand:       #F0E8DA;
+  --sand-dark:  #E5DDD0;
+  --terracotta: #C4622D;
+  --terra-dark: #A8521F;
+  --terra-light:#F0916A;
+  --ocean:      #1B6CA8;
+  --ocean-light:#2C8AC8;
   --green:      #4A7C59;
-  --text-dark:  #4B3D50;
-  --text-mid:   #6B5A70;
-  --text-light: #9E8FA4;
+  --text-dark:  #1C1C1C;
+  --text-mid:   #4A4A4A;
+  --text-light: #888;
   --white:      #FFFFFF;
   --shadow-sm:  0 2px 8px rgba(0,0,0,0.07);
   --shadow-md:  0 4px 20px rgba(0,0,0,0.09);
@@ -101,7 +101,7 @@ a { color: inherit; text-decoration: none; }
   background: var(--terracotta);
   color: var(--white);
 }
-.btn-primary:hover { background: var(--terra-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(217,166,176,0.4); }
+.btn-primary:hover { background: var(--terra-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(196,98,45,0.35); }
 .btn-secondary {
   background: transparent;
   color: var(--white);
@@ -130,7 +130,7 @@ a { color: inherit; text-decoration: none; }
   transition: all .35s ease;
 }
 #navbar.scrolled {
-  background: rgba(250,248,246,0.97);
+  background: rgba(255,253,249,0.97);
   backdrop-filter: blur(12px);
   box-shadow: var(--shadow-sm);
   padding: 14px 0;
@@ -258,7 +258,7 @@ a { color: inherit; text-decoration: none; }
 }
 .hero-title em {
   font-style: italic;
-  color: #F2D0D7;
+  color: #FFD4B8;
 }
 .hero-sub {
   font-size: clamp(16px, 2vw, 20px);
@@ -323,67 +323,6 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ── Feature strip ───────────────────────────────────────────── */
-/* ── Direct Booking Banner ───────────────────────────────────── */
-.direct-booking-banner {
-  background: linear-gradient(135deg, #4B3D50 0%, #527F96 100%);
-  padding: 20px 24px;
-}
-.direct-booking-inner {
-  max-width: 1180px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.direct-booking-text {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  color: var(--white);
-}
-.direct-booking-icon { font-size: 24px; flex-shrink: 0; }
-.direct-booking-text strong {
-  display: block;
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 2px;
-}
-.direct-booking-sub {
-  font-size: 13px;
-  color: rgba(255,255,255,0.8);
-}
-.direct-booking-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-}
-.direct-booking-airbnb {
-  font-size: 13px;
-  color: rgba(255,255,255,0.75);
-  text-decoration: underline;
-  white-space: nowrap;
-}
-.direct-booking-airbnb:hover { color: var(--white); }
-.direct-booking-cta {
-  background: var(--white);
-  color: #4B3D50;
-  padding: 10px 22px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 700;
-  white-space: nowrap;
-  transition: all .2s;
-}
-.direct-booking-cta:hover { background: var(--sand); }
-@media (max-width: 640px) {
-  .direct-booking-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
-  .direct-booking-actions { width: 100%; }
-  .direct-booking-cta { flex: 1; text-align: center; }
-}
-
 #features {
   background: var(--white);
   padding: 0;
@@ -433,7 +372,7 @@ a { color: inherit; text-decoration: none; }
   aspect-ratio: 4/3;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: linear-gradient(135deg, #D9A6B0 0%, #527F96 100%);
+  background: linear-gradient(135deg, #C4622D 0%, #1B6CA8 100%);
   position: relative;
 }
 .about-photo-placeholder {
@@ -860,7 +799,7 @@ a { color: inherit; text-decoration: none; }
 }
 .form-group input:focus, .form-group select:focus {
   border-color: var(--terracotta);
-  box-shadow: 0 0 0 3px rgba(217,166,176,0.18);
+  box-shadow: 0 0 0 3px rgba(196,98,45,0.12);
 }
 .form-group input.error { border-color: #E53935; }
 
@@ -1080,7 +1019,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Contact / CTA strip ─────────────────────────────────────── */
 #contact {
-  background: linear-gradient(135deg, #4B3D50 0%, #527F96 100%);
+  background: linear-gradient(135deg, var(--terracotta) 0%, #A8521F 100%);
   padding: 80px 0;
   text-align: center;
 }
@@ -1089,7 +1028,7 @@ a { color: inherit; text-decoration: none; }
 .contact-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 .btn-white {
   background: var(--white);
-  color: #4B3D50;
+  color: var(--terracotta);
 }
 .btn-white:hover { background: var(--warm-white); }
 
@@ -1101,7 +1040,7 @@ footer {
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: 48px;
   padding-bottom: 40px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -1170,8 +1109,8 @@ footer {
   border-color: var(--terracotta) !important;
 }
 .flatpickr-day.inRange {
-  background: rgba(217,166,176,0.15) !important;
-  border-color: rgba(217,166,176,0.15) !important;
+  background: rgba(196,98,45,0.15) !important;
+  border-color: rgba(196,98,45,0.15) !important;
 }
 .flatpickr-calendar { font-family: 'Inter', sans-serif !important; }
 
@@ -1392,33 +1331,6 @@ footer {
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════════
-     DIRECT BOOKING BANNER
-════════════════════════════════════════════════════════════ -->
-<div class="direct-booking-banner">
-  <div class="direct-booking-inner">
-    <div class="direct-booking-text">
-      <span class="direct-booking-icon">🏷️</span>
-      <div>
-        <strong>Book direct &amp; save — no platform fees</strong>
-        <span class="direct-booking-sub">We're listed on Airbnb &amp; Booking.com — but book with us directly and keep the fees in your pocket.</span>
-      </div>
-    </div>
-    <div class="direct-booking-actions">
-      <a href="https://www.airbnb.com/rooms/1777533504078101076?guests=1&adults=1&s=67&unique_share_id=bec5eb84-e113-4857-a018-02db7e3629f6"
-         target="_blank" rel="noopener noreferrer"
-         class="direct-booking-airbnb">
-        Airbnb →
-      </a>
-      <a href="https://www.booking.com/hotel/es/villa-hola-yaiza.en-gb.html?label=gen173nr-10CAsoRkIQdmlsbGEtaG9sYS15YWl6YUgzWARoRogBAZgBM7gBB8gBDNgBA-gBAfgBAYgCAagCAbgC18e11QbAAgHSAiRjOTBkNTUxMi1lNzQwLTQ0OTQtYWU4OS02NTJhZDI5YmFlYTbYAgHgAgE&sid=1ef85e07a03294feff1172100749b9f9&dist=0&keep_landing=1&sb_price_type=total&type=total&"
-         target="_blank" rel="noopener noreferrer"
-         class="direct-booking-airbnb">
-        Booking.com →
-      </a>
-      <a href="#booking" class="direct-booking-cta">Book Direct &amp; Save</a>
-    </div>
-  </div>
-</div>
 
 <!-- ════════════════════════════════════════════════════════════
      FEATURE STRIP
@@ -1433,7 +1345,7 @@ footer {
     <div class="feature-item">
       <span class="feature-icon">📍</span>
       <div class="feature-title">Prime Location</div>
-      <div class="feature-desc">In the beautiful Las Buganvillas complex, moments from Playa Blanca.</div>
+      <div class="feature-desc">In the beautiful Las Buganvillas complex, moments from the main town area.</div>
     </div>
     <div class="feature-item">
       <span class="feature-icon">🌡️</span>
@@ -1456,13 +1368,13 @@ footer {
   <div class="container">
     <div class="about-grid">
       <div class="about-photo">
-        <img src="/images/dining-room-2.jpg" alt="Villa Hola dining room with large table and doors opening to private pool">
+        <img src="/images/pool-terrace.jpg" alt="Villa Hola rooftop terrace with panoramic views" style="width:100%;height:500px;object-fit:cover;">
       </div>
       <div class="about-text">
         <div class="section-label">Welcome to Villa Hola</div>
-        <h2 class="section-title">A Slice of Paradise in Playa Blanca</h2>
+        <h2 class="section-title">Family Friendly Paradise in Playa Blanca</h2>
         <p style="color:var(--text-mid);font-size:16px;margin-bottom:20px;line-height:1.75">
-          Nestled in the prestigious Las Buganvillas complex, Villa Hola offers everything
+          Nestled in the sought-after Las Buganvillas complex, Villa Hola offers everything
           you need for the perfect Lanzarote holiday. Wake up to golden sunshine, spend your
           days lounging by your private pool, and explore one of the Canary Islands' most
           beautiful destinations — all at your own pace.
@@ -1470,7 +1382,7 @@ footer {
         <p style="color:var(--text-mid);font-size:16px;margin-bottom:28px;line-height:1.75">
           Whether you're a family wanting space and comfort, a group of friends ready to
           explore the island, or a couple seeking a luxurious retreat — Villa Hola, with
-          its four bedrooms, private pool and rooftop terrace, is your home away from home.
+          its 4 bedrooms, private pool and rooftop terrace, is here for you Lanzarote getaway.
         </p>
         <div class="about-features">
           <div class="about-feature"><span class="about-feature-icon">✓</span> 4 bedrooms, sleeps up to 8</div>
@@ -1612,9 +1524,9 @@ footer {
         <ul class="facility-list">
           <li>4 bedrooms sleeping up to 8 guests</li>
           <li>Master bedroom with king-size bed & en suite</li>
-          <li>Second bedroom with double bed</li>
-          <li>Third bedroom with double bed</li>
-          <li>Fourth bedroom with twin beds</li>
+          <li>Second bedroom with double bed & en suite</li>
+          <li>Third bedroom with 2 single beds</li>
+          <li>Fourth bedroom with 2 single beds</li>
           <li>Quality linens and bedding provided</li>
         </ul>
       </div>
@@ -1623,9 +1535,9 @@ footer {
         <div class="facility-card-title">Bathrooms</div>
         <ul class="facility-list">
           <li>3 bathrooms</li>
-          <li>En-suite shower room to master bedroom</li>
-          <li>Main bathroom with bath & walk-in shower</li>
-          <li>Third shower room</li>
+          <li>En-suite with walk-in shower to master bedroom</li>
+          <li>Second en suite with walk in shower</li>
+          <li>Third bathroom with bath and shower</li>
           <li>Towels provided</li>
         </ul>
       </div>
@@ -1638,7 +1550,7 @@ footer {
           <li>Fridge, freezer and dishwasher</li>
           <li>Washing machine</li>
           <li>Full crockery, cutlery and glassware</li>
-          <li>Large dining table seating up to 10</li>
+          <li>Large dining table seating up to 8</li>
           <li>Coffee maker and kettle</li>
         </ul>
       </div>
@@ -1650,7 +1562,7 @@ footer {
           <li>Smart TV with streaming apps</li>
           <li>Air conditioning (hot & cold)</li>
           <li>High-speed Wi-Fi throughout</li>
-          <li>Indoor dining area</li>
+          <li>Indoor dining area with french doors to open to pool area</li>
         </ul>
       </div>
       <div class="facility-card">
@@ -1661,20 +1573,19 @@ footer {
           <li>Sun terrace with loungers</li>
           <li>Outdoor dining area</li>
           <li>BBQ facilities</li>
-          <li>Beautiful garden / communal grounds</li>
-          <li>Private parking space</li>
+          <li>Beautiful garden</li>
+          <li>Private parking space
+          <li>Community has tennis and padel courts to use with rackets provided</li>
         </ul>
       </div>
       <div class="facility-card">
         <span class="facility-card-icon">✅</span>
         <div class="facility-card-title">Extras</div>
         <ul class="facility-list">
-          <li>Games room with pool/table tennis table</li>
+          <li>Games room with pool table, table tennis and air hockey</li>
           <li>Rooftop terrace with panoramic views</li>
-          <li>Iron and ironing board</li>
-          <li>Safe for valuables</li>
-          <li>Baby cot available on request</li>
-          <li>24/7 WhatsApp support during your stay</li>
+          <li>Baby cot and high chair available on request</li>
+          <li>Responsive WhatsApp support during your stay</li>
         </ul>
       </div>
     </div>
@@ -2064,9 +1975,6 @@ footer {
         <div class="review-date">Bristol, UK</div>
       </div>
     </div>
-    <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--text-light)">
-      * Reviews are representative examples — real guest reviews will be displayed here.
-    </p>
   </div>
 </section>
 
@@ -2139,7 +2047,7 @@ footer {
           <span class="faq-arrow">⌄</span>
         </button>
         <div class="faq-answer">
-          Cancellations made more than 60 days before check-in will receive a full deposit refund. Cancellations within 60 days of check-in are non-refundable. Full terms and conditions are provided on booking.
+          Cancellations made more than 90 days before check-in will receive a full deposit refund. Cancellations within 90 days of check-in are non-refundable.
         </div>
       </div>
       <div class="faq-item">
@@ -2148,7 +2056,7 @@ footer {
           <span class="faq-arrow">⌄</span>
         </button>
         <div class="faq-answer">
-          Yes, high-speed Wi-Fi is included with every booking at no extra charge.
+          Yes, high-speed fibre Wi-Fi is included with every booking at no extra charge.
         </div>
       </div>
       <div class="faq-item">
@@ -2252,26 +2160,6 @@ footer {
           <li><a href="mailto:bookings@villahola.es">📧 bookings@villahola.es</a></li>
           <li><a href="#booking">Book Online</a></li>
           <li><a href="/admin">Owner Login</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Find Us Online</h4>
-        <ul class="footer-links">
-          <li>
-            <a href="https://www.facebook.com/profile.php?id=61594140615895" target="_blank" rel="noopener noreferrer">
-              📘 Facebook
-            </a>
-          </li>
-          <li>
-            <a href="https://www.airbnb.com/rooms/1777533504078101076?guests=1&adults=1&s=67&unique_share_id=bec5eb84-e113-4857-a018-02db7e3629f6" target="_blank" rel="noopener noreferrer">
-              🏠 Airbnb
-            </a>
-          </li>
-          <li>
-            <a href="https://www.booking.com/hotel/es/villa-hola-yaiza.en-gb.html?label=gen173nr-10CAsoRkIQdmlsbGEtaG9sYS15YWl6YUgzWARoRogBAZgBM7gBB8gBDNgBA-gBAfgBAYgCAagCAbgC18e11QbAAgHSAiRjOTBkNTUxMi1lNzQwLTQ0OTQtYWU4OS02NTJhZDI5YmFlYTbYAgHgAgE&sid=1ef85e07a03294feff1172100749b9f9&dist=0&keep_landing=1&sb_price_type=total&type=total&" target="_blank" rel="noopener noreferrer">
-              🔵 Booking.com
-            </a>
-          </li>
         </ul>
       </div>
     </div>
