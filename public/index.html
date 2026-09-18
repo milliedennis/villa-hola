@@ -472,6 +472,73 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
 }
 
+/* ── About Host ───────────────────────────────────────────────── */
+#about-host { background: var(--text-dark); padding: 96px 0; }
+.about-host-inner {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 56px;
+  align-items: center;
+  max-width: 820px;
+  margin: 0 auto;
+}
+.host-photo-wrap {
+  display: flex;
+  justify-content: center;
+}
+.host-photo-ring {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, var(--terra) 0%, var(--terra-light) 100%);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  flex-shrink: 0;
+}
+.host-photo-ring img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+.host-text .section-label { color: var(--terra-light); margin-bottom: 12px; }
+.host-text h2 { color: var(--white); font-size: 32px; margin-bottom: 6px; }
+.host-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(197,112,79,0.15);
+  color: var(--terra-light);
+  border: 1px solid rgba(197,112,79,0.3);
+  border-radius: 50px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.host-text p { color: rgba(255,255,255,0.72); font-size: 15px; line-height: 1.75; margin-bottom: 12px; }
+.host-text p:last-of-type { margin-bottom: 24px; }
+.host-emergency {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-top: 20px;
+}
+.host-emergency-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: 2px; }
+.host-emergency-number { font-size: 16px; font-weight: 600; color: var(--white); }
+.host-emergency-number a { color: var(--white); text-decoration: none; }
+@media (max-width: 640px) {
+  .about-host-inner { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+  .host-location { margin: 0 auto 20px; }
+  .host-emergency { justify-content: center; }
+}
+
 /* ── Facilities ───────────────────────────────────────────────── */
 .facilities-grid {
   display: grid;
@@ -1316,28 +1383,84 @@ footer {
 
     <div class="gallery-grid">
       <div class="gallery-item" onclick="openLightbox(this)">
-        <img src="/images/dining-room-1.jpg" alt="Spacious dining room opening to private pool">
+        <img src="/images/dining-room-1.jpg" alt="Dining room with large table opening to private pool">
         <div class="gallery-overlay"><span class="gallery-label">Dining Room & Pool Views</span></div>
       </div>
       <div class="gallery-item" onclick="openLightbox(this)">
-        <img src="/images/living-room-2.jpg" alt="Spacious living room with vaulted ceiling">
-        <div class="gallery-overlay"><span class="gallery-label">Living Room</span></div>
+        <img src="/images/living-room-1.jpg" alt="Vaulted living room with golden evening light">
+        <div class="gallery-overlay"><span class="gallery-label">Vaulted Living Room</span></div>
       </div>
       <div class="gallery-item" onclick="openLightbox(this)">
-        <img src="/images/bedroom-master.jpg" alt="Master bedroom with king-size bed">
-        <div class="gallery-overlay"><span class="gallery-label">Master Bedroom</span></div>
+        <img src="/images/living-room-2.jpg" alt="Open-plan living space with corner sofa and gold coffee table">
+        <div class="gallery-overlay"><span class="gallery-label">Open Living Space</span></div>
       </div>
       <div class="gallery-item" onclick="openLightbox(this)">
         <img src="/images/pool-terrace.jpg" alt="Private pool and sun terrace">
-        <div class="gallery-overlay"><span class="gallery-label">Private Pool</span></div>
+        <div class="gallery-overlay"><span class="gallery-label">Private Pool & Terrace</span></div>
       </div>
       <div class="gallery-item" onclick="openLightbox(this)">
-        <img src="/images/rooftop-terrace.jpg" alt="Rooftop terrace with panoramic views">
-        <div class="gallery-overlay"><span class="gallery-label">Rooftop Terrace</span></div>
+        <img src="/images/rooftop-terrace.jpg" alt="Rooftop sun terrace with loungers and panoramic views">
+        <div class="gallery-overlay"><span class="gallery-label">Rooftop Sun Terrace</span></div>
       </div>
       <div class="gallery-item" onclick="openLightbox(this)">
-        <img src="/images/bathroom-main.jpg" alt="Luxury bathroom with bath and skylight">
-        <div class="gallery-overlay"><span class="gallery-label">Bathroom</span></div>
+        <img src="/images/neighbourhood-view.jpg" alt="Lanzarote views from the villa">
+        <div class="gallery-overlay"><span class="gallery-label">Views of Lanzarote</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/bedroom-master.jpg" alt="Spacious master bedroom with king-size bed">
+        <div class="gallery-overlay"><span class="gallery-label">Master Bedroom</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/bedroom-double-2.jpg" alt="Double bedroom with natural light">
+        <div class="gallery-overlay"><span class="gallery-label">Double Bedroom</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/bedroom-double-4.jpg" alt="Double bedroom with arch mirror and rattan pendant">
+        <div class="gallery-overlay"><span class="gallery-label">Double Bedroom</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/bedroom-twin-1.jpg" alt="Twin bedroom with two single beds">
+        <div class="gallery-overlay"><span class="gallery-label">Twin Bedroom</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/bedroom-twin-2.jpg" alt="Second twin bedroom with sunlit window">
+        <div class="gallery-overlay"><span class="gallery-label">Twin Bedroom</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/bathroom-main.jpg" alt="En-suite bathroom with bath and skylight">
+        <div class="gallery-overlay"><span class="gallery-label">En-suite with Bath</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/ensuite-shower.jpg" alt="Modern en-suite shower room with walk-in shower">
+        <div class="gallery-overlay"><span class="gallery-label">En-suite Shower Room</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/wardrobe-mirror.jpg" alt="Floor-to-ceiling mirrored wardrobe in master suite">
+        <div class="gallery-overlay"><span class="gallery-label">Built-in Wardrobes</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/kitchen-1.jpg" alt="Fully equipped kitchen with oven, hob and appliances">
+        <div class="gallery-overlay"><span class="gallery-label">Fully Equipped Kitchen</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/games-room.jpg" alt="Games room with pool and table tennis table">
+        <div class="gallery-overlay"><span class="gallery-label">Games Room</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/entrance-hallway.jpg" alt="Welcoming entrance hallway with round mirror and tree">
+        <div class="gallery-overlay"><span class="gallery-label">Entrance Hallway</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/courtyard-patio.jpg" alt="Private courtyard patio with bistro table">
+        <div class="gallery-overlay"><span class="gallery-label">Private Courtyard</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/dining-room-2.jpg" alt="Indoor-outdoor dining with pool doors open">
+        <div class="gallery-overlay"><span class="gallery-label">Indoor-Outdoor Dining</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/villa-sign.jpg" alt="Villa Hola entrance sign, No. 56">
+        <div class="gallery-overlay"><span class="gallery-label">Villa Hola, No. 56</span></div>
       </div>
     </div>
   </div>
@@ -1927,6 +2050,37 @@ footer {
 <!-- ════════════════════════════════════════════════════════════
      CONTACT CTA
 ════════════════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════════
+     ABOUT YOUR HOST
+════════════════════════════════════════════════════════════ -->
+<section id="about-host">
+  <div class="container">
+    <div class="about-host-inner">
+      <div class="host-photo-wrap">
+        <div class="host-photo-ring">
+          <img src="/images/millie-headshot.jpg" alt="Millie Dennis — your Villa Hola host">
+        </div>
+      </div>
+      <div class="host-text">
+        <div class="section-label">Your Host</div>
+        <h2>Millie Dennis</h2>
+        <div class="host-location">📍 Playa Blanca local</div>
+        <p>I grew up in Playa Blanca and have lived in Lanzarote my whole life. I know this part of the island pretty well — the good beaches, the restaurants that are actually worth it, where to hire a car, all that sort of thing.</p>
+        <p>My job is to make your stay as good as it can be. Any questions about the villa, the area, or just Playa Blanca in general — just message me and I'll do my best.</p>
+        <a id="wa-host" href="#" class="btn btn-whatsapp" style="display:inline-flex">💬 Message Millie</a>
+        <div class="host-emergency">
+          <span style="font-size:20px">📞</span>
+          <div>
+            <div class="host-emergency-label">Emergency Contact</div>
+            <div class="host-emergency-number"><a href="tel:+34633715010">+34 633 715 010</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <section id="contact">
   <div class="container">
     <h2 class="section-title">Ready to Book Your<br>Lanzarote Holiday?</h2>
