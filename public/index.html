@@ -1,0 +1,2340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Villa Hola — Your private holiday villa in Las Buganvillas, Playa Blanca, Lanzarote. Book direct and save. Private pool, 4 bedrooms, sleeps up to 8.">
+<title>Villa Hola — Private Holiday Villa in Playa Blanca, Lanzarote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   VILLA HOLA — Main Stylesheet
+   Design: Premium, sunny, Lanzarote-inspired
+═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --cream:      #FFFDF9;
+  --warm-white: #FFF9F2;
+  --sand:       #F0E8DA;
+  --sand-dark:  #E5DDD0;
+  --terracotta: #C4622D;
+  --terra-dark: #A8521F;
+  --terra-light:#F0916A;
+  --ocean:      #1B6CA8;
+  --ocean-light:#2C8AC8;
+  --green:      #4A7C59;
+  --text-dark:  #1C1C1C;
+  --text-mid:   #4A4A4A;
+  --text-light: #888;
+  --white:      #FFFFFF;
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.07);
+  --shadow-md:  0 4px 20px rgba(0,0,0,0.09);
+  --shadow-lg:  0 8px 40px rgba(0,0,0,0.12);
+  --radius:     12px;
+  --radius-lg:  20px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+h1,h2,h3,h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+img { display:block; max-width:100%; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ── Utilities ───────────────────────────────────────────────── */
+.container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+.text-center { text-align: center; }
+.section-label {
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--terracotta);
+  margin-bottom: 12px;
+}
+.section-title {
+  font-size: clamp(28px, 4vw, 42px);
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+.section-intro {
+  font-size: 17px;
+  color: var(--text-mid);
+  max-width: 580px;
+}
+.section-intro.center { margin: 0 auto; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all .2s ease;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--terracotta);
+  color: var(--white);
+}
+.btn-primary:hover { background: var(--terra-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(196,98,45,0.35); }
+.btn-secondary {
+  background: transparent;
+  color: var(--white);
+  border: 2px solid rgba(255,255,255,0.7);
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.15); border-color: var(--white); }
+.btn-outline {
+  background: transparent;
+  color: var(--terracotta);
+  border: 2px solid var(--terracotta);
+}
+.btn-outline:hover { background: var(--terracotta); color: var(--white); }
+.btn-whatsapp {
+  background: #25D366;
+  color: var(--white);
+}
+.btn-whatsapp:hover { background: #1DB954; transform: translateY(-1px); }
+.btn-lg { padding: 18px 36px; font-size: 16px; border-radius: 10px; }
+
+/* ── Navigation ──────────────────────────────────────────────── */
+#navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 20px 0;
+  transition: all .35s ease;
+}
+#navbar.scrolled {
+  background: rgba(255,253,249,0.97);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
+  padding: 14px 0;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  transition: color .3s;
+}
+.nav-logo .logo-icon { font-size: 24px; }
+#navbar.scrolled .nav-logo { color: var(--text-dark); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+  transition: color .3s;
+}
+#navbar.scrolled .nav-links a { color: var(--text-mid); }
+.nav-links a:hover { color: var(--terracotta) !important; }
+.nav-cta {
+  display: flex;
+  gap: 10px;
+}
+.nav-book-btn {
+  background: var(--terracotta);
+  color: var(--white) !important;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all .2s;
+}
+.nav-book-btn:hover { background: var(--terra-dark) !important; color: var(--white) !important; }
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--white);
+  font-size: 24px;
+}
+#navbar.scrolled .mobile-menu-btn { color: var(--text-dark); }
+
+/* ── Hero ─────────────────────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: url('/images/living-room-1.jpg') center/cover no-repeat;
+  overflow: hidden;
+}
+
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.6) 100%);
+  opacity: 1;
+}
+
+.hero-photo-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.hero-photo-placeholder-text {
+  color: rgba(255,255,255,0.15);
+  font-size: 18px;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: .05em;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 120px 0 80px;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: var(--white);
+  padding: 7px 16px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+.hero-title {
+  font-size: clamp(42px, 7vw, 80px);
+  color: var(--white);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+}
+.hero-title em {
+  font-style: italic;
+  color: #FFD4B8;
+}
+.hero-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: rgba(255,255,255,0.88);
+  max-width: 520px;
+  margin-bottom: 36px;
+  font-weight: 300;
+  line-height: 1.7;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 60px;
+}
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.hero-stat {
+  color: var(--white);
+}
+.hero-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  display: block;
+}
+.hero-stat-label {
+  font-size: 12px;
+  opacity: .75;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.6);
+  font-size: 12px;
+  text-align: center;
+  z-index: 2;
+  cursor: pointer;
+}
+.scroll-arrow {
+  display: block;
+  margin: 8px auto 0;
+  width: 24px;
+  height: 24px;
+  border-right: 2px solid rgba(255,255,255,0.5);
+  border-bottom: 2px solid rgba(255,255,255,0.5);
+  transform: rotate(45deg);
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%,100% { transform: rotate(45deg) translate(0,0); opacity:.6; }
+  50%      { transform: rotate(45deg) translate(3px,3px); opacity:1; }
+}
+
+/* ── Feature strip ───────────────────────────────────────────── */
+#features {
+  background: var(--white);
+  padding: 0;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--sand);
+}
+.feature-item {
+  padding: 36px 28px;
+  border-right: 1px solid var(--sand);
+  transition: background .2s;
+}
+.feature-item:last-child { border-right: none; }
+.feature-item:hover { background: var(--warm-white); }
+.feature-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  display: block;
+}
+.feature-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-dark);
+}
+.feature-desc {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.55;
+}
+
+/* ── Section padding ──────────────────────────────────────────── */
+.section { padding: 96px 0; }
+.section-alt { background: var(--warm-white); }
+
+/* ── About / Intro ───────────────────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.about-photo {
+  aspect-ratio: 4/3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: linear-gradient(135deg, #C4622D 0%, #1B6CA8 100%);
+  position: relative;
+}
+.about-photo-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  color: rgba(255,255,255,0.4);
+}
+.about-text .section-label { margin-bottom: 14px; }
+.about-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 28px 0 36px;
+}
+.about-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-mid);
+}
+.about-feature-icon {
+  color: var(--terracotta);
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── Gallery ──────────────────────────────────────────────────── */
+#gallery { background: var(--text-dark); padding: 96px 0; }
+#gallery .section-label { color: var(--terra-light); }
+#gallery .section-title { color: var(--white); }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 280px);
+  gap: 12px;
+  margin-top: 48px;
+}
+.gallery-item {
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  background: #2A2A2A;
+  transition: transform .3s;
+}
+.gallery-item:hover { transform: scale(1.02); z-index: 2; }
+.gallery-item:first-child { grid-column: 1/3; grid-row: 1; }
+.gallery-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .5s;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+.gallery-placeholder {
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: rgba(255,255,255,0.25);
+}
+.gallery-placeholder-icon { font-size: 36px; }
+.gallery-placeholder-text { font-size: 13px; text-align: center; padding: 0 20px; }
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity .3s;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+}
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+.gallery-label {
+  font-size: 13px;
+  color: var(--white);
+  font-weight: 500;
+}
+
+/* ── Facilities ───────────────────────────────────────────────── */
+.facilities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 56px;
+}
+.facility-card {
+  background: var(--white);
+  border: 1px solid var(--sand-dark);
+  border-radius: var(--radius);
+  padding: 28px;
+  transition: box-shadow .2s, transform .2s;
+}
+.facility-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+.facility-card-icon { font-size: 36px; margin-bottom: 14px; display: block; }
+.facility-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-dark);
+}
+.facility-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.facility-list li {
+  font-size: 14px;
+  color: var(--text-mid);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.facility-list li::before {
+  content: '✓';
+  color: var(--green);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── Pool & outdoor ───────────────────────────────────────────── */
+.pool-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  min-height: 500px;
+}
+.pool-photo {
+  background: linear-gradient(135deg, #1B6CA8 0%, #0D4A78 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  color: rgba(255,255,255,0.3);
+}
+.pool-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+.pool-content {
+  background: var(--ocean);
+  padding: 72px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.pool-content .section-label { color: rgba(255,255,255,0.6); }
+.pool-content .section-title { color: var(--white); margin-bottom: 20px; }
+.pool-content p { color: rgba(255,255,255,0.82); font-size: 16px; margin-bottom: 28px; }
+.pool-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+.pool-spec {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.85);
+  font-size: 14px;
+}
+.pool-spec-icon { font-size: 20px; }
+
+/* ── Location ─────────────────────────────────────────────────── */
+.location-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+.location-map {
+  aspect-ratio: 4/3;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--sand);
+  position: relative;
+}
+.location-map iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.map-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-light);
+  background: var(--sand);
+}
+.map-placeholder-icon { font-size: 48px; }
+.nearby-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 28px;
+}
+.nearby-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--sand-dark);
+}
+.nearby-item:last-child { border-bottom: none; }
+.nearby-icon { font-size: 22px; width: 36px; text-align: center; flex-shrink: 0; }
+.nearby-name { font-weight: 500; font-size: 15px; color: var(--text-dark); }
+.nearby-dist { font-size: 13px; color: var(--text-light); margin-left: auto; }
+
+/* ── Booking ──────────────────────────────────────────────────── */
+#booking {
+  background: var(--text-dark);
+  padding: 96px 0;
+}
+#booking .section-label { color: var(--terra-light); }
+#booking .section-title { color: var(--white); }
+#booking .section-intro { color: rgba(255,255,255,0.7); }
+
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  margin-top: 56px;
+  align-items: start;
+}
+
+/* Form */
+.booking-form-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.booking-form-header {
+  background: var(--terracotta);
+  padding: 24px 32px;
+}
+.booking-form-header h3 {
+  font-size: 20px;
+  color: var(--white);
+  font-weight: 600;
+}
+.booking-form-header p { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 4px; }
+.booking-form-body { padding: 32px; }
+
+/* Step indicators */
+.booking-steps {
+  display: flex;
+  gap: 0;
+  margin-bottom: 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--sand-dark);
+}
+.booking-step {
+  flex: 1;
+  padding: 10px 4px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-light);
+  background: var(--warm-white);
+  border-right: 1px solid var(--sand-dark);
+  transition: all .3s;
+}
+.booking-step:last-child { border-right: none; }
+.booking-step.active { background: var(--terracotta); color: var(--white); }
+.booking-step.done { background: var(--green); color: var(--white); }
+.step-num { display: block; font-size: 16px; font-weight: 700; }
+
+/* Step panels */
+.step-panel { display: none; }
+.step-panel.active { display: block; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { margin-bottom: 18px; }
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-mid);
+  margin-bottom: 7px;
+}
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dark);
+  background: var(--white);
+  outline: none;
+  transition: border .2s, box-shadow .2s;
+  appearance: none;
+}
+.form-group input:focus, .form-group select:focus {
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 3px rgba(196,98,45,0.12);
+}
+.form-group input.error { border-color: #E53935; }
+
+.guests-row {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.guests-btn {
+  width: 44px; height: 44px;
+  background: var(--warm-white);
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--terracotta);
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: background .2s;
+}
+.guests-btn:hover { background: var(--sand); }
+.guests-val {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 0 8px;
+}
+
+.availability-result {
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  display: none;
+}
+.availability-result.available { background: #E8F5E9; color: #2E7D32; }
+.availability-result.unavailable { background: #FFEBEE; color: #C62828; }
+.availability-result.checking { background: var(--warm-white); color: var(--text-mid); }
+
+.price-breakdown {
+  background: var(--warm-white);
+  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 20px;
+  display: none;
+}
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 5px 0;
+  color: var(--text-mid);
+}
+.price-row.total {
+  border-top: 1px solid var(--sand-dark);
+  margin-top: 8px;
+  padding-top: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+.price-row.deposit { color: var(--terracotta); font-weight: 600; }
+.price-row.balance { color: var(--ocean); }
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+  margin-top: 8px;
+}
+.form-actions .btn { width: 100%; justify-content: center; }
+
+/* Stripe element container */
+#card-element {
+  padding: 13px 14px;
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 8px;
+  background: var(--white);
+  transition: border .2s;
+}
+#card-element.StripeElement--focus { border-color: var(--terracotta); }
+#card-errors {
+  color: #C62828;
+  font-size: 13px;
+  margin-top: 6px;
+  min-height: 20px;
+}
+
+.stripe-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 12px;
+}
+
+/* Booking sidebar */
+.booking-sidebar {}
+.sidebar-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 20px;
+}
+.sidebar-card h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.sidebar-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+}
+.sidebar-feature:last-child { border-bottom: none; }
+.sidebar-feature-icon { font-size: 20px; }
+.whatsapp-sidebar {
+  background: rgba(37,211,102,0.12);
+  border-color: rgba(37,211,102,0.25);
+}
+.whatsapp-sidebar h4 { color: #6FEE9B; }
+.whatsapp-sidebar p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+/* ── FAQ ──────────────────────────────────────────────────────── */
+.faq-grid {
+  max-width: 780px;
+  margin: 56px auto 0;
+}
+.faq-item {
+  border: 1px solid var(--sand-dark);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+  background: var(--white);
+}
+.faq-question {
+  width: 100%;
+  text-align: left;
+  padding: 20px 24px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dark);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  transition: background .2s;
+}
+.faq-question:hover { background: var(--warm-white); }
+.faq-question.open { color: var(--terracotta); }
+.faq-arrow {
+  font-size: 20px;
+  transition: transform .3s;
+  flex-shrink: 0;
+  color: var(--terracotta);
+}
+.faq-question.open .faq-arrow { transform: rotate(180deg); }
+.faq-answer {
+  display: none;
+  padding: 0 24px 20px;
+  font-size: 15px;
+  color: var(--text-mid);
+  line-height: 1.7;
+}
+
+/* ── Reviews ──────────────────────────────────────────────────── */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+.review-card {
+  background: var(--white);
+  border: 1px solid var(--sand-dark);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+.review-stars {
+  color: #F59E0B;
+  font-size: 18px;
+  margin-bottom: 14px;
+  letter-spacing: 2px;
+}
+.review-text {
+  font-size: 15px;
+  color: var(--text-mid);
+  line-height: 1.65;
+  font-style: italic;
+  margin-bottom: 18px;
+}
+.review-author {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-dark);
+}
+.review-date { font-size: 12px; color: var(--text-light); }
+
+/* ── Contact / CTA strip ─────────────────────────────────────── */
+#contact {
+  background: linear-gradient(135deg, var(--terracotta) 0%, #A8521F 100%);
+  padding: 80px 0;
+  text-align: center;
+}
+#contact .section-title { color: var(--white); font-size: clamp(28px, 4vw, 46px); }
+#contact p { color: rgba(255,255,255,0.85); font-size: 18px; margin: 20px auto 36px; max-width: 500px; }
+.contact-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn-white {
+  background: var(--white);
+  color: var(--terracotta);
+}
+.btn-white:hover { background: var(--warm-white); }
+
+/* ── Footer ───────────────────────────────────────────────────── */
+footer {
+  background: #111;
+  color: rgba(255,255,255,0.5);
+  padding: 56px 0 32px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+.footer-desc { font-size: 14px; line-height: 1.7; max-width: 280px; }
+.footer-col h4 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a { font-size: 14px; transition: color .2s; }
+.footer-links a:hover { color: var(--white); }
+.footer-bottom {
+  padding-top: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+/* ── Lightbox ─────────────────────────────────────────────────── */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#lightbox.open { display: flex; }
+.lightbox-close {
+  position: absolute;
+  top: 20px; right: 24px;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 32px;
+  cursor: pointer;
+  z-index: 2;
+}
+#lightbox img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: var(--radius);
+  object-fit: contain;
+}
+
+/* ── flatpickr overrides ──────────────────────────────────────── */
+.flatpickr-day.selected, .flatpickr-day.selected:hover {
+  background: var(--terracotta) !important;
+  border-color: var(--terracotta) !important;
+}
+.flatpickr-day.inRange {
+  background: rgba(196,98,45,0.15) !important;
+  border-color: rgba(196,98,45,0.15) !important;
+}
+.flatpickr-calendar { font-family: 'Inter', sans-serif !important; }
+
+/* ── Toasts ───────────────────────────────────────────────────── */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.toast {
+  background: #333;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  box-shadow: var(--shadow-lg);
+  animation: slideIn .3s ease;
+  max-width: 320px;
+}
+.toast.error { background: #C62828; }
+.toast.success { background: #2E7D32; }
+@keyframes slideIn { from { transform: translateX(40px); opacity:0; } to { transform: translateX(0); opacity:1; } }
+
+/* ── Mobile nav drawer ──────────────────────────────────────────*/
+#nav-drawer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0,0,0,0.5);
+}
+#nav-drawer.open { display: block; }
+.nav-drawer-panel {
+  position: absolute;
+  top: 0; right: 0;
+  width: 280px;
+  height: 100%;
+  background: var(--white);
+  padding: 80px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.nav-drawer-panel a {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--sand);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-dark);
+  display: block;
+}
+.nav-drawer-panel .btn { margin-top: 20px; justify-content: center; }
+
+/* Stripe not configured notice */
+.stripe-placeholder {
+  background: var(--warm-white);
+  border: 1.5px dashed var(--sand-dark);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  color: var(--text-mid);
+  font-size: 14px;
+}
+.stripe-placeholder .sp-icon { font-size: 32px; margin-bottom: 8px; display: block; }
+
+/* Loading spinner */
+.spinner {
+  width: 20px; height: 20px;
+  border: 2.5px solid rgba(255,255,255,0.4);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .feature-item { border-bottom: 1px solid var(--sand); }
+  .facilities-grid { grid-template-columns: repeat(2, 1fr); }
+  .reviews-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .section { padding: 64px 0; }
+  .about-grid { grid-template-columns: 1fr; gap: 36px; }
+  .about-photo { aspect-ratio: 16/9; }
+  .about-features { grid-template-columns: 1fr; }
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 200px);
+  }
+  .gallery-item:first-child { grid-column: 1/3; }
+  .facilities-grid { grid-template-columns: 1fr; }
+  .pool-section { grid-template-columns: 1fr; }
+  .pool-photo { min-height: 260px; }
+  .pool-content { padding: 48px 28px; }
+  .location-grid { grid-template-columns: 1fr; }
+  .booking-layout { grid-template-columns: 1fr; }
+  .booking-form-body { padding: 24px; }
+  .form-row { grid-template-columns: 1fr; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .nav-links { display: none; }
+  .mobile-menu-btn { display: block; }
+  .hero-stats { gap: 24px; }
+  .hero-actions { flex-direction: column; }
+  .hero-actions .btn { width: 100%; justify-content: center; }
+  .contact-buttons { flex-direction: column; align-items: center; }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+  .gallery-item { height: 220px; }
+  .gallery-item:first-child { grid-column: 1; height: 260px; }
+  .booking-steps { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <span class="logo-icon">🏡</span>
+        Villa Hola
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">The Villa</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#facilities">Facilities</a></li>
+        <li><a href="#location">Location</a></li>
+        <li><a href="#booking">Booking</a></li>
+        <li><a href="#faq">FAQs</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#booking" class="nav-book-btn">Book Now</a>
+        <button class="mobile-menu-btn" onclick="openNavDrawer()" aria-label="Menu">☰</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile nav drawer -->
+<div id="nav-drawer" onclick="if(event.target===this)closeNavDrawer()">
+  <div class="nav-drawer-panel">
+    <a href="#about" onclick="closeNavDrawer()">The Villa</a>
+    <a href="#gallery" onclick="closeNavDrawer()">Gallery</a>
+    <a href="#facilities" onclick="closeNavDrawer()">Facilities</a>
+    <a href="#location" onclick="closeNavDrawer()">Location</a>
+    <a href="#booking" onclick="closeNavDrawer()">Booking</a>
+    <a href="#faq" onclick="closeNavDrawer()">FAQs</a>
+    <a href="#contact" onclick="closeNavDrawer()">Contact</a>
+    <a href="#booking" class="btn btn-primary" onclick="closeNavDrawer()">Book Now</a>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        📍 Las Buganvillas · Playa Blanca · Lanzarote
+      </div>
+      <h1 class="hero-title">
+        Your Private<br>
+        <em>Lanzarote</em><br>
+        Escape
+      </h1>
+      <p class="hero-sub">
+        Sun, privacy and pure relaxation in a stunning private villa.
+        Your own pool, warm sunshine and the beauty of Lanzarote —
+        all waiting for you at Villa Hola.
+      </p>
+      <div class="hero-actions">
+        <a href="#booking" class="btn btn-primary btn-lg">Check Availability</a>
+        <a href="#gallery" class="btn btn-secondary btn-lg">View Gallery</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">8</span>
+          <span class="hero-stat-label">Guests</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">4</span>
+          <span class="hero-stat-label">Bedrooms</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">3</span>
+          <span class="hero-stat-label">Bathrooms</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">☀️</span>
+          <span class="hero-stat-label">Private Pool</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
+    <span>Scroll to explore</span>
+    <span class="scroll-arrow"></span>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     FEATURE STRIP
+════════════════════════════════════════════════════════════ -->
+<div id="features">
+  <div class="features-grid">
+    <div class="feature-item">
+      <span class="feature-icon">🏊</span>
+      <div class="feature-title">Private Pool</div>
+      <div class="feature-desc">Your own heated pool — no sharing, total privacy, sunbathe all day.</div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">📍</span>
+      <div class="feature-title">Prime Location</div>
+      <div class="feature-desc">In the beautiful Las Buganvillas complex, moments from Playa Blanca.</div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🌡️</span>
+      <div class="feature-title">Year-Round Sun</div>
+      <div class="feature-desc">Over 300 days of sunshine a year. Lanzarote is warm in every season.</div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🔑</span>
+      <div class="feature-title">Book Direct & Save</div>
+      <div class="feature-desc">No platform fees. Book directly and get the best possible price.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     ABOUT / INTRO
+════════════════════════════════════════════════════════════ -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-photo">
+        <img src="/images/rooftop-terrace.jpg" alt="Villa Hola rooftop terrace with panoramic views">
+      </div>
+      <div class="about-text">
+        <div class="section-label">Welcome to Villa Hola</div>
+        <h2 class="section-title">A Slice of Paradise in Playa Blanca</h2>
+        <p style="color:var(--text-mid);font-size:16px;margin-bottom:20px;line-height:1.75">
+          Nestled in the prestigious Las Buganvillas complex, Villa Hola offers everything
+          you need for the perfect Lanzarote holiday. Wake up to golden sunshine, spend your
+          days lounging by your private pool, and explore one of the Canary Islands' most
+          beautiful destinations — all at your own pace.
+        </p>
+        <p style="color:var(--text-mid);font-size:16px;margin-bottom:28px;line-height:1.75">
+          Whether you're a family wanting space and comfort, a group of friends ready to
+          explore the island, or a couple seeking a luxurious retreat — Villa Hola, with
+          its four bedrooms, private pool and rooftop terrace, is your home away from home.
+        </p>
+        <div class="about-features">
+          <div class="about-feature"><span class="about-feature-icon">✓</span> 4 bedrooms, sleeps up to 8</div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span> Private swimming pool</div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span> Fully equipped kitchen</div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span> Air conditioning throughout</div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span> Games room with pool table</div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span> High-speed Wi-Fi</div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span> Rooftop terrace with views</div>
+          <div class="about-feature"><span class="about-feature-icon">✓</span> 3 bathrooms</div>
+        </div>
+        <a href="#booking" class="btn btn-primary">Check Availability</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     GALLERY
+════════════════════════════════════════════════════════════ -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-label">Photography</div>
+    <h2 class="section-title" style="color:var(--white)">Your Villa, Room by Room</h2>
+    <p class="section-intro" style="color:rgba(255,255,255,0.7)">A beautifully presented villa ready for your arrival.</p>
+
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/dining-room-1.jpg" alt="Spacious dining room opening to private pool">
+        <div class="gallery-overlay"><span class="gallery-label">Dining Room & Pool Views</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/living-room-2.jpg" alt="Spacious living room with vaulted ceiling">
+        <div class="gallery-overlay"><span class="gallery-label">Living Room</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/bedroom-master.jpg" alt="Master bedroom with king-size bed">
+        <div class="gallery-overlay"><span class="gallery-label">Master Bedroom</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/pool-terrace.jpg" alt="Private pool and sun terrace">
+        <div class="gallery-overlay"><span class="gallery-label">Private Pool</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/rooftop-terrace.jpg" alt="Rooftop terrace with panoramic views">
+        <div class="gallery-overlay"><span class="gallery-label">Rooftop Terrace</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="/images/bathroom-main.jpg" alt="Luxury bathroom with bath and skylight">
+        <div class="gallery-overlay"><span class="gallery-label">Bathroom</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     FACILITIES
+════════════════════════════════════════════════════════════ -->
+<section id="facilities" class="section section-alt">
+  <div class="container">
+    <div class="section-label text-center">Everything you need</div>
+    <h2 class="section-title text-center">Villa Facilities</h2>
+    <p class="section-intro center text-center">All the comforts of home — and then some.</p>
+
+    <div class="facilities-grid">
+      <div class="facility-card">
+        <span class="facility-card-icon">🛏️</span>
+        <div class="facility-card-title">Bedrooms</div>
+        <ul class="facility-list">
+          <li>4 bedrooms sleeping up to 8 guests</li>
+          <li>Master bedroom with king-size bed & en suite</li>
+          <li>Second bedroom with double bed</li>
+          <li>Third bedroom with double bed</li>
+          <li>Fourth bedroom with twin beds</li>
+          <li>Quality linens and bedding provided</li>
+        </ul>
+      </div>
+      <div class="facility-card">
+        <span class="facility-card-icon">🚿</span>
+        <div class="facility-card-title">Bathrooms</div>
+        <ul class="facility-list">
+          <li>3 bathrooms</li>
+          <li>En-suite shower room to master bedroom</li>
+          <li>Main bathroom with bath & walk-in shower</li>
+          <li>Third shower room</li>
+          <li>Towels provided</li>
+        </ul>
+      </div>
+      <div class="facility-card">
+        <span class="facility-card-icon">🍳</span>
+        <div class="facility-card-title">Kitchen & Dining</div>
+        <ul class="facility-list">
+          <li>Fully equipped kitchen</li>
+          <li>Oven, hob and microwave</li>
+          <li>Fridge, freezer and dishwasher</li>
+          <li>Washing machine</li>
+          <li>Full crockery, cutlery and glassware</li>
+          <li>Large dining table seating up to 10</li>
+          <li>Coffee maker and kettle</li>
+        </ul>
+      </div>
+      <div class="facility-card">
+        <span class="facility-card-icon">🛋️</span>
+        <div class="facility-card-title">Living Area</div>
+        <ul class="facility-list">
+          <li>Spacious lounge with comfortable seating</li>
+          <li>Smart TV with streaming apps</li>
+          <li>Air conditioning (hot & cold)</li>
+          <li>High-speed Wi-Fi throughout</li>
+          <li>Indoor dining area</li>
+        </ul>
+      </div>
+      <div class="facility-card">
+        <span class="facility-card-icon">☀️</span>
+        <div class="facility-card-title">Outdoor Areas</div>
+        <ul class="facility-list">
+          <li>Private swimming pool</li>
+          <li>Sun terrace with loungers</li>
+          <li>Outdoor dining area</li>
+          <li>BBQ facilities</li>
+          <li>Beautiful garden / communal grounds</li>
+          <li>Private parking space</li>
+        </ul>
+      </div>
+      <div class="facility-card">
+        <span class="facility-card-icon">✅</span>
+        <div class="facility-card-title">Extras</div>
+        <ul class="facility-list">
+          <li>Games room with pool/table tennis table</li>
+          <li>Rooftop terrace with panoramic views</li>
+          <li>Iron and ironing board</li>
+          <li>Safe for valuables</li>
+          <li>Baby cot available on request</li>
+          <li>24/7 WhatsApp support during your stay</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:28px;font-size:14px;color:var(--text-light)">
+      * Facilities listed are subject to confirmation. Full details provided on booking.
+    </p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     POOL & OUTDOOR
+════════════════════════════════════════════════════════════ -->
+<div class="pool-section">
+  <div class="pool-photo">
+    <img src="/images/dining-room-2.jpg" alt="Open-plan dining room with floor-to-ceiling doors to private pool">
+  </div>
+  <div class="pool-content">
+    <div class="section-label">Your Private Oasis</div>
+    <h2 class="section-title">Sun, Water & Total Privacy</h2>
+    <p>
+      Your private pool is the heart of Villa Hola — sunbathe in peace, take a dip
+      whenever you like, and dine al fresco on the terrace as the Lanzarote sun
+      goes down. No shared facilities, no schedules, just pure relaxation.
+    </p>
+    <div class="pool-specs">
+      <div class="pool-spec"><span class="pool-spec-icon">🏊</span> Private pool</div>
+      <div class="pool-spec"><span class="pool-spec-icon">☀️</span> Sun loungers</div>
+      <div class="pool-spec"><span class="pool-spec-icon">🍽️</span> Outdoor dining</div>
+      <div class="pool-spec"><span class="pool-spec-icon">🔥</span> BBQ</div>
+      <div class="pool-spec"><span class="pool-spec-icon">🔒</span> Gated & private</div>
+      <div class="pool-spec"><span class="pool-spec-icon">🌅</span> Terrace views</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     LOCATION
+════════════════════════════════════════════════════════════ -->
+<section id="location" class="section">
+  <div class="container">
+    <div class="location-grid">
+      <div>
+        <div class="section-label">Where We Are</div>
+        <h2 class="section-title">Las Buganvillas, Playa Blanca</h2>
+        <p style="color:var(--text-mid);font-size:16px;margin-bottom:28px;line-height:1.75">
+          Set in the Las Buganvillas complex in Playa Blanca, Villa Hola is perfectly
+          positioned to enjoy the very best of southern Lanzarote. Just minutes from
+          stunning beaches, excellent restaurants and the lively Playa Blanca marina.
+        </p>
+        <div class="nearby-list">
+          <div class="nearby-item">
+            <span class="nearby-icon">🏖️</span>
+            <div>
+              <div class="nearby-name">Playa Blanca Beach</div>
+              <div style="font-size:13px;color:var(--text-light)">The main promenade beach</div>
+            </div>
+            <span class="nearby-dist">~10 min walk</span>
+          </div>
+          <div class="nearby-item">
+            <span class="nearby-icon">🏖️</span>
+            <div>
+              <div class="nearby-name">Papagayo Beaches</div>
+              <div style="font-size:13px;color:var(--text-light)">Stunning natural beaches</div>
+            </div>
+            <span class="nearby-dist">~10 min drive</span>
+          </div>
+          <div class="nearby-item">
+            <span class="nearby-icon">⛵</span>
+            <div>
+              <div class="nearby-name">Playa Blanca Marina</div>
+              <div style="font-size:13px;color:var(--text-light)">Restaurants, shops & ferry terminal</div>
+            </div>
+            <span class="nearby-dist">~5 min drive</span>
+          </div>
+          <div class="nearby-item">
+            <span class="nearby-icon">🍽️</span>
+            <div>
+              <div class="nearby-name">Restaurants & Bars</div>
+              <div style="font-size:13px;color:var(--text-light)">Wide selection nearby</div>
+            </div>
+            <span class="nearby-dist">~5–10 min walk</span>
+          </div>
+          <div class="nearby-item">
+            <span class="nearby-icon">🛒</span>
+            <div>
+              <div class="nearby-name">Supermarkets</div>
+              <div style="font-size:13px;color:var(--text-light)">Full grocery shopping</div>
+            </div>
+            <span class="nearby-dist">~5 min drive</span>
+          </div>
+          <div class="nearby-item">
+            <span class="nearby-icon">✈️</span>
+            <div>
+              <div class="nearby-name">Lanzarote Airport (ACE)</div>
+              <div style="font-size:13px;color:var(--text-light)">Easy transfer</div>
+            </div>
+            <span class="nearby-dist">~40 min drive</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="location-map">
+          <!-- Replace with actual Google Maps embed when ready:
+          <iframe src="https://www.google.com/maps/embed?pb=..." allowfullscreen></iframe>
+          -->
+          <div class="map-placeholder">
+            <div class="map-placeholder-icon">🗺️</div>
+            <p style="font-size:14px;text-align:center;padding:0 24px;color:var(--text-mid)">
+              Map will be added here.<br>
+              <small>Las Buganvillas, Playa Blanca, Lanzarote, Spain</small>
+            </p>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:20px;background:var(--warm-white);border-radius:var(--radius)">
+          <div style="font-weight:600;margin-bottom:6px;font-size:15px">Getting Here</div>
+          <p style="font-size:14px;color:var(--text-mid);line-height:1.65">
+            Lanzarote Airport (ACE) is served by direct flights from most UK airports year-round.
+            A hire car is recommended for exploring the island, though taxis and transfers are
+            readily available from the airport to Playa Blanca.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     BOOKING
+════════════════════════════════════════════════════════════ -->
+<section id="booking">
+  <div class="container">
+    <div class="section-label">Direct Booking</div>
+    <h2 class="section-title">Check Availability & Book</h2>
+    <p class="section-intro">No booking fees. Pay just a 10% deposit to secure your dates — the balance is arranged with us directly.</p>
+
+    <div class="booking-layout">
+      <!-- Booking form -->
+      <div class="booking-form-card">
+        <div class="booking-form-header">
+          <h3>Book Villa Hola</h3>
+          <p>Select your dates and complete your booking in minutes</p>
+        </div>
+        <div class="booking-form-body">
+
+          <!-- Step indicators -->
+          <div class="booking-steps">
+            <div class="booking-step active" id="step-indicator-1">
+              <span class="step-num">1</span>
+              Dates
+            </div>
+            <div class="booking-step" id="step-indicator-2">
+              <span class="step-num">2</span>
+              Details
+            </div>
+            <div class="booking-step" id="step-indicator-3">
+              <span class="step-num">3</span>
+              Payment
+            </div>
+          </div>
+
+          <!-- Step 1: Dates & guests -->
+          <div class="step-panel active" id="step-1">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Check-in Date</label>
+                <input type="text" id="check-in" placeholder="Select date" readonly>
+              </div>
+              <div class="form-group">
+                <label>Check-out Date</label>
+                <input type="text" id="check-out" placeholder="Select date" readonly>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Number of Guests</label>
+              <div class="guests-row">
+                <button class="guests-btn" onclick="changeGuests(-1)" type="button">−</button>
+                <span class="guests-val" id="guests-display">2</span>
+                <button class="guests-btn" onclick="changeGuests(1)" type="button">+</button>
+              </div>
+              <input type="hidden" id="num-guests" value="2">
+            </div>
+
+            <div class="availability-result" id="avail-result"></div>
+            <div class="price-breakdown" id="price-breakdown">
+              <div class="price-row"><span id="pr-nights">3 nights</span><span id="pr-subtotal">€360.00</span></div>
+              <div class="price-row"><span>Cleaning fee</span><span id="pr-cleaning">€80.00</span></div>
+              <div class="price-row total"><span>Total</span><span id="pr-total">€440.00</span></div>
+              <div class="price-row deposit">🔒 <span>Deposit due now (20%)</span><span id="pr-deposit">€44.00</span></div>
+              <div class="price-row balance">💬 <span>Balance via WhatsApp</span><span id="pr-balance">€396.00</span></div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" onclick="checkAvailability()" id="check-btn">
+                Check Availability
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Guest details -->
+          <div class="step-panel" id="step-2">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="g-name">Full Name *</label>
+                <input type="text" id="g-name" placeholder="Your full name" autocomplete="name">
+              </div>
+              <div class="form-group">
+                <label for="g-email">Email Address *</label>
+                <input type="email" id="g-email" placeholder="your@email.com" autocomplete="email">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="g-phone">Phone Number</label>
+                <input type="tel" id="g-phone" placeholder="+44 7700 000000" autocomplete="tel">
+              </div>
+              <div class="form-group">
+                <label for="g-country">Country</label>
+                <input type="text" id="g-country" placeholder="United Kingdom" autocomplete="country-name">
+              </div>
+            </div>
+
+            <!-- Selected dates summary -->
+            <div style="background:var(--warm-white);border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:14px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                <span style="color:var(--text-mid)">Check-in</span>
+                <strong id="s2-checkin">—</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                <span style="color:var(--text-mid)">Check-out</span>
+                <strong id="s2-checkout">—</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;border-top:1px solid var(--sand-dark);padding-top:8px;margin-top:6px">
+                <span style="color:var(--terracotta);font-weight:600">Deposit to pay now</span>
+                <strong style="color:var(--terracotta)" id="s2-deposit">€—</strong>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" onclick="goToPayment()">Continue to Payment</button>
+              <button class="btn btn-outline" onclick="goToStep(1)" style="border-color:var(--sand-dark);color:var(--text-mid)">← Back</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Payment -->
+          <div class="step-panel" id="step-3">
+            <!-- Payment summary -->
+            <div style="background:var(--warm-white);border-radius:8px;padding:16px;margin-bottom:20px;font-size:14px">
+              <div style="font-weight:700;margin-bottom:10px;font-size:15px">Booking Summary</div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                <span style="color:var(--text-mid)">Dates</span>
+                <span id="s3-dates">—</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                <span style="color:var(--text-mid)">Guest</span>
+                <span id="s3-guest">—</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+                <span style="color:var(--text-mid)">Total price</span>
+                <strong id="s3-total">€—</strong>
+              </div>
+              <div style="background:var(--terracotta);color:#fff;border-radius:6px;padding:10px 14px;display:flex;justify-content:space-between">
+                <span>🔒 Deposit to pay now</span>
+                <strong id="s3-deposit">€—</strong>
+              </div>
+            </div>
+
+            <!-- Stripe payment or placeholder -->
+            <div id="payment-section">
+              <div id="stripe-payment-section" style="display:none">
+                <div class="form-group">
+                  <label>Card Details</label>
+                  <div id="card-element"></div>
+                  <div id="card-errors" role="alert"></div>
+                </div>
+                <div class="stripe-note">
+                  🔒 Payments secured by Stripe. Your card details are never stored by us.
+                </div>
+              </div>
+              <div id="stripe-placeholder" class="stripe-placeholder">
+                <span class="sp-icon">💳</span>
+                <strong>Online payment not yet configured</strong>
+                <p style="margin:8px 0 4px;color:var(--text-light)">
+                  Stripe payment will be available once our account is set up.<br>
+                  In the meantime, please contact us directly to arrange your booking.
+                </p>
+                <a id="wa-direct-book" href="#" class="btn btn-whatsapp" style="margin-top:12px">
+                  💬 Book via WhatsApp
+                </a>
+              </div>
+            </div>
+
+            <div id="pay-btn-wrap" class="form-actions" style="display:none;margin-top:16px">
+              <button class="btn btn-primary btn-lg" id="pay-btn" onclick="submitPayment()">
+                Pay Deposit Now
+              </button>
+            </div>
+
+            <div style="margin-top:16px;padding:14px;background:#E3F2FD;border-radius:8px;font-size:13px;color:#1565C0">
+              <strong>💬 Remaining balance:</strong> After payment, we'll contact you on WhatsApp to
+              arrange the remaining balance and confirm all the details of your stay.
+            </div>
+
+            <div class="form-actions" style="margin-top:12px">
+              <button class="btn btn-outline" onclick="goToStep(2)" style="border-color:var(--sand-dark);color:var(--text-mid)">← Back</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="booking-sidebar">
+        <div class="sidebar-card">
+          <h4>What's Included</h4>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">🔑</span> Flexible check-in</div>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">🏊</span> Private pool access</div>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">📶</span> High-speed Wi-Fi</div>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">🛏️</span> Fresh linens & towels</div>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">🅿️</span> Private parking</div>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">✈️</span> Airport transfer advice</div>
+        </div>
+
+        <div class="sidebar-card">
+          <h4>Pricing Guide</h4>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">❄️</span>
+            <div><div>Low Season</div><div style="color:rgba(255,255,255,0.5);font-size:12px">from €325/night</div></div>
+          </div>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">🌸</span>
+            <div><div>Peak Season</div><div style="color:rgba(255,255,255,0.5);font-size:12px">from €395/night</div></div>
+          </div>
+          <div class="sidebar-feature"><span class="sidebar-feature-icon">☀️</span>
+            <div><div>10% Early Booking Discount</div><div style="color:rgba(255,255,255,0.5);font-size:12px">Book direct & save</div></div>
+          </div>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);font-size:13px;color:rgba(255,255,255,0.5)">
+            + €80 cleaning fee · Min. 3 nights
+          </div>
+        </div>
+
+        <div class="sidebar-card whatsapp-sidebar">
+          <h4>💬 Questions? Chat With Us</h4>
+          <p>Our team is on hand to answer any questions about the villa, the area, or your booking.</p>
+          <a id="wa-questions" href="#" class="btn btn-whatsapp" style="width:100%;justify-content:center">
+            Open WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     REVIEWS
+════════════════════════════════════════════════════════════ -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-label text-center">Guest Reviews</div>
+    <h2 class="section-title text-center">What Our Guests Say</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"An absolutely stunning villa in a perfect location. The private pool was a highlight — we were out there every day. Can't wait to return!"</p>
+        <div class="review-author">Sarah & James M.</div>
+        <div class="review-date">Manchester, UK</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"We've visited Lanzarote many times and this is by far the best villa we've stayed in. Immaculate, well-equipped and the owners were brilliant."</p>
+        <div class="review-author">The Robertson Family</div>
+        <div class="review-date">Edinburgh, UK</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Perfect from start to finish. Playa Blanca is a gem and Villa Hola made our holiday truly special. Already recommending it to friends."</p>
+        <div class="review-author">Helen & David T.</div>
+        <div class="review-date">Bristol, UK</div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--text-light)">
+      * Reviews are representative examples — real guest reviews will be displayed here.
+    </p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     FAQ
+════════════════════════════════════════════════════════════ -->
+<section id="faq" class="section">
+  <div class="container">
+    <div class="section-label text-center">Got Questions?</div>
+    <h2 class="section-title text-center">Frequently Asked Questions</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What are the check-in and check-out times?
+          <span class="faq-arrow">⌄</span>
+        </button>
+        <div class="faq-answer">
+          Check-in is from 3:00pm and check-out is by 10:00am. Early check-in and late check-out may be available — please ask us via WhatsApp when making your booking.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How does the deposit and balance work?
+          <span class="faq-arrow">⌄</span>
+        </button>
+        <div class="faq-answer">
+          When you book online, you pay a 20% deposit to secure your dates. The remaining 80% balance is then arranged with us directly via WhatsApp. We will contact you shortly after your booking to confirm the details and arrange the balance payment.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is there a minimum stay?
+          <span class="faq-arrow">⌄</span>
+        </button>
+        <div class="faq-answer">
+          Our minimum stay is 3 nights outside of peak season, and 5 nights during the summer (June–August). Please check availability for your preferred dates and the booking form will advise you of any minimum.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is the pool heated?
+          <span class="faq-arrow">⌄</span>
+        </button>
+        <div class="faq-answer">
+          Please contact us via WhatsApp for the latest information on pool heating. Lanzarote's climate is warm year-round, so the pool is generally comfortable even without heating.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is the villa suitable for children?
+          <span class="faq-arrow">⌄</span>
+        </button>
+        <div class="faq-answer">
+          Yes — Villa Hola is a great choice for families. Please note that children must always be supervised around the pool area. A travel cot and high chair can be provided on request — please let us know in advance.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Are pets allowed?
+          <span class="faq-arrow">⌄</span>
+        </button>
+        <div class="faq-answer">
+          Unfortunately pets are not permitted at Villa Hola. This is to ensure the comfort of all guests and to meet the requirements of the complex.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What is your cancellation policy?
+          <span class="faq-arrow">⌄</span>
+        </button>
+        <div class="faq-answer">
+          Cancellations made more than 60 days before check-in will receive a full deposit refund. Cancellations within 60 days of check-in are non-refundable. We strongly recommend taking out holiday travel insurance. Full terms and conditions are provided on booking.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is Wi-Fi available at the villa?
+          <span class="faq-arrow">⌄</span>
+        </button>
+        <div class="faq-answer">
+          Yes, high-speed Wi-Fi is included with every booking at no extra charge.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What is the maximum number of guests?
+          <span class="faq-arrow">⌄</span>
+        </button>
+        <div class="faq-answer">
+          Villa Hola accommodates a maximum of 6 guests in 3 bedrooms. This limit must be respected — the number of guests stated at booking is the maximum permitted to stay at the property.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Do I need a hire car?
+          <span class="faq-arrow">⌄</span>
+        </button>
+        <div class="faq-answer">
+          A hire car is highly recommended for exploring Lanzarote — the island has incredible scenery, volcanic landscapes and beaches that are best discovered by car. That said, Playa Blanca itself has a good range of restaurants, beaches and shops within walking distance. Taxis are also readily available.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     CONTACT CTA
+════════════════════════════════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <h2 class="section-title">Ready to Book Your<br>Lanzarote Holiday?</h2>
+    <p>Secure your dates today with just a 10% deposit.<br>Questions? We're always happy to chat.</p>
+    <div class="contact-buttons">
+      <a href="#booking" class="btn btn-white btn-lg">Check Availability</a>
+      <a id="wa-cta" href="#" class="btn btn-whatsapp btn-lg">💬 WhatsApp Us</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">🏡 Villa Hola</div>
+        <p class="footer-desc">
+          A beautiful private holiday villa in Las Buganvillas, Playa Blanca,
+          Lanzarote — the perfect escape for families, couples and groups
+          looking for sun, relaxation and a home away from home.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#about">The Villa</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#facilities">Facilities</a></li>
+          <li><a href="#location">Location</a></li>
+          <li><a href="#booking">Book Now</a></li>
+          <li><a href="#faq">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul class="footer-links">
+          <li><a id="footer-wa" href="#">💬 WhatsApp</a></li>
+          <li><a href="mailto:bookings@villahola.es">📧 bookings@villahola.es</a></li>
+          <li><a href="#booking">Book Online</a></li>
+          <li><a href="/admin">Owner Login</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Villa Hola · villahola.es · Las Buganvillas, Playa Blanca, Lanzarote.</span>
+      <span>Licence: VV-35-3-0002362 · Direct bookings welcome — no agency fees.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════════ -->
+<script>
+// ── Globals ────────────────────────────────────────────────────────────────
+let config   = {};
+let pricing  = null;
+let bookingId = null;
+let stripeObj = null;
+let cardElement = null;
+let currentStep = 1;
+let blockedDates = [];
+const MAX_GUESTS = 8;
+
+// ── Navbar scroll behaviour ─────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── Mobile nav ──────────────────────────────────────────────────────────────
+function openNavDrawer()  { document.getElementById('nav-drawer').classList.add('open'); }
+function closeNavDrawer() { document.getElementById('nav-drawer').classList.remove('open'); }
+
+// ── Init ────────────────────────────────────────────────────────────────────
+async function init() {
+  // Load config from server
+  try {
+    const r = await fetch('/api/config');
+    config = await r.json();
+  } catch (e) {
+    config = { whatsapp: '+34600000000', depositPct: 20, cleaningFee: 80, minStay: 3, currency: 'EUR' };
+  }
+
+  // Set WhatsApp links
+  const waNum = config.whatsapp || '+34600000000';
+  const waNumClean = waNum.replace(/[^0-9]/g, '');
+  const waLinks = ['wa-questions','wa-cta','footer-wa','wa-direct-book'];
+  waLinks.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.href = `https://wa.me/${waNumClean}?text=${encodeURIComponent('Hi! I'm interested in booking Villa Hola.')}`;
+  });
+
+  // Load blocked dates for next 18 months
+  await loadBlockedDates();
+
+  // Initialise flatpickr
+  const today = new Date();
+  const minDate = new Date(today);
+  minDate.setDate(minDate.getDate() + 1);
+
+  const fpOut = flatpickr('#check-out', {
+    minDate: 'today',
+    dateFormat: 'Y-m-d',
+    altInput: true,
+    altFormat: 'D d M Y',
+    disable: blockedDates,
+    onChange: () => clearAvailability(),
+  });
+
+  flatpickr('#check-in', {
+    minDate: 'today',
+    dateFormat: 'Y-m-d',
+    altInput: true,
+    altFormat: 'D d M Y',
+    disable: blockedDates,
+    onChange: ([date]) => {
+      // Set check-out minimum to day after check-in
+      const nextDay = new Date(date);
+      nextDay.setDate(nextDay.getDate() + (config.minStay || 3));
+      fpOut.set('minDate', nextDay);
+      clearAvailability();
+    },
+  });
+
+  // Init Stripe if configured
+  if (config.stripePubKey && !config.stripePubKey.startsWith('pk_test_REPLACE')) {
+    stripeObj = Stripe(config.stripePubKey);
+    const elements = stripeObj.elements();
+    cardElement = elements.create('card', {
+      style: {
+        base: { fontSize:'15px', fontFamily:'Inter,system-ui,sans-serif', color:'#1C1C1C', '::placeholder': { color: '#AAA' } },
+        invalid: { color: '#C62828' },
+      },
+    });
+    cardElement.mount('#card-element');
+    cardElement.on('change', e => {
+      document.getElementById('card-errors').textContent = e.error ? e.error.message : '';
+    });
+    document.getElementById('stripe-payment-section').style.display = 'block';
+    document.getElementById('stripe-placeholder').style.display = 'none';
+    document.getElementById('pay-btn-wrap').style.display = 'flex';
+  }
+}
+
+// ── Blocked dates ───────────────────────────────────────────────────────────
+async function loadBlockedDates() {
+  try {
+    const from = new Date().toISOString().slice(0,10);
+    const to   = new Date(Date.now() + 550*24*3600*1000).toISOString().slice(0,10);
+    const r    = await fetch(`/api/availability?from=${from}&to=${to}`);
+    const d    = await r.json();
+    blockedDates = d.blocked || [];
+  } catch (e) {}
+}
+
+// ── Guests counter ──────────────────────────────────────────────────────────
+function changeGuests(delta) {
+  const el  = document.getElementById('num-guests');
+  const cur = parseInt(el.value);
+  const val = Math.min(MAX_GUESTS, Math.max(1, cur + delta));
+  el.value  = val;
+  document.getElementById('guests-display').textContent = val;
+}
+
+// ── Step 1: Check availability ──────────────────────────────────────────────
+async function checkAvailability() {
+  const checkIn  = document.getElementById('check-in')._flatpickr.selectedDates[0];
+  const checkOut = document.getElementById('check-out')._flatpickr.selectedDates[0];
+
+  if (!checkIn || !checkOut) {
+    showAvailResult('Please select both check-in and check-out dates.', 'unavailable');
+    return;
+  }
+
+  const ci = checkIn.toISOString().slice(0,10);
+  const co = checkOut.toISOString().slice(0,10);
+
+  const btn = document.getElementById('check-btn');
+  btn.innerHTML = '<span class="spinner"></span> Checking…';
+  btn.disabled  = true;
+  showAvailResult('Checking availability…', 'checking');
+
+  try {
+    const r = await fetch('/api/availability/check', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({ check_in: ci, check_out: co, num_guests: parseInt(document.getElementById('num-guests').value) }),
+    });
+    const d = await r.json();
+
+    if (d.available === false && d.reason === 'minimum_stay') {
+      showAvailResult(`Minimum stay is ${d.minStay} nights — you've selected ${d.nights}. Please extend your stay.`, 'unavailable');
+      hidePriceBreakdown();
+    } else if (!d.available) {
+      showAvailResult('Sorry — those dates are not available. Please try different dates.', 'unavailable');
+      hidePriceBreakdown();
+    } else {
+      pricing = d.pricing;
+      showAvailResult(`✓ Those dates are available! ${pricing.nights} nights — see your price below.`, 'available');
+      showPriceBreakdown(pricing);
+      // Change button to "Continue to Book"
+      btn.innerHTML = 'Continue to Book →';
+      btn.onclick = () => goToStep(2);
+      btn.disabled = false;
+      return;
+    }
+  } catch (e) {
+    showAvailResult('Unable to check availability right now. Please try again or contact us on WhatsApp.', 'unavailable');
+  }
+
+  btn.innerHTML = 'Check Availability';
+  btn.onclick   = checkAvailability;
+  btn.disabled  = false;
+}
+
+function showAvailResult(msg, type) {
+  const el = document.getElementById('avail-result');
+  el.textContent = msg;
+  el.className = `availability-result ${type}`;
+  el.style.display = 'block';
+}
+
+function clearAvailability() {
+  document.getElementById('avail-result').style.display = 'none';
+  hidePriceBreakdown();
+  const btn = document.getElementById('check-btn');
+  btn.innerHTML = 'Check Availability';
+  btn.onclick   = checkAvailability;
+  btn.disabled  = false;
+  pricing = null;
+}
+
+function showPriceBreakdown(p) {
+  document.getElementById('pr-nights').textContent  = `${p.nights} nights`;
+  document.getElementById('pr-subtotal').textContent = `€${p.subtotal.toFixed(2)}`;
+  document.getElementById('pr-cleaning').textContent = `€${p.cleaningFee.toFixed(2)}`;
+  document.getElementById('pr-total').textContent    = `€${p.grandTotal.toFixed(2)}`;
+  document.getElementById('pr-deposit').textContent  = `€${p.deposit.toFixed(2)}`;
+  document.getElementById('pr-balance').textContent  = `€${p.balance.toFixed(2)}`;
+  document.getElementById('price-breakdown').style.display = 'block';
+}
+function hidePriceBreakdown() {
+  document.getElementById('price-breakdown').style.display = 'none';
+}
+
+// ── Step navigation ─────────────────────────────────────────────────────────
+function goToStep(n) {
+  document.querySelectorAll('.step-panel').forEach(el => el.classList.remove('active'));
+  document.getElementById(`step-${n}`).classList.add('active');
+
+  document.querySelectorAll('.booking-step').forEach((el, i) => {
+    el.classList.remove('active','done');
+    if (i + 1 < n)  el.classList.add('done');
+    if (i + 1 === n) el.classList.add('active');
+  });
+  currentStep = n;
+
+  // Populate step 2 summary
+  if (n === 2 && pricing) {
+    const ci = document.getElementById('check-in')._flatpickr.selectedDates[0];
+    const co = document.getElementById('check-out')._flatpickr.selectedDates[0];
+    document.getElementById('s2-checkin').textContent  = ci ? ci.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : '—';
+    document.getElementById('s2-checkout').textContent = co ? co.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : '—';
+    document.getElementById('s2-deposit').textContent  = pricing ? `€${pricing.deposit.toFixed(2)}` : '—';
+  }
+
+  // Scroll booking section into view
+  document.getElementById('booking').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Step 2 → Step 3 ─────────────────────────────────────────────────────────
+async function goToPayment() {
+  const name    = document.getElementById('g-name').value.trim();
+  const email   = document.getElementById('g-email').value.trim();
+
+  if (!name || !email) { showToast('Please enter your name and email.', 'error'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Please enter a valid email address.', 'error'); return; }
+  if (!pricing) { showToast('Please check availability first.', 'error'); return; }
+
+  // Create pending booking
+  const btn = document.querySelector('#step-2 .btn-primary');
+  btn.innerHTML = '<span class="spinner"></span> Please wait…';
+  btn.disabled  = true;
+
+  try {
+    const ci = document.getElementById('check-in')._flatpickr.selectedDates[0].toISOString().slice(0,10);
+    const co = document.getElementById('check-out')._flatpickr.selectedDates[0].toISOString().slice(0,10);
+    const r  = await fetch('/api/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({
+        guest_name:    name,
+        guest_email:   email,
+        guest_phone:   document.getElementById('g-phone').value.trim(),
+        guest_country: document.getElementById('g-country').value.trim(),
+        num_guests:    parseInt(document.getElementById('num-guests').value),
+        check_in:      ci,
+        check_out:     co,
+      }),
+    });
+    const d = await r.json();
+    if (!r.ok) { showToast(d.error || 'Booking failed. Please try again.', 'error'); btn.innerHTML='Continue to Payment'; btn.disabled=false; return; }
+
+    bookingId = d.booking.id;
+
+    // Populate step 3
+    const fmtDate = dt => new Date(dt).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+    document.getElementById('s3-dates').textContent  = `${fmtDate(ci)} – ${fmtDate(co)}`;
+    document.getElementById('s3-guest').textContent  = name;
+    document.getElementById('s3-total').textContent  = `€${pricing.grandTotal.toFixed(2)}`;
+    document.getElementById('s3-deposit').textContent = `€${pricing.deposit.toFixed(2)}`;
+
+    // WhatsApp direct book link (with booking ref if available)
+    const waNum  = (config.whatsapp || '+34600000000').replace(/[^0-9]/g,'');
+    const waMsg  = encodeURIComponent(`Hi! I'd like to book Villa Hola.\nDates: ${ci} to ${co}\nGuests: ${document.getElementById('num-guests').value}\nName: ${name}`);
+    const waEl   = document.getElementById('wa-direct-book');
+    if (waEl) waEl.href = `https://wa.me/${waNum}?text=${waMsg}`;
+
+    // If Stripe configured, create payment intent
+    if (stripeObj && bookingId) {
+      const pr = await fetch('/api/payments/create-intent', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify({ booking_id: bookingId }),
+      });
+      const pd = await pr.json();
+      if (pr.ok && pd.client_secret) {
+        window._stripeClientSecret = pd.client_secret;
+      }
+    }
+
+    goToStep(3);
+  } catch (e) {
+    showToast('Something went wrong. Please try again.', 'error');
+    btn.innerHTML = 'Continue to Payment';
+    btn.disabled  = false;
+  }
+}
+
+// ── Step 3: Payment ─────────────────────────────────────────────────────────
+async function submitPayment() {
+  if (!stripeObj || !cardElement || !window._stripeClientSecret) return;
+
+  const btn = document.getElementById('pay-btn');
+  btn.innerHTML = '<span class="spinner"></span> Processing…';
+  btn.disabled  = true;
+
+  const { paymentIntent, error } = await stripeObj.confirmCardPayment(window._stripeClientSecret, {
+    payment_method: {
+      card: cardElement,
+      billing_details: { name: document.getElementById('g-name').value.trim(), email: document.getElementById('g-email').value.trim() },
+    },
+  });
+
+  if (error) {
+    document.getElementById('card-errors').textContent = error.message;
+    btn.innerHTML = 'Pay Deposit Now';
+    btn.disabled  = false;
+    return;
+  }
+
+  if (paymentIntent.status === 'succeeded') {
+    // Confirm on backend
+    await fetch('/api/payments/confirm', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({ payment_intent_id: paymentIntent.id, booking_id: bookingId }),
+    });
+    // Fetch reference and redirect
+    const br = await fetch(`/api/bookings/ref/${bookingId}`);
+    if (!br.ok) {
+      // Try by ID
+      window.location.href = `/confirmation?booking_id=${bookingId}`;
+      return;
+    }
+    const bd = await br.json();
+    window.location.href = `/confirmation?ref=${bd.booking.reference}`;
+  }
+}
+
+// ── FAQ accordion ───────────────────────────────────────────────────────────
+function toggleFaq(btn) {
+  const answer  = btn.nextElementSibling;
+  const isOpen  = btn.classList.contains('open');
+  document.querySelectorAll('.faq-question.open').forEach(b => {
+    b.classList.remove('open');
+    b.nextElementSibling.style.display = 'none';
+  });
+  if (!isOpen) {
+    btn.classList.add('open');
+    answer.style.display = 'block';
+  }
+}
+
+// ── Gallery lightbox ─────────────────────────────────────────────────────────
+function openLightbox(item) {
+  const img = item.querySelector('img');
+  if (!img) return; // No real photo yet
+  document.getElementById('lightbox-img').src = img.src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+// ── Toast notifications ──────────────────────────────────────────────────────
+function showToast(msg, type = '') {
+  const t  = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.textContent = msg;
+  document.getElementById('toast-container').appendChild(t);
+  setTimeout(() => t.remove(), 4500);
+}
+
+// ── Start ────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
