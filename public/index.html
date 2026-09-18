@@ -2012,7 +2012,7 @@ async function init() {
   const waLinks = ['wa-questions','wa-cta','footer-wa','wa-direct-book'];
   waLinks.forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.href = `https://wa.me/${waNumClean}?text=${encodeURIComponent('Hi! I'm interested in booking Villa Hola.')}`;
+    if (el) el.href = `https://wa.me/${waNumClean}?text=${encodeURIComponent("Hi! I'm interested in booking Villa Hola.")}`;
   });
 
   // Load blocked dates for next 18 months
