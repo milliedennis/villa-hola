@@ -987,12 +987,12 @@ a { color: inherit; text-decoration: none; }
 }
 .sidebar-feature:last-child { border-bottom: none; }
 .sidebar-feature-icon { font-size: 20px; }
-.whatsapp-sidebar {
-  background: rgba(37,211,102,0.12);
-  border-color: rgba(37,211,102,0.25);
+.email-sidebar {
+  background: rgba(82,127,150,0.15);
+  border-color: rgba(82,127,150,0.3);
 }
-.whatsapp-sidebar h4 { color: #6FEE9B; }
-.whatsapp-sidebar p {
+.email-sidebar h4 { color: var(--ocean-light); }
+.email-sidebar p {
   font-size: 14px;
   color: rgba(255,255,255,0.7);
   margin-bottom: 16px;
@@ -1313,6 +1313,8 @@ footer {
 #navbar.scrolled .lang-btn.active { color: var(--text-dark); background: var(--sand); }
 .lang-sep { color: rgba(255,255,255,0.25); font-size: 10px; user-select: none; }
 #navbar.scrolled .lang-sep { color: var(--sand-dark); }
+.curr-divider { color: rgba(255,255,255,0.2); font-size: 14px; margin: 0 4px; user-select:none; }
+#navbar.scrolled .curr-divider { color: var(--sand-dark); }
 </style>
 </head>
 <body>
@@ -1341,6 +1343,10 @@ footer {
         <button onclick="setLanguage('es')" class="lang-btn" id="lang-es">ES</button>
         <span class="lang-sep">|</span>
         <button onclick="setLanguage('de')" class="lang-btn" id="lang-de">DE</button>
+        <span class="curr-divider">·</span>
+        <button onclick="setCurrency('EUR')" class="lang-btn active" id="curr-eur">€</button>
+        <span class="lang-sep">|</span>
+        <button onclick="setCurrency('GBP')" class="lang-btn" id="curr-gbp">£</button>
       </div>
       <div class="nav-cta">
         <a href="#booking" class="nav-book-btn" data-i18n="nav-book">Book Now</a>
@@ -1366,6 +1372,10 @@ footer {
       <button onclick="setLanguage('es');closeNavDrawer()" class="lang-btn" id="lang-es-m" style="color:var(--text-mid);font-size:13px;padding:6px 10px">ES</button>
       <span class="lang-sep" style="color:var(--sand-dark)">|</span>
       <button onclick="setLanguage('de');closeNavDrawer()" class="lang-btn" id="lang-de-m" style="color:var(--text-mid);font-size:13px;padding:6px 10px">DE</button>
+      <span style="color:var(--sand-dark);font-size:14px;margin:0 4px">·</span>
+      <button onclick="setCurrency('EUR');closeNavDrawer()" class="lang-btn active" id="curr-eur-m" style="color:var(--text-mid);font-size:13px;padding:6px 10px">€</button>
+      <span class="lang-sep" style="color:var(--sand-dark)">|</span>
+      <button onclick="setCurrency('GBP');closeNavDrawer()" class="lang-btn" id="curr-gbp-m" style="color:var(--text-mid);font-size:13px;padding:6px 10px">£</button>
     </div>
     <a href="#booking" class="btn btn-primary" onclick="closeNavDrawer()" data-i18n="nav-book">Book Now</a>
   </div>
@@ -1688,7 +1698,7 @@ footer {
           <li data-i18n="fac-ext-1">Games room with pool table, table tennis and air hockey</li>
           <li data-i18n="fac-ext-2">Rooftop terrace with panoramic views</li>
           <li data-i18n="fac-ext-3">Baby cot available on request</li>
-          <li data-i18n="fac-ext-4">24/7 WhatsApp support during your stay</li>
+          <li data-i18n="fac-ext-4">Email support throughout your stay</li>
         </ul>
       </div>
     </div>
@@ -1870,13 +1880,12 @@ footer {
             <div class="availability-result" id="avail-result"></div>
             <div class="price-breakdown" id="price-breakdown">
               <div class="price-row"><span id="pr-nights">3 nights</span><span id="pr-subtotal">€0.00</span></div>
-              <div class="price-row" id="pr-discount-row" style="display:none;color:#4A7C59"><span>🎉 Early booking discount (10%)</span><span id="pr-discount">-€0.00</span></div>
               <div class="price-row" id="pr-cleaning-row"><span>Cleaning fee</span><span id="pr-cleaning">€80.00</span></div>
               <div class="price-row" id="pr-weekly-clean-row" style="display:none;color:#4A7C59"><span>✓ Weekly clean included</span><span>—</span></div>
               <div class="price-row"><span>IGIC (7% Canary Islands tax)</span><span id="pr-igic">€0.00</span></div>
               <div class="price-row total"><span>Total inc. IGIC</span><span id="pr-total">€0.00</span></div>
               <div class="price-row deposit">🔒 <span>Deposit due now (20%)</span><span id="pr-deposit">€0.00</span></div>
-              <div class="price-row balance">💬 <span>Balance via WhatsApp</span><span id="pr-balance">€0.00</span></div>
+              <div class="price-row balance">📧 <span>Balance due (pay before check-in)</span><span id="pr-balance">€0.00</span></div>
             </div>
 
             <div class="form-actions">
@@ -1969,8 +1978,8 @@ footer {
                   Stripe payment will be available once our account is set up.<br>
                   In the meantime, please contact us directly to arrange your booking.
                 </p>
-                <a id="wa-direct-book" href="#" class="btn btn-whatsapp" style="margin-top:12px">
-                  💬 Book via WhatsApp
+                <a href="mailto:bookings@villahola.es" class="btn btn-primary" style="margin-top:12px">
+                  📧 Book via Email
                 </a>
               </div>
             </div>
@@ -1982,7 +1991,7 @@ footer {
             </div>
 
             <div style="margin-top:16px;padding:14px;background:#E3F2FD;border-radius:8px;font-size:13px;color:#1565C0">
-              <span data-i18n="balance-note"><strong>💬 Remaining balance:</strong> After payment, we'll contact you on WhatsApp to arrange the remaining balance and confirm all the details of your stay.</span>
+              <span data-i18n="balance-note"><strong>📧 Remaining balance:</strong> After payment, we'll contact you by email to arrange the remaining balance and confirm all the details of your stay.</span>
             </div>
 
             <div class="form-actions" style="margin-top:12px">
@@ -2013,18 +2022,16 @@ footer {
           <div class="sidebar-feature"><span class="sidebar-feature-icon">🌸</span>
             <div><div data-i18n="sb-peak-season">Peak Season</div><div style="color:rgba(255,255,255,0.5);font-size:12px" data-i18n="sb-peak-price">from €395/night + 7% IGIC</div></div>
           </div>
-          <div class="sidebar-feature"><span class="sidebar-feature-icon">☀️</span>
-            <div><div data-i18n="sb-early-book">10% Early Booking Discount</div><div style="color:rgba(255,255,255,0.5);font-size:12px" data-i18n="sb-early-desc">Off-peak dates · 1+ year ahead</div></div>
-          </div>
+
           <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);font-size:13px;color:rgba(255,255,255,0.5)">
             €80 cleaning fee (stays under 5 nights) · Weekly clean included for 5+ nights · Min. 2 nights
           </div>
         </div>
 
-        <div class="sidebar-card whatsapp-sidebar">
+        <div class="sidebar-card email-sidebar">
           <h4 data-i18n="wa-sidebar-title">💬 Questions? Chat With Us</h4>
           <p data-i18n="wa-sidebar-desc">Our team is on hand to answer any questions about the villa, the area, or your booking.</p>
-          <a id="wa-questions" href="#" class="btn btn-whatsapp" style="width:100%;justify-content:center" data-i18n="wa-sidebar-btn">Open WhatsApp</a>
+          <a href="mailto:bookings@villahola.es" class="btn btn-primary" style="width:100%;justify-content:center" data-i18n="wa-sidebar-btn">📧 Email Us</a>
         </div>
       </div>
     </div>
@@ -2073,11 +2080,11 @@ footer {
     <div class="faq-grid">
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q1">What are the check-in and check-out times?</span><span class="faq-arrow">⌄</span></button>
-        <div class="faq-answer" data-i18n="faq-a1">Check-in is from 3:00pm and check-out is by 10:00am. Early check-in and late check-out may be available — please ask us via WhatsApp when making your booking.</div>
+        <div class="faq-answer" data-i18n="faq-a1">Check-in is from 3:00pm and check-out is by 10:00am. Early check-in and late check-out may be available — please email us at bookings@villahola.es when making your booking.</div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q2">How does the deposit and balance work?</span><span class="faq-arrow">⌄</span></button>
-        <div class="faq-answer" data-i18n="faq-a2">When you book online, you pay a 20% deposit to secure your dates. The remaining 80% balance is due 30 days before your check-in date and is arranged with us directly via WhatsApp. We will contact you shortly after your booking to confirm the details and arrange the balance payment.</div>
+        <div class="faq-answer" data-i18n="faq-a2">When you book online, you pay a 20% deposit to secure your dates. The remaining 80% balance is due 30 days before your check-in date. We will contact you by email shortly after your booking to confirm the details and arrange the balance payment.</div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q3">Is there a minimum stay?</span><span class="faq-arrow">⌄</span></button>
@@ -2085,7 +2092,7 @@ footer {
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q4">Is the pool heated?</span><span class="faq-arrow">⌄</span></button>
-        <div class="faq-answer" data-i18n="faq-a4">The pool is not heated, but it is fitted with a thermal cover that retains heat from the sun. Lanzarote's warm climate means the pool benefits from solar energy throughout the year, and water temperatures can reach up to 33°C during warmer months. The pool is generally very pleasant for swimming.</div>
+        <div class="faq-answer" data-i18n="faq-a4">Yes — the pool is heated from November through to May inclusive. During the summer months (June to October) the pool is unheated, though Lanzarote's warm climate means the water stays pleasantly warm thanks to solar heat. The pool is available for swimming year-round.</div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q5">Is the villa suitable for children?</span><span class="faq-arrow">⌄</span></button>
@@ -2097,7 +2104,7 @@ footer {
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q7">What is your cancellation policy?</span><span class="faq-arrow">⌄</span></button>
-        <div class="faq-answer" data-i18n="faq-a7">Cancellations made more than 60 days before check-in will receive a full deposit refund. Cancellations within 60 days of check-in are non-refundable. Full terms and conditions are provided on booking.</div>
+        <div class="faq-answer" data-i18n="faq-a7">Our cancellation policy is as follows: cancellations made more than 90 days before check-in will receive a full refund of the deposit paid. Cancellations made between 60 and 90 days before check-in will receive a 50% refund of the deposit. Cancellations made less than 60 days before check-in are non-refundable. In the event of a no-show, the full amount paid is non-refundable. The balance payment (due 30 days before check-in) is non-refundable once paid. We strongly recommend purchasing comprehensive travel insurance to cover against unforeseen cancellations. To cancel a booking, please email bookings@villahola.es with your booking reference. Full terms and conditions are provided at the time of booking.</div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq-q8">Is Wi-Fi available at the villa?</span><span class="faq-arrow">⌄</span></button>
@@ -2137,7 +2144,7 @@ footer {
         <p data-i18n="host-p1">I grew up in Playa Blanca and have lived in Lanzarote my entire life, so I know the island — and especially this part of it — like a local.</p>
         <p data-i18n="host-p2">I can point you towards the beaches worth visiting, the restaurants I'd actually recommend, the best places to hire a car, and all those little tips that can make your stay that much better.</p>
         <p data-i18n="host-p3">I'm here to make your time at the villa as easy and enjoyable as possible. Whether you have a question about the villa, need a recommendation, or just want some local advice, feel free to message me anytime. I'm always happy to help!</p>
-        <a id="wa-host" href="#" class="btn btn-whatsapp" style="display:inline-flex" data-i18n="host-wa-btn">💬 Message Millie</a>
+        <a href="mailto:bookings@villahola.es" class="btn btn-primary" style="display:inline-flex" data-i18n="host-wa-btn">📧 Email Millie</a>
         <div class="host-emergency">
           <span style="font-size:20px">📞</span>
           <div>
@@ -2157,7 +2164,7 @@ footer {
     <p data-i18n="contact-desc">Secure your dates today with just a 10% deposit.<br>Questions? We're always happy to chat.</p>
     <div class="contact-buttons">
       <a href="#booking" class="btn btn-white btn-lg" data-i18n="contact-cta1">Check Availability</a>
-      <a id="wa-cta" href="#" class="btn btn-whatsapp btn-lg" data-i18n="contact-wa">💬 WhatsApp Us</a>
+      <a href="mailto:bookings@villahola.es" class="btn btn-white btn-lg" data-i18n="contact-wa">📧 Email Us</a>
     </div>
   </div>
 </section>
@@ -2187,7 +2194,6 @@ footer {
       <div class="footer-col">
         <h4 data-i18n="footer-contact-title">Contact</h4>
         <ul class="footer-links">
-          <li><a id="footer-wa" href="#" data-i18n="footer-wa-link">💬 WhatsApp</a></li>
           <li><a href="mailto:bookings@villahola.es">📧 bookings@villahola.es</a></li>
           <li><a href="#booking" data-i18n="footer-book-online">Book Online</a></li>
           <li><a href="/admin" data-i18n="footer-owner-login">Owner Login</a></li>
@@ -2293,7 +2299,7 @@ const translations = {
       'fac-kit-7': 'Coffee maker and kettle',
       'fac-liv-1': 'Spacious lounge with comfortable seating',
       'fac-liv-2': 'Smart TV with streaming apps',
-      'fac-liv-3': 'Air conditioning (hot &amp; cold)',
+      'fac-liv-3': 'Air conditioning throughout (coin operated)',
       'fac-liv-4': 'High-speed Wi-Fi throughout',
       'fac-liv-5': 'Indoor dining area',
       'fac-out-1': 'Private swimming pool',
@@ -2305,7 +2311,7 @@ const translations = {
       'fac-ext-1': 'Games room with pool table, table tennis and air hockey',
       'fac-ext-2': 'Rooftop terrace with panoramic views',
       'fac-ext-3': 'Baby cot available on request',
-      'fac-ext-4': '24/7 WhatsApp support during your stay',
+      'fac-ext-4': 'Email support throughout your stay',
     // Pool
     'pool-label': 'Your Private Oasis', 'pool-title': 'Sun, Water &amp; Total Privacy',
     'pool-desc': 'Your private pool is the heart of Villa Hola — sunbathe in peace, take a dip whenever you like, and dine al fresco on the terrace as the Lanzarote sun goes down. No shared facilities, no schedules, just pure relaxation.',
@@ -2339,19 +2345,18 @@ const translations = {
     's3-dates-label': 'Dates', 's3-guest-label': 'Guest', 's3-total-label': 'Total price',
     's3-deposit-label': '🔒 Deposit to pay now', 's3-back': '← Back',
     'stripe-note': '🔒 Payments secured by Stripe. Your card details are never stored by us.',
-    'balance-note': "<strong>💬 Remaining balance:</strong> After payment, we'll contact you on WhatsApp to arrange the remaining balance and confirm all the details of your stay.",
+    'balance-note': "<strong>📧 Remaining balance:</strong> After payment, we'll contact you by email to arrange the remaining balance and confirm all the details of your stay.",
     // Sidebar
     'sb-whats-title': "What's Included",
     'sb-feat-1': ' Flexible check-in', 'sb-feat-2': ' Private pool access',
     'sb-feat-3': ' High-speed Wi-Fi', 'sb-feat-4': ' Fresh linens &amp; towels',
     'sb-feat-5': ' Private parking', 'sb-feat-6': ' Airport transfer advice',
     'sb-pricing-title': 'Pricing Guide',
-    'sb-low-season': 'Low Season', 'sb-low-price': 'from €325/night + 7% IGIC',
-    'sb-peak-season': 'Peak Season', 'sb-peak-price': 'from €395/night + 7% IGIC',
-    'sb-early-book': '10% Early Booking Discount', 'sb-early-desc': 'Off-peak dates · 1+ year ahead',
-    'wa-sidebar-title': '💬 Questions? Chat With Us',
-    'wa-sidebar-desc': 'Our team is on hand to answer any questions about the villa, the area, or your booking.',
-    'wa-sidebar-btn': 'Open WhatsApp',
+    'sb-low-season': 'Low Season', 'sb-low-price': 'from {CUR}325/night + 7% IGIC',
+    'sb-peak-season': 'Peak Season', 'sb-peak-price': 'from {CUR}395/night + 7% IGIC',
+    'wa-sidebar-title': '📧 Questions? Email Us',
+    'wa-sidebar-desc': 'Drop us an email and we\'ll get back to you as soon as possible — usually within a few hours.',
+    'wa-sidebar-btn': '📧 Email Us',
     // Reviews
     'reviews-label': 'Guest Reviews', 'reviews-title': 'What Our Guests Say',
       'rev1-text': '"An absolutely stunning villa in a perfect location. The private pool was a highlight \u2014 we were out there every day. Can\'t wait to return!"',
@@ -2369,13 +2374,13 @@ const translations = {
     'faq-q8': 'Is Wi-Fi available at the villa?',
     'faq-q9': 'What is the maximum number of guests?',
     'faq-q10': 'Do I need a hire car?',
-    'faq-a1': 'Check-in is from 3:00pm and check-out is by 10:00am. Early check-in and late check-out may be available — please ask us via WhatsApp when making your booking.',
-    'faq-a2': 'When you book online, you pay a 20% deposit to secure your dates. The remaining 80% balance is due 30 days before your check-in date and is arranged with us directly via WhatsApp. We will contact you shortly after your booking to confirm the details and arrange the balance payment.',
+    'faq-a1': 'Check-in is from 3:00pm and check-out is by 10:00am. Early check-in and late check-out may be available — please email us at bookings@villahola.es when making your booking.',
+    'faq-a2': 'When you book online, you pay a 20% deposit to secure your dates. The remaining 80% balance is due 30 days before your check-in date. We will contact you by email shortly after your booking to confirm the details and arrange the balance payment.',
     'faq-a3': 'Our minimum stay is 2 nights year-round. Please check availability for your preferred dates and the booking form will advise you of any minimum.',
-    'faq-a4': "The pool is not heated, but it is fitted with a thermal cover that retains heat from the sun. Lanzarote's warm climate means the pool benefits from solar energy throughout the year, and water temperatures can reach up to 33°C during warmer months. The pool is generally very pleasant for swimming.",
+    'faq-a4': "The pool is heated from November through to May inclusive. During the summer months (June to October) the pool is unheated, though Lanzarote\'s warm climate means the water stays pleasantly warm thanks to solar heat. The pool is available for swimming year-round.",
     'faq-a5': 'Yes — Villa Hola is a great choice for families. Please note that children must always be supervised around the pool area. A travel cot and high chair can be provided on request — please let us know in advance.',
     'faq-a6': 'Unfortunately pets are not permitted at Villa Hola. This is to ensure the comfort of all guests and to meet the requirements of the complex.',
-    'faq-a7': 'Cancellations made more than 60 days before check-in will receive a full deposit refund. Cancellations within 60 days of check-in are non-refundable. Full terms and conditions are provided on booking.',
+    'faq-a7': 'More than 90 days before check-in: full deposit refund. 60–90 days before check-in: 50% deposit refund. Less than 60 days before check-in: non-refundable. The balance payment (due 30 days before check-in) is non-refundable once paid. In the event of a no-show, all amounts paid are forfeited. We strongly recommend purchasing travel insurance. To cancel, email bookings@villahola.es with your booking reference.',
     'faq-a8': 'Yes, high-speed Wi-Fi is included with every booking at no extra charge.',
     'faq-a9': 'Villa Hola accommodates a maximum of 8 guests across 4 bedrooms. This limit must be respected — the number of guests stated at booking is the maximum permitted to stay at the property.',
     'faq-a10': 'A hire car is highly recommended for exploring Lanzarote — the island has incredible scenery, volcanic landscapes and beaches that are best discovered by car. That said, Playa Blanca itself has a good range of restaurants, beaches and shops within walking distance. Taxis are also available.',
@@ -2384,11 +2389,11 @@ const translations = {
     'host-p1': "I grew up in Playa Blanca and have lived in Lanzarote my entire life, so I know the island — and especially this part of it — like a local.",
     'host-p2': "I can point you towards the beaches worth visiting, the restaurants I'd actually recommend, the best places to hire a car, and all those little tips that can make your stay that much better.",
     'host-p3': "I'm here to make your time at the villa as easy and enjoyable as possible. Whether you have a question about the villa, need a recommendation, or just want some local advice, feel free to message me anytime. I'm always happy to help!",
-    'host-wa-btn': '💬 Message Millie', 'host-emergency-label': 'Emergency Contact',
+    'host-wa-btn': '📧 Email Millie', 'host-emergency-label': 'Emergency Contact',
     // Contact
     'contact-title': 'Ready to Book Your<br>Lanzarote Holiday?',
-    'contact-desc': "Secure your dates today with just a 10% deposit.<br>Questions? We're always happy to chat.",
-    'contact-cta1': 'Check Availability', 'contact-wa': '💬 WhatsApp Us',
+    'contact-desc': "Secure your dates with a 20% deposit — the rest is due 30 days before arrival.<br>Questions? Email us at bookings@villahola.es.",
+    'contact-cta1': 'Check Availability', 'contact-wa': '📧 Email Us',
     // Footer
     'footer-desc': 'A beautiful private holiday villa in Las Buganvillas, Playa Blanca, Lanzarote — the perfect escape for families, couples and groups looking for sun, relaxation and a home away from home.',
     'footer-links-title': 'Quick Links',
@@ -2396,7 +2401,7 @@ const translations = {
     'footer-link-fac': 'Facilities', 'footer-link-location': 'Location',
     'footer-link-book': 'Book Now', 'footer-link-faq': 'FAQs',
     'footer-contact-title': 'Contact',
-    'footer-wa-link': '💬 WhatsApp', 'footer-book-online': 'Book Online',
+    'footer-book-online': 'Book Online',
     'footer-owner-login': 'Owner Login', 'footer-find-title': 'Find Us Online',
   },
 
@@ -2461,7 +2466,7 @@ const translations = {
       'fac-kit-7': 'Cafetera y hervidor de agua',
       'fac-liv-1': 'Amplio salón con cómodos asientos',
       'fac-liv-2': 'Smart TV con aplicaciones de streaming',
-      'fac-liv-3': 'Aire acondicionado (frío y calor)',
+      'fac-liv-3': 'Aire acondicionado en toda la villa (de monedas)',
       'fac-liv-4': 'Wi-Fi de alta velocidad en toda la villa',
       'fac-liv-5': 'Comedor interior',
       'fac-out-1': 'Piscina privada',
@@ -2473,7 +2478,7 @@ const translations = {
       'fac-ext-1': 'Sala de juegos con mesa de billar, ping-pong y air hockey',
       'fac-ext-2': 'Terraza en la azotea con vistas panorámicas',
       'fac-ext-3': 'Cuna de viaje disponible bajo petición',
-      'fac-ext-4': 'Soporte por WhatsApp 24/7 durante su estancia',
+      'fac-ext-4': 'Soporte por correo electrónico durante su estancia',
     // Pool
     'pool-label': 'Tu Oasis Privado', 'pool-title': 'Sol, Agua y Total Privacidad',
     'pool-desc': 'Tu piscina privada es el corazón de Villa Hola — toma el sol con tranquilidad, date un chapuzón cuando quieras y cena al aire libre en la terraza mientras el sol de Lanzarote se pone. Sin instalaciones compartidas, sin horarios, solo pura relajación.',
@@ -2507,19 +2512,18 @@ const translations = {
     's3-dates-label': 'Fechas', 's3-guest-label': 'Huésped', 's3-total-label': 'Precio total',
     's3-deposit-label': '🔒 Depósito a pagar ahora', 's3-back': '← Volver',
     'stripe-note': '🔒 Pagos gestionados de forma segura por Stripe. Tus datos de tarjeta nunca se almacenan con nosotros.',
-    'balance-note': '<strong>💬 Saldo restante:</strong> Tras el pago, nos pondremos en contacto contigo por WhatsApp para gestionar el saldo restante y confirmar todos los detalles de tu estancia.',
+    'balance-note': '<strong>📧 Saldo restante:</strong> Tras el pago, nos pondremos en contacto contigo por correo electrónico para gestionar el saldo restante y confirmar todos los detalles de tu estancia.',
     // Sidebar
     'sb-whats-title': 'Qué Incluye',
     'sb-feat-1': ' Entrada flexible', 'sb-feat-2': ' Acceso a piscina privada',
     'sb-feat-3': ' Wi-Fi de alta velocidad', 'sb-feat-4': ' Ropa de cama y toallas',
     'sb-feat-5': ' Aparcamiento privado', 'sb-feat-6': ' Información sobre traslados',
     'sb-pricing-title': 'Guía de Precios',
-    'sb-low-season': 'Temporada Baja', 'sb-low-price': 'desde €325/noche + 7% IGIC',
-    'sb-peak-season': 'Temporada Alta', 'sb-peak-price': 'desde €395/noche + 7% IGIC',
-    'sb-early-book': '10% Descuento por Reserva Anticipada', 'sb-early-desc': 'Fechas fuera de temporada · 1+ año de antelación',
-    'wa-sidebar-title': '💬 ¿Preguntas? Chatea con Nosotros',
-    'wa-sidebar-desc': 'Nuestro equipo está disponible para responder cualquier pregunta sobre la villa, la zona o tu reserva.',
-    'wa-sidebar-btn': 'Abrir WhatsApp',
+    'sb-low-season': 'Temporada Baja', 'sb-low-price': 'desde {CUR}325/noche + 7% IGIC',
+    'sb-peak-season': 'Temporada Alta', 'sb-peak-price': 'desde {CUR}395/noche + 7% IGIC',
+    'wa-sidebar-title': '📧 ¿Preguntas? Escríbenos',
+    'wa-sidebar-desc': 'Envíanos un correo electrónico y te responderemos lo antes posible, normalmente en pocas horas.',
+    'wa-sidebar-btn': '📧 Escríbenos',
     // Reviews
     'reviews-label': 'Opiniones de Huéspedes', 'reviews-title': 'Lo Que Dicen Nuestros Huéspedes',
       'rev1-text': '"Una villa absolutamente impresionante en una ubicación perfecta. La piscina privada fue lo mejor \u2014 estábamos ahí cada día. ¡No podemos esperar para volver!"',
@@ -2537,13 +2541,13 @@ const translations = {
     'faq-q8': '¿Hay Wi-Fi disponible en la villa?',
     'faq-q9': '¿Cuál es el número máximo de huéspedes?',
     'faq-q10': '¿Necesito alquilar un coche?',
-    'faq-a1': 'La entrada es a partir de las 15:00h y la salida antes de las 10:00h. La entrada anticipada y la salida tardía pueden estar disponibles — consúltanos por WhatsApp al hacer tu reserva.',
-    'faq-a2': 'Al reservar online, pagas un depósito del 20% para asegurar tus fechas. El 80% restante vence 30 días antes de tu fecha de entrada y se gestiona directamente con nosotros por WhatsApp.',
+    'faq-a1': 'La entrada es a partir de las 15:00h y la salida antes de las 10:00h. La entrada anticipada y la salida tardía pueden estar disponibles — consúltanos por correo a bookings@villahola.es al hacer tu reserva.',
+    'faq-a2': 'Al reservar online, pagas un depósito del 20% para asegurar tus fechas. El 80% restante vence 30 días antes de tu fecha de entrada. Te contactaremos por correo electrónico tras la reserva para confirmar los detalles y gestionar el pago del saldo.',
     'faq-a3': 'La estancia mínima es de 2 noches durante todo el año. Comprueba la disponibilidad para tus fechas preferidas y el formulario de reserva te indicará cualquier mínimo aplicable.',
-    'faq-a4': 'La piscina no está climatizada, pero dispone de una cubierta térmica que retiene el calor del sol. El cálido clima de Lanzarote hace que la piscina sea muy agradable para bañarse durante todo el año.',
+    'faq-a4': 'La piscina está climatizada de noviembre a mayo inclusive. Durante los meses de verano (junio a octubre) la piscina no está calefactada, aunque el cálido clima de Lanzarote hace que el agua esté agradablemente cálida gracias al calor solar. La piscina está disponible para nadar todo el año.',
     'faq-a5': 'Sí — Villa Hola es una excelente opción para familias. Ten en cuenta que los niños deben estar siempre supervisados en la zona de la piscina. Se puede proporcionar cuna de viaje y trona bajo petición.',
     'faq-a6': 'Lamentablemente no se admiten mascotas en Villa Hola. Esto garantiza la comodidad de todos los huéspedes y cumple con los requisitos del complejo.',
-    'faq-a7': 'Las cancelaciones realizadas con más de 60 días de antelación a la fecha de entrada recibirán el reembolso total del depósito. Las cancelaciones dentro de los 60 días anteriores a la entrada no son reembolsables.',
+    'faq-a7': 'Más de 90 días antes de la entrada: reembolso total del depósito. Entre 60 y 90 días antes: reembolso del 50% del depósito. Menos de 60 días antes: sin reembolso. El pago del saldo (30 días antes de la entrada) no es reembolsable una vez abonado. En caso de no presentarse, se pierden todos los importes pagados. Recomendamos encarecidamente contratar un seguro de viaje. Para cancelar, envía un correo a bookings@villahola.es con tu referencia de reserva.',
     'faq-a8': 'Sí, el Wi-Fi de alta velocidad está incluido en todas las reservas sin coste adicional.',
     'faq-a9': 'Villa Hola tiene capacidad para un máximo de 8 huéspedes en 4 dormitorios. Este límite debe respetarse.',
     'faq-a10': 'Se recomienda encarecidamente alquilar un coche para explorar Lanzarote — la isla tiene paisajes volcánicos y playas increíbles que se descubren mejor en coche. Dicho esto, Playa Blanca tiene una buena oferta de restaurantes, playas y tiendas a poca distancia a pie.',
@@ -2552,11 +2556,11 @@ const translations = {
     'host-p1': 'Crecí en Playa Blanca y he vivido en Lanzarote toda mi vida, así que conozco la isla — y especialmente esta zona — como una local.',
     'host-p2': 'Puedo recomendarte las playas que merece la pena visitar, los restaurantes que realmente recomendaría, los mejores sitios para alquilar un coche y todos esos pequeños consejos que pueden hacer tu estancia mucho mejor.',
     'host-p3': 'Estoy aquí para que tu tiempo en la villa sea lo más fácil y agradable posible. Tanto si tienes una pregunta sobre la villa, necesitas una recomendación o simplemente quieres algún consejo local, no dudes en escribirme cuando quieras. ¡Siempre estaré encantada de ayudar!',
-    'host-wa-btn': '💬 Mensaje a Millie', 'host-emergency-label': 'Contacto de Emergencia',
+    'host-wa-btn': '📧 Email a Millie', 'host-emergency-label': 'Contacto de Emergencia',
     // Contact
     'contact-title': '¿Listo para Reservar tus<br>Vacaciones en Lanzarote?',
-    'contact-desc': 'Asegura tus fechas hoy con solo un 10% de depósito.<br>¿Tienes preguntas? Estaremos encantados de chatear.',
-    'contact-cta1': 'Comprobar Disponibilidad', 'contact-wa': '💬 WhatsApp',
+    'contact-desc': 'Reserva con un depósito del 20% — el resto vence 30 días antes de la llegada.<br>¿Preguntas? Escríbenos a bookings@villahola.es.',
+    'contact-cta1': 'Comprobar Disponibilidad', 'contact-wa': '📧 Escríbenos',
     // Footer
     'footer-desc': 'Una hermosa villa privada de vacaciones en Las Buganvillas, Playa Blanca, Lanzarote — el escape perfecto para familias, parejas y grupos en busca de sol, relajación y un hogar lejos del hogar.',
     'footer-links-title': 'Enlaces Rápidos',
@@ -2564,7 +2568,7 @@ const translations = {
     'footer-link-fac': 'Instalaciones', 'footer-link-location': 'Ubicación',
     'footer-link-book': 'Reservar', 'footer-link-faq': 'Preguntas',
     'footer-contact-title': 'Contacto',
-    'footer-wa-link': '💬 WhatsApp', 'footer-book-online': 'Reservar Online',
+    'footer-book-online': 'Reservar Online',
     'footer-owner-login': 'Acceso Propietario', 'footer-find-title': 'Encuéntranos Online',
   },
 
@@ -2629,7 +2633,7 @@ const translations = {
       'fac-kit-7': 'Kaffeemaschine und Wasserkocher',
       'fac-liv-1': 'Geräumiges Wohnzimmer mit bequemen Sitzmöbeln',
       'fac-liv-2': 'Smart-TV mit Streaming-Apps',
-      'fac-liv-3': 'Klimaanlage (Heizen &amp; Kühlen)',
+      'fac-liv-3': 'Klimaanlage in der gesamten Villa (münzbetrieben)',
       'fac-liv-4': 'Schnelles WLAN in der gesamten Villa',
       'fac-liv-5': 'Innen-Essbereich',
       'fac-out-1': 'Privater Swimmingpool',
@@ -2641,7 +2645,7 @@ const translations = {
       'fac-ext-1': 'Spielzimmer mit Billardtisch, Tischtennis und Air-Hockey',
       'fac-ext-2': 'Dachterrasse mit Panoramablick',
       'fac-ext-3': 'Babybett auf Anfrage erhältlich',
-      'fac-ext-4': '24/7 WhatsApp-Support während Ihres Aufenthalts',
+      'fac-ext-4': 'E-Mail-Support während Ihres Aufenthalts',
     // Pool
     'pool-label': 'Ihre private Oase', 'pool-title': 'Sonne, Wasser &amp; totale Privatsphäre',
     'pool-desc': 'Ihr privater Pool ist das Herzstück der Villa Hola — sonnen Sie sich in Ruhe, springen Sie wann immer Sie möchten ins Wasser und essen Sie al fresco auf der Terrasse, während die Lanzarote-Sonne untergeht. Keine gemeinsam genutzten Einrichtungen, keine festen Zeiten, nur pure Entspannung.',
@@ -2675,19 +2679,18 @@ const translations = {
     's3-dates-label': 'Termine', 's3-guest-label': 'Gast', 's3-total-label': 'Gesamtpreis',
     's3-deposit-label': '🔒 Anzahlung jetzt fällig', 's3-back': '← Zurück',
     'stripe-note': '🔒 Zahlungen werden sicher über Stripe abgewickelt. Ihre Kartendaten werden nie bei uns gespeichert.',
-    'balance-note': '<strong>💬 Restbetrag:</strong> Nach der Zahlung werden wir Sie über WhatsApp kontaktieren, um den Restbetrag zu arrangieren und alle Details Ihres Aufenthalts zu bestätigen.',
+    'balance-note': '<strong>📧 Restbetrag:</strong> Nach der Zahlung werden wir Sie per E-Mail kontaktieren, um den Restbetrag zu arrangieren und alle Details Ihres Aufenthalts zu bestätigen.',
     // Sidebar
     'sb-whats-title': 'Im Preis Enthalten',
     'sb-feat-1': ' Flexibler Check-in', 'sb-feat-2': ' Privater Poolzugang',
     'sb-feat-3': ' Schnelles WLAN', 'sb-feat-4': ' Frische Bettwäsche &amp; Handtücher',
     'sb-feat-5': ' Privater Parkplatz', 'sb-feat-6': ' Informationen zu Transfers',
     'sb-pricing-title': 'Preisübersicht',
-    'sb-low-season': 'Nebensaison', 'sb-low-price': 'ab €325/Nacht + 7% IGIC',
+    'sb-low-season': 'Nebensaison', 'sb-low-price': 'ab {CUR}325/Nacht + 7% IGIC',
     'sb-peak-season': 'Hochsaison', 'sb-peak-price': 'ab €395/Nacht + 7% IGIC',
-    'sb-early-book': '10% Frühbucherrabatt', 'sb-early-desc': 'Nebensaisontermine · 1+ Jahr im Voraus',
-    'wa-sidebar-title': '💬 Fragen? Schreiben Sie uns',
+    'wa-sidebar-title': '📧 Fragen? Schreiben Sie uns',
     'wa-sidebar-desc': 'Unser Team beantwortet gerne alle Fragen zur Villa, zur Gegend oder zu Ihrer Buchung.',
-    'wa-sidebar-btn': 'WhatsApp öffnen',
+    'wa-sidebar-btn': '📧 E-Mail senden',
     // Reviews
     'reviews-label': 'Gästebewertungen', 'reviews-title': 'Was Unsere Gäste Sagen',
       'rev1-text': '"Eine absolut atemberaubende Villa in perfekter Lage. Der Privatpool war das Highlight \u2014 wir waren jeden Tag draußen. Wir kommen definitiv wieder!"',
@@ -2705,13 +2708,13 @@ const translations = {
     'faq-q8': 'Ist WLAN in der Villa verfügbar?',
     'faq-q9': 'Was ist die maximale Gästeanzahl?',
     'faq-q10': 'Brauche ich ein Mietauto?',
-    'faq-a1': 'Der Check-in ist ab 15:00 Uhr und der Check-out bis 10:00 Uhr. Früher Check-in und später Check-out können verfügbar sein — bitte fragen Sie uns per WhatsApp bei der Buchung.',
-    'faq-a2': 'Bei der Online-Buchung zahlen Sie eine Anzahlung von 20%, um Ihre Termine zu sichern. Die restlichen 80% sind 30 Tage vor Ihrem Check-in-Datum fällig und werden direkt mit uns per WhatsApp abgewickelt.',
+    'faq-a1': 'Der Check-in ist ab 15:00 Uhr und der Check-out bis 10:00 Uhr. Früher Check-in und später Check-out können verfügbar sein — bitte schreiben Sie uns an bookings@villahola.es bei der Buchung.',
+    'faq-a2': 'Bei der Online-Buchung zahlen Sie eine Anzahlung von 20%, um Ihre Termine zu sichern. Die restlichen 80% sind 30 Tage vor Ihrem Check-in-Datum fällig. Wir kontaktieren Sie nach der Buchung per E-Mail, um die Details zu bestätigen und die Restzahlung zu arrangieren.',
     'faq-a3': 'Der Mindestaufenthalt beträgt ganzjährig 2 Nächte. Prüfen Sie die Verfügbarkeit für Ihre bevorzugten Termine.',
-    'faq-a4': 'Der Pool wird nicht beheizt, ist aber mit einer Thermoabdeckung ausgestattet, die die Sonnenwärme speichert. Das warme Klima Lanzarotes sorgt dafür, dass der Pool das ganze Jahr über angenehm zum Baden ist.',
+    'faq-a4': 'Der Pool wird von November bis einschließlich Mai beheizt. In den Sommermonaten (Juni bis Oktober) ist der Pool unbeheizt, aber dank des warmen Klimas von Lanzarote bleibt das Wasser durch Sonnenenergie angenehm warm. Der Pool steht das ganze Jahr zum Schwimmen zur Verfügung.',
     'faq-a5': 'Ja — die Villa Hola ist eine ausgezeichnete Wahl für Familien. Bitte beachten Sie, dass Kinder immer im Poolbereich beaufsichtigt werden müssen. Ein Reisebettchen und ein Hochstuhl können auf Anfrage bereitgestellt werden.',
     'faq-a6': 'Leider sind in der Villa Hola keine Haustiere erlaubt. Dies gewährleistet den Komfort aller Gäste und erfüllt die Anforderungen des Komplexes.',
-    'faq-a7': 'Stornierungen mehr als 60 Tage vor dem Check-in erhalten eine vollständige Anzahlungsrückerstattung. Stornierungen innerhalb von 60 Tagen vor dem Check-in sind nicht erstattungsfähig.',
+    'faq-a7': 'Mehr als 90 Tage vor Check-in: vollständige Anzahlungsrückerstattung. 60–90 Tage vorher: 50% der Anzahlung zurück. Weniger als 60 Tage vorher: keine Rückerstattung. Die Restzahlung (fällig 30 Tage vor Check-in) ist nach Zahlung nicht erstattungsfähig. Bei Nichterscheinen verfallen alle gezahlten Beträge. Wir empfehlen dringend den Abschluss einer Reiseversicherung. Zur Stornierung senden Sie eine E-Mail an bookings@villahola.es mit Ihrer Buchungsreferenz.',
     'faq-a8': 'Ja, schnelles WLAN ist bei jeder Buchung ohne Aufpreis enthalten.',
     'faq-a9': 'Die Villa Hola bietet Platz für maximal 8 Gäste in 4 Schlafzimmern. Dieses Limit muss eingehalten werden.',
     'faq-a10': 'Ein Mietauto wird sehr empfohlen, um Lanzarote zu erkunden — die Insel hat unglaubliche Vulkanlandschaften und Strände, die man am besten mit dem Auto entdeckt. Allerdings hat Playa Blanca selbst eine gute Auswahl an Restaurants, Stränden und Einkaufsmöglichkeiten in Gehweite.',
@@ -2724,7 +2727,7 @@ const translations = {
     // Contact
     'contact-title': 'Bereit für Ihren<br>Lanzarote-Urlaub?',
     'contact-desc': 'Sichern Sie sich Ihre Termine noch heute mit nur 10% Anzahlung.<br>Fragen? Wir freuen uns auf Ihre Nachricht.',
-    'contact-cta1': 'Verfügbarkeit Prüfen', 'contact-wa': '💬 WhatsApp',
+    'contact-cta1': 'Verfügbarkeit Prüfen', 'contact-wa': '📧 E-Mail',
     // Footer
     'footer-desc': 'Eine wunderschöne private Ferienvilla in Las Buganvillas, Playa Blanca, Lanzarote — der perfekte Rückzugsort für Familien, Paare und Gruppen, die Sonne, Entspannung und ein Zuhause fernab von zu Hause suchen.',
     'footer-links-title': 'Schnelllinks',
@@ -2732,12 +2735,31 @@ const translations = {
     'footer-link-fac': 'Ausstattung', 'footer-link-location': 'Lage',
     'footer-link-book': 'Jetzt Buchen', 'footer-link-faq': 'FAQ',
     'footer-contact-title': 'Kontakt',
-    'footer-wa-link': '💬 WhatsApp', 'footer-book-online': 'Online Buchen',
+    'footer-book-online': 'Online Buchen',
     'footer-owner-login': 'Eigentümer-Login', 'footer-find-title': 'Finden Sie Uns Online',
   },
 };
 
 let currentLang = 'en';
+
+// ── Currency ────────────────────────────────────────────────────────────────
+let currentCurrency = 'EUR';
+const CURR_SYMBOL = { EUR: '€', GBP: '£' };
+
+function setCurrency(curr) {
+  currentCurrency = curr;
+  // Update button states — desktop
+  ['eur','gbp'].forEach(c => {
+    const btn = document.getElementById(`curr-${c}`);
+    if (btn) btn.classList.toggle('active', c === curr.toLowerCase());
+    const btnM = document.getElementById(`curr-${c}-m`);
+    if (btnM) btnM.classList.toggle('active', c === curr.toLowerCase());
+  });
+  // Re-apply current language so price strings update
+  const activeLang = document.querySelector('.lang-btn.active[id^="lang-"]:not([id$="-m"])');
+  const lang = activeLang ? activeLang.id.replace('lang-','') : 'en';
+  setLanguage(lang);
+}
 
 function setLanguage(lang) {
   currentLang = lang;
@@ -2789,15 +2811,6 @@ async function init() {
   } catch (e) {
     config = { whatsapp: '+34600000000', depositPct: 20, cleaningFee: 80, minStay: 3, currency: 'EUR' };
   }
-
-  // Set WhatsApp links
-  const waNum = config.whatsapp || '+34600000000';
-  const waNumClean = waNum.replace(/[^0-9]/g, '');
-  const waLinks = ['wa-questions','wa-cta','footer-wa','wa-direct-book'];
-  waLinks.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.href = `https://wa.me/${waNumClean}?text=${encodeURIComponent("Hi! I'm interested in booking Villa Hola.")}`;
-  });
 
   // Load blocked dates for next 18 months
   await loadBlockedDates();
@@ -2914,7 +2927,7 @@ async function checkAvailability() {
       return;
     }
   } catch (e) {
-    showAvailResult('Unable to check availability right now. Please try again or contact us on WhatsApp.', 'unavailable');
+    showAvailResult('Unable to check availability right now. Please try again or email us at bookings@villahola.es.', 'unavailable');
   }
 
   btn.innerHTML = 'Check Availability';
@@ -2940,21 +2953,13 @@ function clearAvailability() {
 }
 
 function showPriceBreakdown(p) {
+  const sym = CURR_SYMBOL[currentCurrency] || '€';
   document.getElementById('pr-nights').textContent   = `${p.nights} nights`;
-  document.getElementById('pr-subtotal').textContent = `€${p.subtotal.toFixed(2)}`;
-  document.getElementById('pr-igic').textContent     = `€${(p.igic || 0).toFixed(2)}`;
-  document.getElementById('pr-total').textContent    = `€${p.grandTotal.toFixed(2)}`;
-  document.getElementById('pr-deposit').textContent  = `€${p.deposit.toFixed(2)}`;
-  document.getElementById('pr-balance').textContent  = `€${p.balance.toFixed(2)}`;
-
-  // Early booking discount row
-  const discRow = document.getElementById('pr-discount-row');
-  if (p.earlyBookingApplied && p.discountAmount > 0) {
-    document.getElementById('pr-discount').textContent = `-€${p.discountAmount.toFixed(2)}`;
-    discRow.style.display = '';
-  } else {
-    discRow.style.display = 'none';
-  }
+  document.getElementById('pr-subtotal').textContent = `${sym}${p.subtotal.toFixed(2)}`;
+  document.getElementById('pr-igic').textContent     = `${sym}${(p.igic || 0).toFixed(2)}`;
+  document.getElementById('pr-total').textContent    = `${sym}${p.grandTotal.toFixed(2)}`;
+  document.getElementById('pr-deposit').textContent  = `${sym}${p.deposit.toFixed(2)}`;
+  document.getElementById('pr-balance').textContent  = `${sym}${p.balance.toFixed(2)}`;
 
   // Cleaning fee vs weekly clean
   if (p.cleaningFee > 0) {
@@ -3038,12 +3043,6 @@ async function goToPayment() {
     document.getElementById('s3-guest').textContent  = name;
     document.getElementById('s3-total').textContent  = `€${pricing.grandTotal.toFixed(2)}`;
     document.getElementById('s3-deposit').textContent = `€${pricing.deposit.toFixed(2)}`;
-
-    // WhatsApp direct book link (with booking ref if available)
-    const waNum  = (config.whatsapp || '+34600000000').replace(/[^0-9]/g,'');
-    const waMsg  = encodeURIComponent(`Hi! I'd like to book Villa Hola.\nDates: ${ci} to ${co}\nGuests: ${document.getElementById('num-guests').value}\nName: ${name}`);
-    const waEl   = document.getElementById('wa-direct-book');
-    if (waEl) waEl.href = `https://wa.me/${waNum}?text=${waMsg}`;
 
     // If Stripe configured, create payment intent
     if (stripeObj && bookingId) {
