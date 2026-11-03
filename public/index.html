@@ -1459,7 +1459,7 @@ footer {
     <div class="feature-item">
       <span class="feature-icon">🏊</span>
       <div class="feature-title" data-i18n="feat1-title">Private Pool</div>
-      <div class="feature-desc" data-i18n="feat1-desc">Your own private pool — solar-warmed with a thermal cover, reaching up to 33°C. No sharing, total privacy.</div>
+      <div class="feature-desc" data-i18n="feat1-desc">Your own private pool — fitted with a solar pool cover and electric heating for the winter months, ensuring swimmable temperatures all year round. No sharing, total privacy.</div>
     </div>
     <div class="feature-item">
       <span class="feature-icon">📍</span>
@@ -1828,7 +1828,7 @@ footer {
   <div class="container">
     <div class="section-label">Direct Booking</div>
     <h2 class="section-title">Check Availability & Book</h2>
-    <p class="section-intro">No booking fees. Pay just a 10% deposit to secure your dates — the balance is arranged with us directly.</p>
+    <p class="section-intro">No booking fees. Pay just a 20% deposit to secure your dates — the balance is due 30 days before arrival.</p>
 
     <div class="booking-layout">
       <!-- Booking form -->
@@ -1867,6 +1867,9 @@ footer {
                 <input type="text" id="check-out" placeholder="Select date" readonly>
               </div>
             </div>
+            <div id="min-stay-hint" style="font-size:13px;color:#888;margin-top:-8px;margin-bottom:8px;display:none">
+              ⓘ Minimum stay is 5 nights — please select a check-out date at least 5 nights after check-in.
+            </div>
             <div class="form-group">
               <label data-i18n="label-guests">Number of Guests</label>
               <div class="guests-row">
@@ -1882,8 +1885,7 @@ footer {
               <div class="price-row"><span id="pr-nights">3 nights</span><span id="pr-subtotal">€0.00</span></div>
               <div class="price-row" id="pr-cleaning-row"><span>Cleaning fee</span><span id="pr-cleaning">€80.00</span></div>
               <div class="price-row" id="pr-weekly-clean-row" style="display:none;color:#4A7C59"><span>✓ Weekly clean included</span><span>—</span></div>
-              <div class="price-row"><span>IGIC (7% Canary Islands tax)</span><span id="pr-igic">€0.00</span></div>
-              <div class="price-row total"><span>Total inc. IGIC</span><span id="pr-total">€0.00</span></div>
+              <div class="price-row total"><span>Total (all inclusive)</span><span id="pr-total">€0.00</span></div>
               <div class="price-row deposit">🔒 <span>Deposit due now (20%)</span><span id="pr-deposit">€0.00</span></div>
               <div class="price-row balance">📧 <span>Balance due (pay before check-in)</span><span id="pr-balance">€0.00</span></div>
             </div>
@@ -2024,7 +2026,7 @@ footer {
           </div>
 
           <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);font-size:13px;color:rgba(255,255,255,0.5)">
-            €80 cleaning fee (stays under 5 nights) · Weekly clean included for 5+ nights · Min. 2 nights
+            <span data-i18n="sb-cleaning-note">{CUR}80 cleaning fee (stays under 5 nights) · Weekly clean included for 5+ nights · Min. 5 nights</span>
           </div>
         </div>
 
@@ -2049,20 +2051,20 @@ footer {
     <div class="reviews-grid">
       <div class="review-card">
         <div class="review-stars">★★★★★</div>
-        <p class="review-text" data-i18n="rev1-text">"An absolutely stunning villa in a perfect location. The private pool was a highlight — we were out there every day. Can't wait to return!"</p>
-        <div class="review-author">Sarah & James M.</div>
-        <div class="review-date">Manchester, UK</div>
+        <p class="review-text" data-i18n="rev1-text">"Honestly one of the best holidays we've had in years. Used the pool every single day — even dragged ourselves out for a swim on the last morning before the taxi came! Really easy walk to the beach and loads of good restaurants nearby. Will definitely be back."</p>
+        <div class="review-author">Claire & Dan W.</div>
+        <div class="review-date">Leeds, UK</div>
       </div>
       <div class="review-card">
         <div class="review-stars">★★★★★</div>
-        <p class="review-text" data-i18n="rev2-text">"We've visited Lanzarote many times and this is by far the best villa we've stayed in. Immaculate, well-equipped and the owners were brilliant."</p>
-        <div class="review-author">The Robertson Family</div>
+        <p class="review-text" data-i18n="rev2-text">"We come to Lanzarote pretty much every year and this is without doubt the best place we've stayed. Everything you could possibly need was there, spotlessly clean, and Millie was brilliant with all our questions before we arrived. Already planning to come back next autumn."</p>
+        <div class="review-author">Diane & Phil H.</div>
         <div class="review-date">Edinburgh, UK</div>
       </div>
       <div class="review-card">
         <div class="review-stars">★★★★★</div>
-        <p class="review-text" data-i18n="rev3-text">"Perfect from start to finish. Playa Blanca is a gem and Villa Hola made our holiday truly special. Already recommending it to friends."</p>
-        <div class="review-author">Helen & David T.</div>
+        <p class="review-text" data-i18n="rev3-text">"We'd never been to Playa Blanca before and it completely won us over — so much quieter than the north of the island which is exactly what we wanted. The villa is gorgeous, felt like a proper home rather than a holiday let. Kids absolutley loved the pool. Told everyone at work about it when we got back!"</p>
+        <div class="review-author">Jo & Mark T.</div>
         <div class="review-date">Bristol, UK</div>
       </div>
     </div>
@@ -2161,7 +2163,7 @@ footer {
 <section id="contact">
   <div class="container">
     <h2 class="section-title" data-i18n="contact-title">Ready to Book Your<br>Lanzarote Holiday?</h2>
-    <p data-i18n="contact-desc">Secure your dates today with just a 10% deposit.<br>Questions? We're always happy to chat.</p>
+    <p data-i18n="contact-desc">Secure your dates with a 20% deposit — the rest is due 30 days before arrival.<br>Questions? Email us at bookings@villahola.es.</p>
     <div class="contact-buttons">
       <a href="#booking" class="btn btn-white btn-lg" data-i18n="contact-cta1">Check Availability</a>
       <a href="mailto:bookings@villahola.es" class="btn btn-white btn-lg" data-i18n="contact-wa">📧 Email Us</a>
@@ -2220,8 +2222,11 @@ footer {
         </ul>
       </div>
     </div>
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1);font-size:12px;color:rgba(255,255,255,0.45);text-align:center;line-height:1.6">
+      All advertised prices are fully inclusive of IGIC (Impuesto General Indirecto Canario), the Canary Islands equivalent of VAT, currently charged at 7%. No hidden extras.
+    </div>
     <div class="footer-bottom">
-      <span>© 2026 Villa Hola · villahola.es · Las Buganvillas, Playa Blanca, Lanzarote.</span>
+      <span>© 2025 Villa Hola · villahola.es · Las Buganvillas, Playa Blanca, Lanzarote.</span>
       <span>Licence: VV-35-3-0002362 · Direct bookings welcome — no agency fees.</span>
     </div>
   </div>
@@ -2255,7 +2260,7 @@ const translations = {
     'banner-sub': "We're listed on Airbnb &amp; Booking.com — but book with us directly and keep the fees in your pocket.",
     'banner-cta': 'Book Direct &amp; Save',
     // Features
-    'feat1-title': 'Private Pool', 'feat1-desc': 'Your own private pool — solar-warmed with a thermal cover, reaching up to 33°C. No sharing, total privacy.',
+    'feat1-title': 'Private Heated Pool', 'feat1-desc': 'Your own private pool — fitted with a solar pool cover and electric heating for the winter months, ensuring swimmable temperatures all year round. No sharing, total privacy.',
     'feat2-title': 'Prime Location', 'feat2-desc': 'In the beautiful Las Buganvillas complex, moments from Playa Blanca.',
     'feat3-title': 'Year-Round Sun', 'feat3-desc': 'Over 300 days of sunshine a year. Lanzarote is warm in every season.',
     'feat4-title': 'Book Direct &amp; Save', 'feat4-desc': 'No platform fees. Book directly and get the best possible price.',
@@ -2263,7 +2268,7 @@ const translations = {
     'about-label': 'Welcome to Villa Hola', 'about-title': 'Family Friendly Paradise in Playa Blanca',
     'about-p1': "Nestled in the sought-after Las Buganvillas complex, Villa Hola offers everything you need for the perfect Lanzarote holiday. Wake up to golden sunshine, spend your days lounging by your private pool, and explore one of the Canary Islands' most beautiful destinations — all at your own pace.",
     'about-p2': "Whether you're a family wanting space and comfort, a group of friends ready to explore the island, or a couple seeking a luxurious retreat — Villa Hola, with its four bedrooms, private pool and rooftop terrace, is your home away from home.",
-    'about-f1': ' 4 bedrooms, sleeps up to 8', 'about-f2': ' Private swimming pool',
+    'about-f1': ' 4 bedrooms, sleeps up to 8', 'about-f2': ' Private heated pool (Nov–May)',
     'about-f3': ' Fully equipped kitchen', 'about-f4': ' Air conditioning throughout',
     'about-f5': ' Games room with pool table', 'about-f6': ' High-speed Wi-Fi',
     'about-f7': ' Rooftop terrace with views', 'about-f8': ' 3 bathrooms',
@@ -2302,7 +2307,7 @@ const translations = {
       'fac-liv-3': 'Air conditioning throughout (coin operated)',
       'fac-liv-4': 'High-speed Wi-Fi throughout',
       'fac-liv-5': 'Indoor dining area',
-      'fac-out-1': 'Private swimming pool',
+      'fac-out-1': 'Private pool (heated Nov–May)',
       'fac-out-2': 'Sun terrace with loungers',
       'fac-out-3': 'Outdoor dining area',
       'fac-out-4': 'BBQ facilities',
@@ -2314,8 +2319,8 @@ const translations = {
       'fac-ext-4': 'Email support throughout your stay',
     // Pool
     'pool-label': 'Your Private Oasis', 'pool-title': 'Sun, Water &amp; Total Privacy',
-    'pool-desc': 'Your private pool is the heart of Villa Hola — sunbathe in peace, take a dip whenever you like, and dine al fresco on the terrace as the Lanzarote sun goes down. No shared facilities, no schedules, just pure relaxation.',
-    'pool-spec-1': ' Private pool', 'pool-spec-2': ' Sun loungers',
+    'pool-desc': 'Your private pool is the heart of Villa Hola — sunbathe in peace, take a dip whenever you like, and dine al fresco on the terrace as the Lanzarote sun goes down. No shared facilities, no schedules, just pure relaxation. The pool is heated from November through May.',
+    'pool-spec-1': ' Heated pool (Nov–May)', 'pool-spec-2': ' Sun loungers',
     'pool-spec-3': ' Outdoor dining', 'pool-spec-4': ' BBQ',
     'pool-spec-5': ' Gated &amp; private', 'pool-spec-6': ' Terrace views',
     // Location
@@ -2332,7 +2337,7 @@ const translations = {
     'loc-getting-desc': 'Lanzarote Airport (ACE) is served by direct flights from most UK airports year-round. A hire car is recommended for exploring the island, though taxis and transfers are readily available from the airport to Playa Blanca.',
     // Booking
     'book-label': 'Direct Booking', 'book-title': 'Check Availability &amp; Book',
-    'book-intro': 'No booking fees. Pay just a 10% deposit to secure your dates — the balance is arranged with us directly.',
+    'book-intro': 'No booking fees. Pay just a 20% deposit to secure your dates — the balance is due 30 days before arrival.',
     'book-form-title': 'Book Villa Hola', 'book-form-sub': 'Select your dates and complete your booking in minutes',
     'step-1-label': 'Dates', 'step-2-label': 'Details', 'step-3-label': 'Payment',
     'label-checkin': 'Check-in Date', 'label-checkout': 'Check-out Date',
@@ -2348,20 +2353,21 @@ const translations = {
     'balance-note': "<strong>📧 Remaining balance:</strong> After payment, we'll contact you by email to arrange the remaining balance and confirm all the details of your stay.",
     // Sidebar
     'sb-whats-title': "What's Included",
-    'sb-feat-1': ' Flexible check-in', 'sb-feat-2': ' Private pool access',
+    'sb-feat-1': ' Flexible check-in', 'sb-feat-2': ' Heated pool (Nov–May)',
+    'sb-cleaning-note': '{CUR}{PRICE_CLEAN} cleaning fee (stays under 7 nights) · Weekly clean included for 7+ nights · Min. 5 nights',
     'sb-feat-3': ' High-speed Wi-Fi', 'sb-feat-4': ' Fresh linens &amp; towels',
     'sb-feat-5': ' Private parking', 'sb-feat-6': ' Airport transfer advice',
     'sb-pricing-title': 'Pricing Guide',
-    'sb-low-season': 'Low Season', 'sb-low-price': 'from {CUR}325/night + 7% IGIC',
-    'sb-peak-season': 'Peak Season', 'sb-peak-price': 'from {CUR}395/night + 7% IGIC',
+    'sb-low-season': 'Low Season', 'sb-low-price': 'from {CUR}{PRICE_LOW}/night',
+    'sb-peak-season': 'Peak Season', 'sb-peak-price': 'from {CUR}{PRICE_HIGH}/night',
     'wa-sidebar-title': '📧 Questions? Email Us',
     'wa-sidebar-desc': 'Drop us an email and we\'ll get back to you as soon as possible — usually within a few hours.',
     'wa-sidebar-btn': '📧 Email Us',
     // Reviews
     'reviews-label': 'Guest Reviews', 'reviews-title': 'What Our Guests Say',
-      'rev1-text': '"An absolutely stunning villa in a perfect location. The private pool was a highlight \u2014 we were out there every day. Can\'t wait to return!"',
-      'rev2-text': '"We\'ve visited Lanzarote many times and this is by far the best villa we\'ve stayed in. Immaculate, well-equipped and the owners were brilliant."',
-      'rev3-text': '"Perfect from start to finish. Playa Blanca is a gem and Villa Hola made our holiday truly special. Already recommending it to friends."',
+      'rev1-text': '"Honestly one of the best holidays we\'ve had in years. Used the pool every single day \u2014 even dragged ourselves out for a swim on the last morning before the taxi came! Really easy walk to the beach and loads of good restaurants nearby. Will definitely be back."',
+      'rev2-text': '"We come to Lanzarote pretty much every year and this is without doubt the best place we\'ve stayed. Everything you could possibly need was there, spotlessly clean, and Millie was brilliant with all our questions before we arrived. Already planning to come back next autumn."',
+      'rev3-text': '"We\'d never been to Playa Blanca before and it completely won us over \u2014 so much quieter than the north of the island which is exactly what we wanted. The villa is gorgeous, felt like a proper home rather than a holiday let. Kids absolutley loved the pool. Told everyone at work about it when we got back!"',
     // FAQ
     'faq-label': 'Got Questions?', 'faq-title': 'Frequently Asked Questions',
     'faq-q1': 'What are the check-in and check-out times?',
@@ -2376,7 +2382,7 @@ const translations = {
     'faq-q10': 'Do I need a hire car?',
     'faq-a1': 'Check-in is from 3:00pm and check-out is by 10:00am. Early check-in and late check-out may be available — please email us at bookings@villahola.es when making your booking.',
     'faq-a2': 'When you book online, you pay a 20% deposit to secure your dates. The remaining 80% balance is due 30 days before your check-in date. We will contact you by email shortly after your booking to confirm the details and arrange the balance payment.',
-    'faq-a3': 'Our minimum stay is 2 nights year-round. Please check availability for your preferred dates and the booking form will advise you of any minimum.',
+    'faq-a3': 'Our minimum stay is 5 nights year-round. Please check availability for your preferred dates and the booking form will advise you of any minimum.',
     'faq-a4': "The pool is heated from November through to May inclusive. During the summer months (June to October) the pool is unheated, though Lanzarote\'s warm climate means the water stays pleasantly warm thanks to solar heat. The pool is available for swimming year-round.",
     'faq-a5': 'Yes — Villa Hola is a great choice for families. Please note that children must always be supervised around the pool area. A travel cot and high chair can be provided on request — please let us know in advance.',
     'faq-a6': 'Unfortunately pets are not permitted at Villa Hola. This is to ensure the comfort of all guests and to meet the requirements of the complex.',
@@ -2422,7 +2428,7 @@ const translations = {
     'banner-sub': 'Estamos en Airbnb y Booking.com, pero si reservas directamente con nosotros te ahorras las comisiones.',
     'banner-cta': 'Reserva Directa y Ahorra',
     // Features
-    'feat1-title': 'Piscina Privada', 'feat1-desc': 'Tu propia piscina privada — calentada por el sol con cubierta térmica, alcanzando hasta 33°C. Sin compartir, total privacidad.',
+    'feat1-title': 'Piscina Privada Climatizada', 'feat1-desc': 'Tu propia piscina privada — equipada con cubierta solar y calefacción eléctrica para los meses de invierno, garantizando temperaturas agradables para nadar todo el año. Sin compartir, total privacidad.',
     'feat2-title': 'Ubicación Privilegiada', 'feat2-desc': 'En el bello complejo Las Buganvillas, a poca distancia de Playa Blanca.',
     'feat3-title': 'Sol Todo el Año', 'feat3-desc': 'Más de 300 días de sol al año. Lanzarote tiene buen clima en todas las estaciones.',
     'feat4-title': 'Reserva Directa y Ahorra', 'feat4-desc': 'Sin comisiones de plataforma. Reserva directamente y obtén el mejor precio posible.',
@@ -2430,7 +2436,7 @@ const translations = {
     'about-label': 'Bienvenido a Villa Hola', 'about-title': 'Paraíso Familiar en Playa Blanca',
     'about-p1': 'Ubicada en el codiciado complejo Las Buganvillas, Villa Hola ofrece todo lo que necesitas para unas vacaciones perfectas en Lanzarote. Despierta con el sol dorado, relájate junto a tu piscina privada y explora uno de los destinos más hermosos de las Islas Canarias.',
     'about-p2': 'Tanto si eres una familia que busca espacio y comodidad, un grupo de amigos dispuesto a explorar la isla, o una pareja en busca de un retiro de lujo — Villa Hola, con sus cuatro dormitorios, piscina privada y terraza en la azotea, es tu hogar lejos del hogar.',
-    'about-f1': ' 4 dormitorios, hasta 8 huéspedes', 'about-f2': ' Piscina privada',
+    'about-f1': ' 4 dormitorios, hasta 8 huéspedes', 'about-f2': ' Piscina privada climatizada (nov–may)',
     'about-f3': ' Cocina totalmente equipada', 'about-f4': ' Aire acondicionado en toda la villa',
     'about-f5': ' Sala de juegos con billar', 'about-f6': ' Wi-Fi de alta velocidad',
     'about-f7': ' Terraza en la azotea con vistas', 'about-f8': ' 3 baños',
@@ -2469,7 +2475,7 @@ const translations = {
       'fac-liv-3': 'Aire acondicionado en toda la villa (de monedas)',
       'fac-liv-4': 'Wi-Fi de alta velocidad en toda la villa',
       'fac-liv-5': 'Comedor interior',
-      'fac-out-1': 'Piscina privada',
+      'fac-out-1': 'Piscina privada (climatizada nov–may)',
       'fac-out-2': 'Terraza solarium con tumbonas',
       'fac-out-3': 'Zona de comedor exterior',
       'fac-out-4': 'Instalaciones de barbacoa',
@@ -2481,8 +2487,8 @@ const translations = {
       'fac-ext-4': 'Soporte por correo electrónico durante su estancia',
     // Pool
     'pool-label': 'Tu Oasis Privado', 'pool-title': 'Sol, Agua y Total Privacidad',
-    'pool-desc': 'Tu piscina privada es el corazón de Villa Hola — toma el sol con tranquilidad, date un chapuzón cuando quieras y cena al aire libre en la terraza mientras el sol de Lanzarote se pone. Sin instalaciones compartidas, sin horarios, solo pura relajación.',
-    'pool-spec-1': ' Piscina privada', 'pool-spec-2': ' Tumbonas',
+    'pool-desc': 'Tu piscina privada es el corazón de Villa Hola — toma el sol con tranquilidad, date un chapuzón cuando quieras y cena al aire libre en la terraza mientras el sol de Lanzarote se pone. Sin instalaciones compartidas, sin horarios, solo pura relajación. La piscina está climatizada de noviembre a mayo.',
+    'pool-spec-1': ' Piscina climatizada (nov–may)', 'pool-spec-2': ' Tumbonas',
     'pool-spec-3': ' Comedor exterior', 'pool-spec-4': ' Barbacoa',
     'pool-spec-5': ' Vallada y privada', 'pool-spec-6': ' Vistas desde la terraza',
     // Location
@@ -2499,7 +2505,7 @@ const translations = {
     'loc-getting-desc': 'El aeropuerto de Lanzarote (ACE) tiene vuelos directos desde los principales aeropuertos europeos durante todo el año. Se recomienda alquilar un coche para explorar la isla, aunque hay taxis y traslados disponibles desde el aeropuerto a Playa Blanca.',
     // Booking
     'book-label': 'Reserva Directa', 'book-title': 'Comprobar Disponibilidad y Reservar',
-    'book-intro': 'Sin comisiones de reserva. Paga solo un 10% de depósito para asegurar tus fechas — el saldo se gestiona directamente con nosotros.',
+    'book-intro': 'Sin comisiones de reserva. Paga solo un 20% de depósito para asegurar tus fechas — el saldo vence 30 días antes de la llegada.',
     'book-form-title': 'Reservar Villa Hola', 'book-form-sub': 'Selecciona tus fechas y completa tu reserva en minutos',
     'step-1-label': 'Fechas', 'step-2-label': 'Datos', 'step-3-label': 'Pago',
     'label-checkin': 'Fecha de entrada', 'label-checkout': 'Fecha de salida',
@@ -2515,20 +2521,21 @@ const translations = {
     'balance-note': '<strong>📧 Saldo restante:</strong> Tras el pago, nos pondremos en contacto contigo por correo electrónico para gestionar el saldo restante y confirmar todos los detalles de tu estancia.',
     // Sidebar
     'sb-whats-title': 'Qué Incluye',
-    'sb-feat-1': ' Entrada flexible', 'sb-feat-2': ' Acceso a piscina privada',
+    'sb-feat-1': ' Entrada flexible', 'sb-feat-2': ' Piscina climatizada (nov–may)',
+    'sb-cleaning-note': '{CUR}{PRICE_CLEAN} tarifa de limpieza (estancias menores de 7 noches) · Limpieza semanal incluida para 7+ noches · Mín. 5 noches',
     'sb-feat-3': ' Wi-Fi de alta velocidad', 'sb-feat-4': ' Ropa de cama y toallas',
     'sb-feat-5': ' Aparcamiento privado', 'sb-feat-6': ' Información sobre traslados',
     'sb-pricing-title': 'Guía de Precios',
-    'sb-low-season': 'Temporada Baja', 'sb-low-price': 'desde {CUR}325/noche + 7% IGIC',
-    'sb-peak-season': 'Temporada Alta', 'sb-peak-price': 'desde {CUR}395/noche + 7% IGIC',
+    'sb-low-season': 'Temporada Baja', 'sb-low-price': 'desde {CUR}{PRICE_LOW}/noche',
+    'sb-peak-season': 'Temporada Alta', 'sb-peak-price': 'desde {CUR}{PRICE_HIGH}/noche',
     'wa-sidebar-title': '📧 ¿Preguntas? Escríbenos',
     'wa-sidebar-desc': 'Envíanos un correo electrónico y te responderemos lo antes posible, normalmente en pocas horas.',
     'wa-sidebar-btn': '📧 Escríbenos',
     // Reviews
     'reviews-label': 'Opiniones de Huéspedes', 'reviews-title': 'Lo Que Dicen Nuestros Huéspedes',
-      'rev1-text': '"Una villa absolutamente impresionante en una ubicación perfecta. La piscina privada fue lo mejor \u2014 estábamos ahí cada día. ¡No podemos esperar para volver!"',
-      'rev2-text': '"Hemos visitado Lanzarote muchas veces y esta es sin duda la mejor villa en la que hemos estado. Impecable, bien equipada y los propietarios fueron geniales."',
-      'rev3-text': '"Perfecto de principio a fin. Playa Blanca es una joya y Villa Hola hizo nuestras vacaciones verdaderamente especiales. Ya la estamos recomendando a amigos."',
+      'rev1-text': '"Sinceramente una de las mejores vacaciones que hemos tenido en años. Usamos la piscina cada día — ¡incluso nos metimos a nadar la última mañana antes del taxi! Muy fácil llegar a la playa a pie y hay muchos buenos restaurantes cerca. Definitivamente volveremos."',
+      'rev2-text': '"Venimos a Lanzarote prácticamente cada año y este es sin duda el mejor sitio en el que hemos estado. Todo lo que podías necesitar estaba ahí, impecablemente limpio, y Millie fue genial respondiendo todas nuestras preguntas. Ya estamos planeando volver el próximo otoño."',
+      'rev3-text': '"Nunca habíamos estado en Playa Blanca y nos conquistó por completo — mucho más tranquilo que el norte de la isla, que es exactamente lo que queríamos. La villa es preciosa, se sentía como un hogar de verdad. A los niños les encantó la piscina. ¡Se lo contamos a todos en el trabajo al volver!"',
     // FAQ
     'faq-label': '¿Tienes preguntas?', 'faq-title': 'Preguntas Frecuentes',
     'faq-q1': '¿Cuáles son los horarios de entrada y salida?',
@@ -2543,7 +2550,7 @@ const translations = {
     'faq-q10': '¿Necesito alquilar un coche?',
     'faq-a1': 'La entrada es a partir de las 15:00h y la salida antes de las 10:00h. La entrada anticipada y la salida tardía pueden estar disponibles — consúltanos por correo a bookings@villahola.es al hacer tu reserva.',
     'faq-a2': 'Al reservar online, pagas un depósito del 20% para asegurar tus fechas. El 80% restante vence 30 días antes de tu fecha de entrada. Te contactaremos por correo electrónico tras la reserva para confirmar los detalles y gestionar el pago del saldo.',
-    'faq-a3': 'La estancia mínima es de 2 noches durante todo el año. Comprueba la disponibilidad para tus fechas preferidas y el formulario de reserva te indicará cualquier mínimo aplicable.',
+    'faq-a3': 'La estancia mínima es de 5 noches durante todo el año. Comprueba la disponibilidad para tus fechas preferidas y el formulario de reserva te indicará cualquier mínimo aplicable.',
     'faq-a4': 'La piscina está climatizada de noviembre a mayo inclusive. Durante los meses de verano (junio a octubre) la piscina no está calefactada, aunque el cálido clima de Lanzarote hace que el agua esté agradablemente cálida gracias al calor solar. La piscina está disponible para nadar todo el año.',
     'faq-a5': 'Sí — Villa Hola es una excelente opción para familias. Ten en cuenta que los niños deben estar siempre supervisados en la zona de la piscina. Se puede proporcionar cuna de viaje y trona bajo petición.',
     'faq-a6': 'Lamentablemente no se admiten mascotas en Villa Hola. Esto garantiza la comodidad de todos los huéspedes y cumple con los requisitos del complejo.',
@@ -2589,7 +2596,7 @@ const translations = {
     'banner-sub': 'Wir sind auf Airbnb und Booking.com vertreten — aber buchen Sie direkt bei uns und behalten Sie die Gebühren in der Tasche.',
     'banner-cta': 'Direkt Buchen &amp; Sparen',
     // Features
-    'feat1-title': 'Privater Pool', 'feat1-desc': 'Ihr eigener privater Pool — solar erwärmt mit Thermoabdeckung, bis zu 33°C. Kein Teilen, totale Privatsphäre.',
+    'feat1-title': 'Privater Beheizter Pool', 'feat1-desc': 'Ihr eigener privater Pool — ausgestattet mit Solarabdeckung und elektrischer Heizung für die Wintermonate, sodass das ganze Jahr über angenehme Temperaturen zum Schwimmen gewährleistet sind. Kein Teilen, totale Privatsphäre.',
     'feat2-title': 'Erstklassige Lage', 'feat2-desc': 'Im schönen Las Buganvillas Komplex, nur wenige Schritte von Playa Blanca entfernt.',
     'feat3-title': 'Sonne das ganze Jahr', 'feat3-desc': 'Über 300 Sonnentage pro Jahr. Lanzarote ist in jeder Jahreszeit warm.',
     'feat4-title': 'Direkt Buchen &amp; Sparen', 'feat4-desc': 'Keine Plattformgebühren. Buchen Sie direkt und erhalten Sie den bestmöglichen Preis.',
@@ -2597,7 +2604,7 @@ const translations = {
     'about-label': 'Willkommen in der Villa Hola', 'about-title': 'Familienparadies in Playa Blanca',
     'about-p1': 'Im begehrten Las Buganvillas Komplex gelegen, bietet die Villa Hola alles, was Sie für einen perfekten Lanzarote-Urlaub benötigen. Wachen Sie im goldenen Sonnenlicht auf, entspannen Sie an Ihrem privaten Pool und erkunden Sie eines der schönsten Reiseziele der Kanarischen Inseln.',
     'about-p2': 'Ob Familie auf der Suche nach Platz und Komfort, Freundesgruppe zum Erkunden der Insel oder Pärchen für einen Luxusrückzug — die Villa Hola mit ihren vier Schlafzimmern, dem privaten Pool und der Dachterrasse ist Ihr Zuhause fernab von zu Hause.',
-    'about-f1': ' 4 Schlafzimmer, bis zu 8 Gäste', 'about-f2': ' Privater Swimmingpool',
+    'about-f1': ' 4 Schlafzimmer, bis zu 8 Gäste', 'about-f2': ' Beheizter Pool (Nov–Mai)',
     'about-f3': ' Voll ausgestattete Küche', 'about-f4': ' Klimaanlage im gesamten Haus',
     'about-f5': ' Spielzimmer mit Billardtisch', 'about-f6': ' Schnelles WLAN',
     'about-f7': ' Dachterrasse mit Ausblick', 'about-f8': ' 3 Bäder',
@@ -2636,7 +2643,7 @@ const translations = {
       'fac-liv-3': 'Klimaanlage in der gesamten Villa (münzbetrieben)',
       'fac-liv-4': 'Schnelles WLAN in der gesamten Villa',
       'fac-liv-5': 'Innen-Essbereich',
-      'fac-out-1': 'Privater Swimmingpool',
+      'fac-out-1': 'Privater Pool (beheizt Nov–Mai)',
       'fac-out-2': 'Sonnenterrasse mit Liegestühlen',
       'fac-out-3': 'Außen-Essbereich',
       'fac-out-4': 'Grillmöglichkeit',
@@ -2648,8 +2655,8 @@ const translations = {
       'fac-ext-4': 'E-Mail-Support während Ihres Aufenthalts',
     // Pool
     'pool-label': 'Ihre private Oase', 'pool-title': 'Sonne, Wasser &amp; totale Privatsphäre',
-    'pool-desc': 'Ihr privater Pool ist das Herzstück der Villa Hola — sonnen Sie sich in Ruhe, springen Sie wann immer Sie möchten ins Wasser und essen Sie al fresco auf der Terrasse, während die Lanzarote-Sonne untergeht. Keine gemeinsam genutzten Einrichtungen, keine festen Zeiten, nur pure Entspannung.',
-    'pool-spec-1': ' Privater Pool', 'pool-spec-2': ' Sonnenliegen',
+    'pool-desc': 'Ihr privater Pool ist das Herzstück der Villa Hola — sonnen Sie sich in Ruhe, springen Sie wann immer Sie möchten ins Wasser und essen Sie al fresco auf der Terrasse, während die Lanzarote-Sonne untergeht. Keine gemeinsam genutzten Einrichtungen, keine festen Zeiten, nur pure Entspannung. Der Pool wird von November bis Mai beheizt.',
+    'pool-spec-1': ' Beheizter Pool (Nov–Mai)', 'pool-spec-2': ' Sonnenliegen',
     'pool-spec-3': ' Außenterrasse zum Essen', 'pool-spec-4': ' Grill',
     'pool-spec-5': ' Eingezäunt &amp; privat', 'pool-spec-6': ' Terrassenblick',
     // Location
@@ -2666,7 +2673,7 @@ const translations = {
     'loc-getting-desc': 'Der Flughafen Lanzarote (ACE) wird ganzjährig von Direktflügen aus den meisten europäischen Flughäfen bedient. Ein Mietwagen wird zum Erkunden der Insel empfohlen, obwohl Taxis und Transfers vom Flughafen nach Playa Blanca leicht verfügbar sind.',
     // Booking
     'book-label': 'Direktbuchung', 'book-title': 'Verfügbarkeit prüfen &amp; Buchen',
-    'book-intro': 'Keine Buchungsgebühren. Zahlen Sie nur 10% Anzahlung, um Ihre Termine zu sichern — der Rest wird direkt mit uns vereinbart.',
+    'book-intro': 'Keine Buchungsgebühren. Zahlen Sie nur 20% Anzahlung, um Ihre Termine zu sichern — der Restbetrag ist 30 Tage vor der Anreise fällig.',
     'book-form-title': 'Villa Hola Buchen', 'book-form-sub': 'Wählen Sie Ihre Termine und schließen Sie die Buchung in Minuten ab',
     'step-1-label': 'Termine', 'step-2-label': 'Details', 'step-3-label': 'Zahlung',
     'label-checkin': 'Anreisedatum', 'label-checkout': 'Abreisedatum',
@@ -2682,20 +2689,21 @@ const translations = {
     'balance-note': '<strong>📧 Restbetrag:</strong> Nach der Zahlung werden wir Sie per E-Mail kontaktieren, um den Restbetrag zu arrangieren und alle Details Ihres Aufenthalts zu bestätigen.',
     // Sidebar
     'sb-whats-title': 'Im Preis Enthalten',
-    'sb-feat-1': ' Flexibler Check-in', 'sb-feat-2': ' Privater Poolzugang',
+    'sb-feat-1': ' Flexibler Check-in', 'sb-feat-2': ' Beheizter Pool (Nov–Mai)',
+    'sb-cleaning-note': '{CUR}{PRICE_CLEAN} Reinigungsgebühr (Aufenthalte unter 7 Nächten) · Wöchentliche Reinigung inklusive ab 7 Nächten · Mind. 5 Nächte',
     'sb-feat-3': ' Schnelles WLAN', 'sb-feat-4': ' Frische Bettwäsche &amp; Handtücher',
     'sb-feat-5': ' Privater Parkplatz', 'sb-feat-6': ' Informationen zu Transfers',
     'sb-pricing-title': 'Preisübersicht',
-    'sb-low-season': 'Nebensaison', 'sb-low-price': 'ab {CUR}325/Nacht + 7% IGIC',
-    'sb-peak-season': 'Hochsaison', 'sb-peak-price': 'ab €395/Nacht + 7% IGIC',
+    'sb-low-season': 'Nebensaison', 'sb-low-price': 'ab {CUR}{PRICE_LOW}/Nacht',
+    'sb-peak-season': 'Hochsaison', 'sb-peak-price': 'ab {CUR}{PRICE_HIGH}/Nacht',
     'wa-sidebar-title': '📧 Fragen? Schreiben Sie uns',
     'wa-sidebar-desc': 'Unser Team beantwortet gerne alle Fragen zur Villa, zur Gegend oder zu Ihrer Buchung.',
     'wa-sidebar-btn': '📧 E-Mail senden',
     // Reviews
     'reviews-label': 'Gästebewertungen', 'reviews-title': 'Was Unsere Gäste Sagen',
-      'rev1-text': '"Eine absolut atemberaubende Villa in perfekter Lage. Der Privatpool war das Highlight \u2014 wir waren jeden Tag draußen. Wir kommen definitiv wieder!"',
-      'rev2-text': '"Wir haben Lanzarote viele Male besucht und dies ist mit Abstand die beste Villa, in der wir je geblieben sind. Makellos, gut ausgestattet und die Gastgeber waren wunderbar."',
-      'rev3-text': '"Von Anfang bis Ende perfekt. Playa Blanca ist ein Juwel und Villa Hola hat unseren Urlaub wirklich unvergesslich gemacht. Wir empfehlen es bereits an Freunde weiter."',
+      'rev1-text': '"Ehrlich gesagt eines der besten Urlaube seit Jahren. Haben den Pool jeden Tag genutzt — haben uns am letzten Morgen sogar noch vor dem Taxi ins Wasser gezwungen! Super Fußweg zum Strand und viele gute Restaurants in der Nähe. Kommen definitiv wieder."',
+      'rev2-text': '"Wir fahren fast jedes Jahr nach Lanzarote und das ist ohne Zweifel das beste Haus, in dem wir je geblieben sind. Alles was man braucht war da, blitzsauber, und Millie war toll und hat alle unsere Fragen vor der Ankunft beantwortet. Planen schon die Rückkehr nächsten Herbst."',
+      'rev3-text': '"Wir waren noch nie in Playa Blanca und es hat uns völlig begeistert — so viel ruhiger als der Norden der Insel, genau das was wir wollten. Die Villa ist wunderschön, fühlt sich an wie ein echtes Zuhause. Die Kinder liebten absolut die Pool. Haben es allen bei der Arbeit erzählt!"',
     // FAQ
     'faq-label': 'Haben Sie Fragen?', 'faq-title': 'Häufig Gestellte Fragen',
     'faq-q1': 'Was sind die Check-in- und Check-out-Zeiten?',
@@ -2710,7 +2718,7 @@ const translations = {
     'faq-q10': 'Brauche ich ein Mietauto?',
     'faq-a1': 'Der Check-in ist ab 15:00 Uhr und der Check-out bis 10:00 Uhr. Früher Check-in und später Check-out können verfügbar sein — bitte schreiben Sie uns an bookings@villahola.es bei der Buchung.',
     'faq-a2': 'Bei der Online-Buchung zahlen Sie eine Anzahlung von 20%, um Ihre Termine zu sichern. Die restlichen 80% sind 30 Tage vor Ihrem Check-in-Datum fällig. Wir kontaktieren Sie nach der Buchung per E-Mail, um die Details zu bestätigen und die Restzahlung zu arrangieren.',
-    'faq-a3': 'Der Mindestaufenthalt beträgt ganzjährig 2 Nächte. Prüfen Sie die Verfügbarkeit für Ihre bevorzugten Termine.',
+    'faq-a3': 'Der Mindestaufenthalt beträgt ganzjährig 5 Nächte. Prüfen Sie die Verfügbarkeit für Ihre bevorzugten Termine.',
     'faq-a4': 'Der Pool wird von November bis einschließlich Mai beheizt. In den Sommermonaten (Juni bis Oktober) ist der Pool unbeheizt, aber dank des warmen Klimas von Lanzarote bleibt das Wasser durch Sonnenenergie angenehm warm. Der Pool steht das ganze Jahr zum Schwimmen zur Verfügung.',
     'faq-a5': 'Ja — die Villa Hola ist eine ausgezeichnete Wahl für Familien. Bitte beachten Sie, dass Kinder immer im Poolbereich beaufsichtigt werden müssen. Ein Reisebettchen und ein Hochstuhl können auf Anfrage bereitgestellt werden.',
     'faq-a6': 'Leider sind in der Villa Hola keine Haustiere erlaubt. Dies gewährleistet den Komfort aller Gäste und erfüllt die Anforderungen des Komplexes.',
@@ -2726,7 +2734,7 @@ const translations = {
     'host-wa-btn': '💬 Millie anschreiben', 'host-emergency-label': 'Notfallkontakt',
     // Contact
     'contact-title': 'Bereit für Ihren<br>Lanzarote-Urlaub?',
-    'contact-desc': 'Sichern Sie sich Ihre Termine noch heute mit nur 10% Anzahlung.<br>Fragen? Wir freuen uns auf Ihre Nachricht.',
+    'contact-desc': 'Sichern Sie sich Ihre Termine noch heute mit nur 20% Anzahlung.<br>Fragen? Wir freuen uns auf Ihre Nachricht.',
     'contact-cta1': 'Verfügbarkeit Prüfen', 'contact-wa': '📧 E-Mail',
     // Footer
     'footer-desc': 'Eine wunderschöne private Ferienvilla in Las Buganvillas, Playa Blanca, Lanzarote — der perfekte Rückzugsort für Familien, Paare und Gruppen, die Sonne, Entspannung und ein Zuhause fernab von zu Hause suchen.',
@@ -2745,6 +2753,10 @@ let currentLang = 'en';
 // ── Currency ────────────────────────────────────────────────────────────────
 let currentCurrency = 'EUR';
 const CURR_SYMBOL = { EUR: '€', GBP: '£' };
+const PRICES = {
+  EUR: { low: 325, high: 395, clean: 80 },
+  GBP: { low: 270, high: 335, clean: 80 }
+};
 
 function setCurrency(curr) {
   currentCurrency = curr;
@@ -2764,10 +2776,16 @@ function setCurrency(curr) {
 function setLanguage(lang) {
   currentLang = lang;
   document.documentElement.lang = lang;
+  const curSym = CURR_SYMBOL[currentCurrency] || '€';
+  const prices = PRICES[currentCurrency] || PRICES.EUR;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (translations[lang] && translations[lang][key] !== undefined) {
-      el.innerHTML = translations[lang][key];
+      el.innerHTML = translations[lang][key]
+        .replace(/\{CUR\}/g, curSym)
+        .replace(/\{PRICE_LOW\}/g, prices.low)
+        .replace(/\{PRICE_HIGH\}/g, prices.high)
+        .replace(/\{PRICE_CLEAN\}/g, prices.clean);
     }
   });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
@@ -2809,7 +2827,7 @@ async function init() {
     const r = await fetch('/api/config');
     config = await r.json();
   } catch (e) {
-    config = { whatsapp: '+34600000000', depositPct: 20, cleaningFee: 80, minStay: 3, currency: 'EUR' };
+    config = { whatsapp: '+34600000000', depositPct: 20, cleaningFee: 80, minStay: 5, currency: 'EUR' };
   }
 
   // Load blocked dates for next 18 months
@@ -2836,10 +2854,17 @@ async function init() {
     altFormat: 'D d M Y',
     disable: blockedDates,
     onChange: ([date]) => {
-      // Set check-out minimum to day after check-in
+      // Set check-out minimum to minStay nights after check-in
+      const minS = config.minStay || 5;
       const nextDay = new Date(date);
-      nextDay.setDate(nextDay.getDate() + (config.minStay || 3));
+      nextDay.setDate(nextDay.getDate() + minS);
       fpOut.set('minDate', nextDay);
+      // Show minimum stay hint
+      const hint = document.getElementById('min-stay-hint');
+      if (hint) { hint.style.display = 'block'; hint.textContent = `ⓘ Minimum stay is ${minS} nights — please select a check-out date at least ${minS} nights after check-in.`; }
+      // Clear checkout if it's now before the new minimum
+      const coDate = fpOut.selectedDates[0];
+      if (coDate && coDate < nextDay) fpOut.clear();
       clearAvailability();
     },
   });
@@ -2954,16 +2979,36 @@ function clearAvailability() {
 
 function showPriceBreakdown(p) {
   const sym = CURR_SYMBOL[currentCurrency] || '€';
+  const prices = PRICES[currentCurrency] || PRICES.EUR;
+
+  // Determine per-night rate for selected currency
+  // Server returns EUR pricing; for GBP recalculate using GBP rates
+  let subtotal, cleaningFee, grandTotal, deposit, balance;
+  if (currentCurrency === 'GBP') {
+    const isHigh = p.nightlyRate >= 395;
+    const nightlyGbp = isHigh ? prices.high : prices.low;
+    subtotal    = nightlyGbp * p.nights;
+    cleaningFee = p.cleaningFee > 0 ? prices.clean : 0;
+    grandTotal  = subtotal + cleaningFee;
+    deposit     = grandTotal * ((p.depositPct || 20) / 100);
+    balance     = grandTotal - deposit;
+  } else {
+    subtotal    = p.subtotal;
+    cleaningFee = p.cleaningFee;
+    grandTotal  = p.grandTotal;
+    deposit     = p.deposit;
+    balance     = p.balance;
+  }
+
   document.getElementById('pr-nights').textContent   = `${p.nights} nights`;
-  document.getElementById('pr-subtotal').textContent = `${sym}${p.subtotal.toFixed(2)}`;
-  document.getElementById('pr-igic').textContent     = `${sym}${(p.igic || 0).toFixed(2)}`;
-  document.getElementById('pr-total').textContent    = `${sym}${p.grandTotal.toFixed(2)}`;
-  document.getElementById('pr-deposit').textContent  = `${sym}${p.deposit.toFixed(2)}`;
-  document.getElementById('pr-balance').textContent  = `${sym}${p.balance.toFixed(2)}`;
+  document.getElementById('pr-subtotal').textContent = `${sym}${subtotal.toFixed(2)}`;
+  document.getElementById('pr-total').textContent    = `${sym}${grandTotal.toFixed(2)}`;
+  document.getElementById('pr-deposit').textContent  = `${sym}${deposit.toFixed(2)}`;
+  document.getElementById('pr-balance').textContent  = `${sym}${balance.toFixed(2)}`;
 
   // Cleaning fee vs weekly clean
-  if (p.cleaningFee > 0) {
-    document.getElementById('pr-cleaning').textContent = `€${p.cleaningFee.toFixed(2)}`;
+  if (cleaningFee > 0) {
+    document.getElementById('pr-cleaning').textContent = `${sym}${cleaningFee.toFixed(2)}`;
     document.getElementById('pr-cleaning-row').style.display = '';
     document.getElementById('pr-weekly-clean-row').style.display = 'none';
   } else {
