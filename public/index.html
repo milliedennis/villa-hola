@@ -1189,7 +1189,7 @@ footer {
   margin: 0 auto;
   pointer-events: none;
 }
-/* Unavailable/booked days — muted, no orange circles */
+/* Unavailable/booked days — soft red, no circles, no labels */
 .flatpickr-day.flatpickr-disabled,
 .flatpickr-day.flatpickr-disabled:hover {
   background: #F3E8E8 !important;
@@ -1199,13 +1199,17 @@ footer {
   cursor: not-allowed !important;
   opacity: 1 !important;
 }
+/* Changeover days — same unavailable style as booked days */
 .flatpickr-day.changeover-day {
-  background: #FEF3C7 !important;
+  background: #F3E8E8 !important;
   border-color: transparent !important;
+  color: #C9A0A0 !important;
+  text-decoration: line-through;
+  cursor: not-allowed !important;
   color: #fff !important;
   font-weight: 600;
 }
-.flatpickr-day.changeover-day:hover { background: #FDE68A !important; }
+.flatpickr-day.changeover-day:hover { background: #F3E8E8 !important; }
 .changeover-label {
   display: none; /* hidden on public calendar */
   font-size: 7px;
