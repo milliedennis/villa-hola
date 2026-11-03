@@ -53,7 +53,7 @@ app.get('/api/config', (req, res) => {
     whatsapp:     process.env.WHATSAPP_NUMBER || '+34600000000',
     depositPct:   parseFloat(process.env.DEPOSIT_PERCENT || '20'),
     cleaningFee:  parseFloat(process.env.CLEANING_FEE || '80'),
-    minStay:      parseInt(process.env.MIN_STAY_NIGHTS || '3'),
+    minStay:      parseInt(process.env.MIN_STAY_NIGHTS || '5'),
     currency:     'EUR',
   });
 });

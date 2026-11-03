@@ -121,6 +121,40 @@ router.get('/sync-status', requireAdmin, (req, res) => {
   });
 });
 
+// ── Lodgify sync (called automatically on each availability check) ────────────
+
+let lodgifyLastSynced = 0;
+const LODGIFY_TTL_MS  = 15 * 60 * 1000; // re-fetch at most every 15 minutes
+
+async function syncLodgify() {
+  const url = process.env.LODGIFY_ICAL_URL;
+  if (!url) return;
+  if (Date.now() - lodgifyLastSynced < LODGIFY_TTL_MS) return; // still fresh
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const text = await response.text();
+    const events = parseIcal(text);
+
+    db.clearChannelBlocks('lodgify');
+
+    for (const event of events) {
+      if (event.start && event.end) {
+        const dates = db.getDatesInRange(event.start, event.end);
+        for (const d of dates) {
+          db.blockDate(d, 'lodgify', event.summary || 'Lodgify booking', 'lodgify');
+        }
+      }
+    }
+
+    lodgifyLastSynced = Date.now();
+    console.log(`[iCal] Lodgify sync: ${events.length} events imported`);
+  } catch (err) {
+    console.error('[iCal] Lodgify sync error:', err.message);
+  }
+}
+
 // ── Simple iCal parser ────────────────────────────────────────────────────────
 
 function parseIcal(text) {
@@ -159,3 +193,4 @@ function parseIcalDate(val) {
 }
 
 module.exports = router;
+module.exports.syncLodgify = syncLodgify;

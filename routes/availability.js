@@ -2,13 +2,17 @@
 const express = require('express');
 const router  = express.Router();
 const db      = require('../database/db');
+const { syncLodgify } = require('./ical');
 
 // GET /api/availability?from=YYYY-MM-DD&to=YYYY-MM-DD
-// Returns array of blocked dates in range
-router.get('/', (req, res) => {
+// Returns array of blocked dates in range (also auto-syncs Lodgify iCal)
+router.get('/', async (req, res) => {
   try {
     const { from, to } = req.query;
     if (!from || !to) return res.status(400).json({ error: 'from and to are required' });
+
+    // Pull latest Lodgify blocks (cached for 15 mins)
+    await syncLodgify();
 
     const blocked = db.getBlockedDates(from, to);
     res.json({ blocked });
