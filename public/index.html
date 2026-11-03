@@ -1175,6 +1175,37 @@ footer {
 }
 .flatpickr-calendar { font-family: 'Inter', sans-serif !important; }
 
+/* ── Calendar reservation labels ─────────────────────────────── */
+.flatpickr-day { position: relative; }
+.day-booking-label {
+  display: block;
+  font-size: 7px;
+  line-height: 1;
+  color: rgba(255,255,255,0.85);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 90%;
+  margin: 0 auto;
+  pointer-events: none;
+}
+.flatpickr-day.flatpickr-disabled .day-booking-label { color: rgba(0,0,0,0.45); }
+.flatpickr-day.changeover-day {
+  background: #F59E0B !important;
+  border-color: #D97706 !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+.flatpickr-day.changeover-day:hover { background: #D97706 !important; }
+.changeover-label {
+  display: block;
+  font-size: 7px;
+  line-height: 1;
+  color: rgba(255,255,255,0.9);
+  font-weight: 500;
+  pointer-events: none;
+}
+
 /* ── Toasts ───────────────────────────────────────────────────── */
 #toast-container {
   position: fixed;
@@ -1391,7 +1422,7 @@ footer {
       <div class="hero-badge">
         📍 Las Buganvillas · Playa Blanca · Lanzarote
       </div>
-      <h1 class="hero-title" data-i18n="hero-title">Your Luxury<br>4-Bedroom Villa<br><em>Lanzarote</em> Escape</h1>
+      <h1 class="hero-title" data-i18n="hero-title">Your Relaxing<br>4-Bedroom Villa<br>in <em>Playa Blanca</em></h1>
       <p class="hero-sub" data-i18n="hero-sub">Sun, privacy and pure relaxation in a stunning private villa. Your own pool, warm sunshine and the beauty of Lanzarote — all waiting for you at Villa Hola.</p>
       <div class="hero-actions">
         <a href="#booking" class="btn btn-primary btn-lg" data-i18n="hero-cta1">Check Availability</a>
@@ -1909,12 +1940,60 @@ footer {
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label for="g-phone" data-i18n="label-phone">Phone Number</label>
-                <input type="tel" id="g-phone" placeholder="+44 7700 000000" autocomplete="tel">
+                <label for="g-phone" data-i18n="label-phone">Phone Number *</label>
+                <div style="display:flex;gap:6px">
+                  <select id="g-phone-code" style="width:100px;flex-shrink:0;padding:10px 6px;border:1px solid var(--sand-dark);border-radius:8px;background:var(--warm-white);font-size:14px;color:var(--text-dark)" autocomplete="tel-country-code">
+                    <option value="+44">🇬🇧 +44</option>
+                    <option value="+353">🇮🇪 +353</option>
+                    <option value="+34">🇪🇸 +34</option>
+                    <option value="+49">🇩🇪 +49</option>
+                    <option value="+33">🇫🇷 +33</option>
+                    <option value="+31">🇳🇱 +31</option>
+                    <option value="+32">🇧🇪 +32</option>
+                    <option value="+46">🇸🇪 +46</option>
+                    <option value="+47">🇳🇴 +47</option>
+                    <option value="+45">🇩🇰 +45</option>
+                    <option value="+358">🇫🇮 +358</option>
+                    <option value="+48">🇵🇱 +48</option>
+                    <option value="+43">🇦🇹 +43</option>
+                    <option value="+41">🇨🇭 +41</option>
+                    <option value="+351">🇵🇹 +351</option>
+                    <option value="+39">🇮🇹 +39</option>
+                    <option value="+1">🇺🇸 +1</option>
+                    <option value="+61">🇦🇺 +61</option>
+                    <option value="+64">🇳🇿 +64</option>
+                    <option value="+27">🇿🇦 +27</option>
+                  </select>
+                  <input type="tel" id="g-phone" placeholder="7700 000000" autocomplete="tel-national" style="flex:1">
+                </div>
               </div>
               <div class="form-group">
-                <label for="g-country" data-i18n="label-country">Country</label>
-                <input type="text" id="g-country" placeholder="United Kingdom" autocomplete="country-name">
+                <label for="g-country" data-i18n="label-country">Nationality *</label>
+                <select id="g-country" autocomplete="country" style="padding:10px 12px;border:1px solid var(--sand-dark);border-radius:8px;background:var(--warm-white);font-size:14px;color:var(--text-dark);width:100%">
+                  <option value="">Select nationality…</option>
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="Ireland">Ireland</option>
+                  <option value="Spain">Spain</option>
+                  <option value="Germany">Germany</option>
+                  <option value="France">France</option>
+                  <option value="Netherlands">Netherlands</option>
+                  <option value="Belgium">Belgium</option>
+                  <option value="Sweden">Sweden</option>
+                  <option value="Norway">Norway</option>
+                  <option value="Denmark">Denmark</option>
+                  <option value="Finland">Finland</option>
+                  <option value="Poland">Poland</option>
+                  <option value="Austria">Austria</option>
+                  <option value="Switzerland">Switzerland</option>
+                  <option value="Portugal">Portugal</option>
+                  <option value="Italy">Italy</option>
+                  <option value="United States">United States</option>
+                  <option value="Canada">Canada</option>
+                  <option value="Australia">Australia</option>
+                  <option value="New Zealand">New Zealand</option>
+                  <option value="South Africa">South Africa</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
             </div>
 
@@ -2249,7 +2328,7 @@ const translations = {
     'nav-location': 'Location', 'nav-booking': 'Booking', 'nav-faq': 'FAQs',
     'nav-book': 'Book Now', 'nav-contact': 'Contact',
     // Hero
-    'hero-title': 'Your Luxury<br>4-Bedroom Villa<br><em>Lanzarote</em> Escape',
+    'hero-title': 'Your Relaxing<br>4-Bedroom Villa<br>in <em>Playa Blanca</em>',
     'hero-sub': 'Sun, privacy and pure relaxation in a stunning private villa. Your own pool, warm sunshine and the beauty of Lanzarote — all waiting for you at Villa Hola.',
     'hero-cta1': 'Check Availability', 'hero-cta2': 'View Gallery',
     'hero-stat-guests': 'Guests', 'hero-stat-bedrooms': 'Bedrooms',
@@ -2342,7 +2421,7 @@ const translations = {
     'step-1-label': 'Dates', 'step-2-label': 'Details', 'step-3-label': 'Payment',
     'label-checkin': 'Check-in Date', 'label-checkout': 'Check-out Date',
     'label-guests': 'Number of Guests', 'label-name': 'Full Name *',
-    'label-email': 'Email Address *', 'label-phone': 'Phone Number', 'label-country': 'Country',
+    'label-email': 'Email Address *', 'label-phone': 'Phone Number *', 'label-country': 'Nationality *',
     'check-avail-btn': 'Check Availability',
     's2-checkin-label': 'Check-in', 's2-checkout-label': 'Check-out', 's2-deposit-label': 'Deposit to pay now',
     's2-continue': 'Continue to Payment', 's2-back': '← Back',
@@ -2417,7 +2496,7 @@ const translations = {
     'nav-location': 'Ubicación', 'nav-booking': 'Reservas', 'nav-faq': 'Preguntas',
     'nav-book': 'Reservar', 'nav-contact': 'Contacto',
     // Hero
-    'hero-title': 'Tu Villa de Lujo<br>4 Dormitorios en<br><em>Lanzarote</em>',
+    'hero-title': 'Tu Villa Tranquila<br>4 Dormitorios en<br><em>Playa Blanca</em>',
     'hero-sub': 'Sol, privacidad y relajación total en una villa privada excepcional. Tu propia piscina, sol cálido y la belleza de Lanzarote — todo esperándote en Villa Hola.',
     'hero-cta1': 'Comprobar Disponibilidad', 'hero-cta2': 'Ver Galería',
     'hero-stat-guests': 'Huéspedes', 'hero-stat-bedrooms': 'Dormitorios',
@@ -2510,7 +2589,7 @@ const translations = {
     'step-1-label': 'Fechas', 'step-2-label': 'Datos', 'step-3-label': 'Pago',
     'label-checkin': 'Fecha de entrada', 'label-checkout': 'Fecha de salida',
     'label-guests': 'Número de huéspedes', 'label-name': 'Nombre completo *',
-    'label-email': 'Correo electrónico *', 'label-phone': 'Teléfono', 'label-country': 'País',
+    'label-email': 'Correo electrónico *', 'label-phone': 'Teléfono *', 'label-country': 'Nacionalidad *',
     'check-avail-btn': 'Comprobar Disponibilidad',
     's2-checkin-label': 'Entrada', 's2-checkout-label': 'Salida', 's2-deposit-label': 'Depósito a pagar ahora',
     's2-continue': 'Continuar al Pago', 's2-back': '← Volver',
@@ -2585,7 +2664,7 @@ const translations = {
     'nav-location': 'Lage', 'nav-booking': 'Buchung', 'nav-faq': 'FAQ',
     'nav-book': 'Jetzt Buchen', 'nav-contact': 'Kontakt',
     // Hero
-    'hero-title': 'Ihre Luxusvilla<br>4 Schlafzimmer auf<br><em>Lanzarote</em>',
+    'hero-title': 'Ihre Entspannte<br>4-Schlafzimmer-Villa<br>in <em>Playa Blanca</em>',
     'hero-sub': 'Sonne, Privatsphäre und pure Entspannung in einer wunderschönen privaten Villa. Ihr eigener Pool, warmes Sonnenlicht und die Schönheit Lanzarotes — alles wartet auf Sie in der Villa Hola.',
     'hero-cta1': 'Verfügbarkeit prüfen', 'hero-cta2': 'Galerie ansehen',
     'hero-stat-guests': 'Gäste', 'hero-stat-bedrooms': 'Schlafzimmer',
@@ -2678,7 +2757,7 @@ const translations = {
     'step-1-label': 'Termine', 'step-2-label': 'Details', 'step-3-label': 'Zahlung',
     'label-checkin': 'Anreisedatum', 'label-checkout': 'Abreisedatum',
     'label-guests': 'Anzahl der Gäste', 'label-name': 'Vollständiger Name *',
-    'label-email': 'E-Mail-Adresse *', 'label-phone': 'Telefonnummer', 'label-country': 'Land',
+    'label-email': 'E-Mail-Adresse *', 'label-phone': 'Telefonnummer *', 'label-country': 'Nationalität *',
     'check-avail-btn': 'Verfügbarkeit Prüfen',
     's2-checkin-label': 'Anreise', 's2-checkout-label': 'Abreise', 's2-deposit-label': 'Anzahlung jetzt fällig',
     's2-continue': 'Weiter zur Zahlung', 's2-back': '← Zurück',
@@ -2809,6 +2888,8 @@ let stripeObj = null;
 let cardElement = null;
 let currentStep = 1;
 let blockedDates = [];
+let reservationDateMap = {}; // date -> short name label
+let changeoverDates = new Set(); // check_out dates = changeover/departure days
 const MAX_GUESTS = 8;
 
 // ── Navbar scroll behaviour ─────────────────────────────────────────────────
@@ -2838,6 +2919,27 @@ async function init() {
   const minDate = new Date(today);
   minDate.setDate(minDate.getDate() + 1);
 
+  function calOnDayCreate(dObj, dStr, fp, dayElem) {
+    const dateStr = dObj[0] ? dObj[0].toISOString().slice(0,10) : null;
+    // Use the data attribute flatpickr sets
+    const d = dayElem.dateObj;
+    if (!d) return;
+    const ds = d.toISOString().slice(0,10);
+
+    if (changeoverDates.has(ds)) {
+      dayElem.classList.add('changeover-day');
+      const lbl = document.createElement('span');
+      lbl.className = 'changeover-label';
+      lbl.textContent = 'Changeover';
+      dayElem.appendChild(lbl);
+    } else if (reservationDateMap[ds]) {
+      const lbl = document.createElement('span');
+      lbl.className = 'day-booking-label';
+      lbl.textContent = reservationDateMap[ds];
+      dayElem.appendChild(lbl);
+    }
+  }
+
   const fpOut = flatpickr('#check-out', {
     minDate: 'today',
     dateFormat: 'Y-m-d',
@@ -2845,6 +2947,7 @@ async function init() {
     altFormat: 'D d M Y',
     disable: blockedDates,
     onChange: () => clearAvailability(),
+    onDayCreate: calOnDayCreate,
   });
 
   flatpickr('#check-in', {
@@ -2853,6 +2956,7 @@ async function init() {
     altInput: true,
     altFormat: 'D d M Y',
     disable: blockedDates,
+    onDayCreate: calOnDayCreate,
     onChange: ([date]) => {
       // Set check-out minimum to minStay nights after check-in
       const minS = config.minStay || 5;
@@ -2889,14 +2993,37 @@ async function init() {
   }
 }
 
-// ── Blocked dates ───────────────────────────────────────────────────────────
+// ── Blocked dates + reservation names ──────────────────────────────────────
 async function loadBlockedDates() {
   try {
     const from = new Date().toISOString().slice(0,10);
     const to   = new Date(Date.now() + 550*24*3600*1000).toISOString().slice(0,10);
-    const r    = await fetch(`/api/availability?from=${from}&to=${to}`);
-    const d    = await r.json();
-    blockedDates = d.blocked || [];
+
+    // Fetch blocked dates and reservation details in parallel
+    const [rdates, rres] = await Promise.all([
+      fetch(`/api/availability?from=${from}&to=${to}`).then(r => r.json()),
+      fetch(`/api/availability/reservations?from=${from}&to=${to}`).then(r => r.json()),
+    ]);
+
+    blockedDates = rdates.blocked || [];
+
+    // Build date→name map and changeover set
+    reservationDateMap = {};
+    changeoverDates = new Set();
+
+    for (const reservation of (rres.reservations || [])) {
+      // Short display name (first 14 chars)
+      const label = (reservation.name || 'Booked').slice(0, 14);
+      // Mark every date in range (check_in up to but not including check_out)
+      const d = new Date(reservation.check_in + 'T12:00:00');
+      const end = new Date(reservation.check_out + 'T12:00:00');
+      while (d < end) {
+        reservationDateMap[d.toISOString().slice(0,10)] = label;
+        d.setDate(d.getDate() + 1);
+      }
+      // Mark check_out as changeover
+      changeoverDates.add(reservation.check_out);
+    }
   } catch (e) {}
 }
 
@@ -3052,8 +3179,14 @@ async function goToPayment() {
   const name    = document.getElementById('g-name').value.trim();
   const email   = document.getElementById('g-email').value.trim();
 
+  const phone    = document.getElementById('g-phone').value.trim();
+  const phoneCode = document.getElementById('g-phone-code').value;
+  const nationality = document.getElementById('g-country').value.trim();
+
   if (!name || !email) { showToast('Please enter your name and email.', 'error'); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Please enter a valid email address.', 'error'); return; }
+  if (!phone) { showToast('Please enter your phone number.', 'error'); return; }
+  if (!nationality) { showToast('Please select your nationality.', 'error'); return; }
   if (!pricing) { showToast('Please check availability first.', 'error'); return; }
 
   // Create pending booking
@@ -3070,8 +3203,8 @@ async function goToPayment() {
       body: JSON.stringify({
         guest_name:    name,
         guest_email:   email,
-        guest_phone:   document.getElementById('g-phone').value.trim(),
-        guest_country: document.getElementById('g-country').value.trim(),
+        guest_phone:   phoneCode + ' ' + phone,
+        guest_country: nationality,
         num_guests:    parseInt(document.getElementById('num-guests').value),
         check_in:      ci,
         check_out:     co,

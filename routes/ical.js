@@ -124,6 +124,7 @@ router.get('/sync-status', requireAdmin, (req, res) => {
 // ── Lodgify sync (called automatically on each availability check) ────────────
 
 let lodgifyLastSynced = 0;
+let lodgifyEventsCache = []; // in-memory event range cache {summary, start, end}
 const LODGIFY_TTL_MS  = 15 * 60 * 1000; // re-fetch at most every 15 minutes
 
 async function syncLodgify() {
@@ -148,6 +149,7 @@ async function syncLodgify() {
       }
     }
 
+    lodgifyEventsCache = events; // keep full event list for /reservations endpoint
     lodgifyLastSynced = Date.now();
     console.log(`[iCal] Lodgify sync: ${events.length} events imported`);
   } catch (err) {
@@ -192,5 +194,8 @@ function parseIcalDate(val) {
   return null;
 }
 
+function getLodgifyEvents() { return lodgifyEventsCache; }
+
 module.exports = router;
 module.exports.syncLodgify = syncLodgify;
+module.exports.getLodgifyEvents = getLodgifyEvents;

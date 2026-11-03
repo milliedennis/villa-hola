@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Confirmed — Villa Hola, Lanzarote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5EFE0;
+    --cream-dark: #EDE4D0;
+    --terracotta: #C4622D;
+    --terracotta-dark: #A8521F;
+    --ocean: #1B6CA8;
+    --sand: #D4B483;
+    --dark: #1C1C1C;
+    --mid: #555;
+    --light: #888;
+    --white: #ffffff;
+    --green: #2E7D32;
+    --green-light: #E8F5E9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Header ────────────────────────────────────────────────────── */
+  header {
+    background: var(--white);
+    padding: 20px 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  .logo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--dark);
+  }
+
+  .logo-icon { font-size: 28px; }
+
+  .logo-text {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--terracotta);
+  }
+
+  .logo-sub {
+    font-size: 11px;
+    color: var(--light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    text-align: left;
+  }
+
+  /* ── Main layout ────────────────────────────────────────────────── */
+  main {
+    flex: 1;
+    padding: 48px 24px 80px;
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* ── Success banner ─────────────────────────────────────────────── */
+  .success-banner {
+    background: var(--green-light);
+    border: 2px solid #A5D6A7;
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .success-icon {
+    width: 72px;
+    height: 72px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 36px;
+  }
+
+  .success-banner h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(24px, 5vw, 32px);
+    color: var(--green);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .success-banner p {
+    color: #388E3C;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── Reference box ──────────────────────────────────────────────── */
+  .reference-box {
+    background: var(--terracotta);
+    color: var(--white);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    gap: 16px;
+  }
+
+  .reference-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 4px;
+  }
+
+  .reference-value {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .copy-btn {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: var(--white);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+
+  .copy-btn:hover { background: rgba(255,255,255,0.3); }
+  .copy-btn.copied { background: rgba(255,255,255,0.35); }
+
+  /* ── Cards ──────────────────────────────────────────────────────── */
+  .card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--cream-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-title .icon { font-size: 22px; }
+
+  /* ── Booking details grid ───────────────────────────────────────── */
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .detail-item {}
+
+  .detail-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 4px;
+  }
+
+  .detail-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark);
+    line-height: 1.4;
+  }
+
+  .detail-sub {
+    font-size: 13px;
+    color: var(--light);
+    margin-top: 2px;
+  }
+
+  /* ── Price breakdown ────────────────────────────────────────────── */
+  .price-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+  }
+
+  .price-row.separator {
+    border-top: 1px solid var(--cream-dark);
+    padding-top: 16px;
+    margin-top: 4px;
+  }
+
+  .price-row-label {
+    font-size: 15px;
+    color: var(--mid);
+  }
+
+  .price-row-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  .price-row.total .price-row-label {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+  }
+
+  .price-row.total .price-row-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark);
+  }
+
+  .price-row.paid .price-row-value {
+    color: var(--green);
+  }
+
+  .price-row.balance .price-row-value {
+    color: var(--terracotta);
+  }
+
+  .paid-badge {
+    background: var(--green-light);
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid #A5D6A7;
+    margin-left: 8px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── Next steps ─────────────────────────────────────────────────── */
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .step-number {
+    width: 32px;
+    height: 32px;
+    background: var(--terracotta);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-content h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+
+  .step-content p {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.5;
+  }
+
+  /* ── WhatsApp CTA ────────────────────────────────────────────────── */
+  .whatsapp-cta {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: var(--white);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .whatsapp-cta h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .whatsapp-cta p {
+    font-size: 15px;
+    opacity: 0.9;
+    margin-bottom: 24px;
+    line-height: 1.6;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--white);
+    color: #128C7E;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+
+  .whatsapp-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+
+  .whatsapp-icon {
+    font-size: 22px;
+  }
+
+  /* ── Email note ─────────────────────────────────────────────────── */
+  .email-note {
+    background: var(--cream-dark);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+
+  .email-note .note-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+
+  .email-note p {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.5;
+  }
+
+  .email-note strong { color: var(--dark); }
+
+  /* ── Return home ─────────────────────────────────────────────────── */
+  .return-home {
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .return-link {
+    color: var(--terracotta);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .return-link:hover { text-decoration: underline; }
+
+  /* ── Loading state ─────────────────────────────────────────────── */
+  .loading-state {
+    text-align: center;
+    padding: 80px 24px;
+  }
+
+  .loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--cream-dark);
+    border-top-color: var(--terracotta);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 24px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-state p {
+    color: var(--light);
+    font-size: 16px;
+  }
+
+  /* ── Error state ────────────────────────────────────────────────── */
+  .error-state {
+    text-align: center;
+    padding: 60px 24px;
+  }
+
+  .error-icon { font-size: 56px; margin-bottom: 20px; }
+
+  .error-state h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px;
+    color: var(--dark);
+    margin-bottom: 12px;
+  }
+
+  .error-state p {
+    color: var(--mid);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto 28px;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--terracotta);
+    color: var(--white);
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--terracotta-dark); }
+
+  /* ── Footer ─────────────────────────────────────────────────────── */
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  footer a {
+    color: var(--sand);
+    text-decoration: none;
+  }
+
+  footer a:hover { text-decoration: underline; }
+
+  /* ── Responsive ─────────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    main { padding: 32px 16px 60px; }
+
+    .reference-box {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .reference-value { font-size: 24px; }
+
+    .details-grid { grid-template-columns: 1fr; gap: 16px; }
+
+    .card { padding: 20px; }
+
+    .whatsapp-cta { padding: 24px 20px; }
+
+    .whatsapp-btn { padding: 14px 24px; font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Header ─────────────────────────────────────────────────────── -->
+<header>
+  <a href="/" class="logo-link">
+    <span class="logo-icon">🏡</span>
+    <div>
+      <span class="logo-text">Villa Hola</span>
+      <span class="logo-sub">Playa Blanca, Lanzarote</span>
+    </div>
+  </a>
+</header>
+
+<!-- ── Main ───────────────────────────────────────────────────────── -->
+<main id="main-content">
+  <!-- Loading state shown initially -->
+  <div class="loading-state" id="loading">
+    <div class="loading-spinner"></div>
+    <p>Loading your booking details…</p>
+  </div>
+
+  <!-- Confirmation content (hidden until loaded) -->
+  <div id="confirmation-content" style="display:none">
+
+    <!-- Success banner -->
+    <div class="success-banner">
+      <div class="success-icon">✓</div>
+      <h1>Booking Confirmed!</h1>
+      <p>Your deposit has been received and your stay at Villa Hola is secured.<br>
+         We look forward to welcoming you to Lanzarote.</p>
+    </div>
+
+    <!-- Reference number -->
+    <div class="reference-box">
+      <div>
+        <div class="reference-label">Booking Reference</div>
+        <div class="reference-value" id="ref-number">—</div>
+      </div>
+      <button class="copy-btn" onclick="copyReference()" id="copy-btn">Copy Ref</button>
+    </div>
+
+    <!-- Booking details -->
+    <div class="card">
+      <h2 class="card-title"><span class="icon">🗓️</span> Your Stay</h2>
+      <div class="details-grid">
+        <div class="detail-item">
+          <div class="detail-label">Guest Name</div>
+          <div class="detail-value" id="guest-name">—</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Guests</div>
+          <div class="detail-value" id="num-guests">—</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Check-In</div>
+          <div class="detail-value" id="check-in">—</div>
+          <div class="detail-sub">From 3:00 pm</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Check-Out</div>
+          <div class="detail-value" id="check-out">—</div>
+          <div class="detail-sub">By 10:00 am</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Duration</div>
+          <div class="detail-value" id="num-nights">—</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Property</div>
+          <div class="detail-value">Villa Hola</div>
+          <div class="detail-sub">Las Buganvillas, Playa Blanca</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Price breakdown -->
+    <div class="card">
+      <h2 class="card-title"><span class="icon">💶</span> Payment Summary</h2>
+      <div class="price-rows">
+        <div class="price-row">
+          <span class="price-row-label" id="nights-label">Accommodation</span>
+          <span class="price-row-value" id="accommodation-cost">—</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-label">Cleaning fee</span>
+          <span class="price-row-value" id="cleaning-fee">—</span>
+        </div>
+        <div class="price-row separator total">
+          <span class="price-row-label">Total</span>
+          <span class="price-row-value" id="total-price">—</span>
+        </div>
+        <div class="price-row paid">
+          <span class="price-row-label">
+            Deposit paid
+            <span class="paid-badge">Paid ✓</span>
+          </span>
+          <span class="price-row-value" id="deposit-paid">—</span>
+        </div>
+        <div class="price-row balance">
+          <span class="price-row-label">Balance due</span>
+          <span class="price-row-value" id="balance-due">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WhatsApp CTA -->
+    <div class="whatsapp-cta">
+      <h3>Ready to arrange your balance?</h3>
+      <p>Your remaining balance is due before your arrival.
+         Drop us a WhatsApp message and we'll confirm payment arrangements
+         and send you everything you need for your stay.</p>
+      <a href="#" class="whatsapp-btn" id="whatsapp-link" target="_blank" rel="noopener">
+        <span class="whatsapp-icon">💬</span>
+        Message Us on WhatsApp
+      </a>
+    </div>
+
+    <!-- Next steps -->
+    <div class="card">
+      <h2 class="card-title"><span class="icon">✅</span> What Happens Next</h2>
+      <div class="steps-list">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>You'll receive a confirmation email</h4>
+            <p>A copy of your booking details has been sent to your email address.
+               If you don't see it within a few minutes, please check your spam folder.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Balance payment before arrival</h4>
+            <p>The remaining balance is due before your arrival.
+               Contact us via WhatsApp and we'll arrange payment and share
+               all the details you need for check-in.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>We'll be in touch before you arrive</h4>
+            <p>We'll reach out ahead of your stay with directions, check-in
+               instructions, WiFi details, and everything else you need for
+               a smooth arrival.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h4>Enjoy Villa Hola!</h4>
+            <p>Relax by your private pool, explore Playa Blanca's beautiful
+               beaches and restaurants, and make memories in the Canary Islands sunshine.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email note -->
+    <div class="email-note">
+      <span class="note-icon">📧</span>
+      <p>Your booking reference is <strong id="ref-inline">—</strong>.
+         Please save this and quote it in any correspondence with us.
+         A confirmation email has been sent to <strong id="guest-email">your email address</strong>.</p>
+    </div>
+
+    <div class="return-home">
+      <a href="/" class="return-link">← Return to Villa Hola website</a>
+    </div>
+  </div>
+
+  <!-- Error state (shown if booking not found) -->
+  <div id="error-state" style="display:none">
+    <div class="error-state">
+      <div class="error-icon">😕</div>
+      <h2>Booking Not Found</h2>
+      <p>We couldn't find the booking details for this reference.
+         If you believe this is an error, please contact us via WhatsApp
+         and we'll look into it straight away.</p>
+      <a href="/" class="btn-primary">Return to Homepage</a>
+    </div>
+  </div>
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────────────── -->
+<footer>
+  <p>
+    <strong style="color:rgba(255,255,255,0.9)">Villa Hola</strong> — Las Buganvillas, Playa Blanca, Lanzarote, Canary Islands<br>
+    Questions? <a href="#" id="footer-whatsapp">WhatsApp us</a> or email <a href="mailto:bookings@villahola.es">bookings@villahola.es</a>
+  </p>
+</footer>
+
+<script>
+'use strict';
+
+const EUR = (n) => '€' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+const fmtDate = (iso) => {
+  if (!iso) return '—';
+  const [y, m, d] = iso.split('-');
+  const date = new Date(y, m - 1, d);
+  return date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+};
+
+async function init() {
+  // Get reference from URL
+  const params = new URLSearchParams(window.location.search);
+  const ref = params.get('ref') || params.get('reference') || params.get('booking');
+
+  // Load config for WhatsApp number
+  let whatsappNumber = '+34600000000';
+  try {
+    const cfg = await fetch('/api/config').then(r => r.json());
+    whatsappNumber = cfg.whatsapp || whatsappNumber;
+  } catch (_) {}
+
+  const makeWhatsAppUrl = (msg) =>
+    `https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`;
+
+  // Set footer WhatsApp link
+  document.getElementById('footer-whatsapp').href =
+    makeWhatsAppUrl('Hello! I have a question about Villa Hola.');
+
+  if (!ref) {
+    showError();
+    return;
+  }
+
+  try {
+    const res = await fetch(`/api/bookings/ref/${encodeURIComponent(ref)}`);
+    if (!res.ok) { showError(); return; }
+    const { booking } = await res.json();
+    if (!booking) { showError(); return; }
+    renderConfirmation(booking, whatsappNumber, makeWhatsAppUrl);
+  } catch (err) {
+    console.error('Error loading booking:', err);
+    showError();
+  }
+}
+
+function renderConfirmation(b, whatsappNumber, makeWhatsAppUrl) {
+  // Reference
+  document.getElementById('ref-number').textContent = b.reference;
+  document.getElementById('ref-inline').textContent = b.reference;
+
+  // Guest info
+  document.getElementById('guest-name').textContent = b.guest_name;
+  document.getElementById('num-guests').textContent =
+    b.num_guests + (b.num_guests === 1 ? ' guest' : ' guests');
+
+  // Dates
+  document.getElementById('check-in').textContent = fmtDate(b.check_in);
+  document.getElementById('check-out').textContent = fmtDate(b.check_out);
+  document.getElementById('num-nights').textContent =
+    b.nights + (b.nights === 1 ? ' night' : ' nights');
+
+  // Nights label
+  document.getElementById('nights-label').textContent =
+    `${b.nights} night${b.nights !== 1 ? 's' : ''} accommodation`;
+
+  // Pricing — derive accommodation from total - cleaning
+  const cleaning = parseFloat(b.cleaning_fee) || 0;
+  const total    = parseFloat(b.total_price) || 0;
+  const deposit  = parseFloat(b.deposit_paid) || 0;
+  const balance  = parseFloat(b.balance_due) || 0;
+  const accomm   = total - cleaning;
+
+  document.getElementById('accommodation-cost').textContent = EUR(accomm > 0 ? accomm : total);
+  document.getElementById('cleaning-fee').textContent = EUR(cleaning);
+  document.getElementById('total-price').textContent = EUR(total);
+  document.getElementById('deposit-paid').textContent = EUR(deposit);
+  document.getElementById('balance-due').textContent = EUR(balance);
+
+  // Email
+  if (b.guest_email) {
+    document.getElementById('guest-email').textContent = b.guest_email;
+  }
+
+  // WhatsApp link pre-filled with reference
+  const waMsg = `Hello! I've just made a booking at Villa Hola (reference: ${b.reference}) and I'd like to arrange payment of the balance of ${EUR(balance)}. My stay is ${fmtDate(b.check_in)} to ${fmtDate(b.check_out)}.`;
+  document.getElementById('whatsapp-link').href = makeWhatsAppUrl(waMsg);
+
+  // Show content, hide loading
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('confirmation-content').style.display = 'block';
+}
+
+function showError() {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('error-state').style.display = 'block';
+}
+
+function copyReference() {
+  const ref = document.getElementById('ref-number').textContent;
+  navigator.clipboard.writeText(ref).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy Ref';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    // Fallback for older browsers
+    const el = document.createElement('textarea');
+    el.value = ref;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  });
+}
+
+init();
+</script>
+
+</body>
+</html>
