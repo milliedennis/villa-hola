@@ -1195,7 +1195,7 @@ footer {
   margin: 0 auto;
   pointer-events: none;
 }
-/* Unavailable/booked days — all states, consistent colour */
+/* Unavailable/booked days — pink background + strikethrough only, same font as available */
 .flatpickr-day.flatpickr-disabled,
 .flatpickr-day.flatpickr-disabled:hover,
 .flatpickr-day.flatpickr-disabled.prevMonthDay,
@@ -1204,7 +1204,7 @@ footer {
 .flatpickr-day.flatpickr-disabled.nextMonthDay:hover {
   background: #F3E8E8 !important;
   border-color: transparent !important;
-  color: #9B4040 !important;
+  color: #1C1C1C !important;
   text-decoration: line-through;
   cursor: not-allowed !important;
   opacity: 1 !important;
@@ -1215,7 +1215,7 @@ footer {
 .flatpickr-day.changeover-day.nextMonthDay {
   background: #F3E8E8 !important;
   border-color: transparent !important;
-  color: #9B4040 !important;
+  color: #1C1C1C !important;
   text-decoration: line-through;
   cursor: not-allowed !important;
   color: #fff !important;
@@ -1223,7 +1223,7 @@ footer {
 }
 .flatpickr-day.changeover-day:hover,
 .flatpickr-day.changeover-day.prevMonthDay:hover,
-.flatpickr-day.changeover-day.nextMonthDay:hover { background: #F3E8E8 !important; color: #9B4040 !important; }
+.flatpickr-day.changeover-day.nextMonthDay:hover { background: #F3E8E8 !important; color: #1C1C1C !important; }
 .changeover-label {
   display: none; /* hidden on public calendar */
   font-size: 7px;
