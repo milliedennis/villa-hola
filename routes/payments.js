@@ -105,6 +105,52 @@ router.post('/confirm', async (req, res) => {
   }
 });
 
+// POST /api/payments/balance-link
+// Create a Stripe Checkout Session for the remaining balance and return the URL
+router.post('/balance-link', async (req, res) => {
+  try {
+    const { booking_id } = req.body;
+    if (!booking_id) return res.status(400).json({ error: 'booking_id required' });
+
+    const booking = db.getBookingById(booking_id);
+    if (!booking) return res.status(404).json({ error: 'Booking not found' });
+    if (booking.balance_due <= 0) return res.status(400).json({ error: 'No balance outstanding for this booking' });
+
+    const s = getStripe();
+    if (!s) return res.status(503).json({ error: 'Stripe not configured' });
+
+    const origin = process.env.SITE_URL || 'https://villahola.es';
+
+    const session = await s.checkout.sessions.create({
+      mode: 'payment',
+      customer_email: booking.guest_email,
+      line_items: [{
+        price_data: {
+          currency: 'eur',
+          product_data: {
+            name: 'Villa Hola — Remaining Balance',
+            description: `Booking ${booking.reference} · Check-in ${booking.check_in} to ${booking.check_out}`,
+          },
+          unit_amount: Math.round(booking.balance_due * 100),
+        },
+        quantity: 1,
+      }],
+      metadata: {
+        booking_id: booking.id,
+        reference:  booking.reference,
+        payment_type: 'balance',
+      },
+      success_url: `${origin}/?balance_paid=1&ref=${booking.reference}`,
+      cancel_url:  `${origin}/`,
+    });
+
+    res.json({ url: session.url, session_id: session.id, amount: booking.balance_due });
+  } catch (err) {
+    console.error('Balance link error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // POST /api/payments/webhook
 // Raw body required — configured before JSON middleware in server.js
 router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
@@ -131,6 +177,20 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
       const wbooking = db.getBookingById(booking.id);
       try { await sendConfirmationEmail(wbooking); } catch (_) {}
       try { await sendOwnerCalendarAlert(wbooking); } catch (_) {}
+    }
+  }
+
+  // Balance paid via Checkout Session (sent from admin)
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object;
+    if (session.metadata?.payment_type === 'balance' && session.metadata?.booking_id) {
+      const booking = db.getBookingById(session.metadata.booking_id);
+      if (booking) {
+        db.updateBooking(booking.id, {
+          balance_due: 0,
+          notes: (booking.notes ? booking.notes + '\n' : '') + `Balance paid via Stripe on ${new Date().toISOString().slice(0,10)}`,
+        });
+      }
     }
   }
 

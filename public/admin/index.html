@@ -919,6 +919,7 @@ textarea { resize: vertical; min-height: 80px; }
     <div class="modal-footer">
       <button class="btn btn-danger btn-sm" id="delete-booking-btn" onclick="confirmDeleteBooking()">🗑 Cancel Booking</button>
       <button class="btn btn-secondary btn-sm" onclick="closeModal('booking-detail-modal')">Close</button>
+      <button class="btn btn-ghost btn-sm" onclick="generateBalanceLink()" title="Create a Stripe payment link for the remaining balance">💳 Balance Link</button>
       <button class="btn btn-primary btn-sm" onclick="saveBookingEdit()">Save Changes</button>
     </div>
   </div>
@@ -1217,6 +1218,59 @@ async function confirmDeleteBooking() {
     loadDashboard();
   } catch (err) {
     alert('Delete failed: ' + err.message);
+  }
+}
+
+/* ─── Balance Payment Link ────────────────────────────────────── */
+async function generateBalanceLink() {
+  if (!currentBookingId) return;
+  const btn = document.querySelector('.modal-footer .btn-ghost');
+  const orig = btn.textContent;
+  btn.textContent = '⏳ Generating…';
+  btn.disabled = true;
+
+  try {
+    const { booking: b } = await api('/bookings/' + currentBookingId);
+    const data = await api('/payments/balance-link', {
+      method: 'POST',
+      body: { booking_id: currentBookingId },
+    });
+
+    // Show the link in a nice popup the admin can copy
+    const box = document.createElement('div');
+    box.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center';
+    box.innerHTML = `
+      <div style="background:#fff;border-radius:12px;padding:28px;max-width:480px;width:90%;font-family:inherit">
+        <h3 style="margin:0 0 8px;font-size:17px">💳 Balance Payment Link</h3>
+        <p style="margin:0 0 16px;color:#666;font-size:14px">
+          Stripe Checkout for <strong>${esc(b.guest_name)}</strong> — <strong>€${data.amount.toFixed(2)}</strong><br>
+          Copy this link and send it to the guest by email or WhatsApp.
+        </p>
+        <div style="display:flex;gap:8px;margin-bottom:20px">
+          <input id="balance-link-input" value="${esc(data.url)}" readonly
+            style="flex:1;padding:9px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;color:#333;background:#f9f9f9">
+          <button onclick="navigator.clipboard.writeText(document.getElementById('balance-link-input').value).then(()=>this.textContent='✓ Copied!')"
+            style="padding:9px 14px;background:#C4622D;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;white-space:nowrap">
+            Copy
+          </button>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:8px">
+          <a href="mailto:${esc(b.guest_email)}?subject=Villa Hola — Balance Payment Link&body=Dear ${esc(b.guest_name)},%0D%0A%0D%0AHere is your secure payment link for your remaining balance of €${data.amount.toFixed(2)}:%0D%0A%0D%0A${encodeURIComponent(data.url)}%0D%0A%0D%0APlease click the link to pay securely by card. If you prefer to pay by bank transfer or cash, please reply to this email.%0D%0A%0D%0AThank you!%0D%0AVilla Hola"
+            style="padding:9px 14px;background:#e8f5e9;color:#2E7D32;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600">
+            📧 Open in Email
+          </a>
+          <button onclick="this.closest('div[style]').remove()" style="padding:9px 14px;background:#eee;border:none;border-radius:8px;cursor:pointer;font-size:13px">Close</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(box);
+    box.addEventListener('click', e => { if (e.target === box) box.remove(); });
+
+  } catch (err) {
+    alert('Could not generate link: ' + err.message + '\n\nMake sure Stripe is configured in Railway.');
+  } finally {
+    btn.textContent = orig;
+    btn.disabled = false;
   }
 }
 

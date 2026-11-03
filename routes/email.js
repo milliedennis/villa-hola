@@ -17,8 +17,13 @@ async function sendConfirmationEmail(booking) {
   const t = getTransporter();
   if (!t) return; // Email not configured
 
-  const whatsapp = process.env.WHATSAPP_NUMBER || '+34600000000';
-  const waLink   = `https://wa.me/${whatsapp.replace(/[^0-9]/g, '')}`;
+  // Calculate balance due date (30 days before check-in)
+  const checkIn       = new Date(booking.check_in + 'T12:00:00');
+  const balanceDueD   = new Date(checkIn);
+  balanceDueD.setDate(balanceDueD.getDate() - 30);
+  const balanceDueStr = balanceDueD.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  const ownerEmail = process.env.EMAIL_FROM || 'Villa Hola <noreply@villahola.es>';
 
   const html = `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#1C1C1C">
@@ -47,17 +52,15 @@ async function sendConfirmationEmail(booking) {
               <td style="padding:8px;background:#FFF9F2;color:#2E7D32;font-weight:bold">€${booking.deposit_paid.toFixed(2)} ✓</td></tr>
           <tr><td style="padding:8px">Balance Due</td>
               <td style="padding:8px;font-weight:bold">€${booking.balance_due.toFixed(2)}</td></tr>
+          <tr><td style="padding:8px;background:#FFF9F2;color:#C62828;font-weight:bold">Balance Due By</td>
+              <td style="padding:8px;background:#FFF9F2;color:#C62828;font-weight:bold">${balanceDueStr}</td></tr>
         </table>
         <div style="background:#FFF3E0;border-left:4px solid #C4622D;padding:16px;margin:24px 0">
-          <strong>Remaining Balance (€${booking.balance_due.toFixed(2)})</strong><br>
-          The remaining balance will be arranged separately via WhatsApp.
-          We will be in touch to confirm the details of your stay.
+          <strong>Remaining Balance — €${booking.balance_due.toFixed(2)} due by ${balanceDueStr}</strong><br><br>
+          Your remaining balance will be arranged by email. We will contact you ahead of your stay
+          to arrange payment. We accept <strong>bank transfer, card payment or cash</strong>.
         </div>
-        <p style="text-align:center;margin:32px 0">
-          <a href="${waLink}" style="background:#25D366;color:#fff;padding:14px 28px;text-decoration:none;border-radius:8px;font-weight:bold;display:inline-block">
-            💬 Contact Us on WhatsApp
-          </a>
-        </p>
+        <p>If you have any questions in the meantime, please don't hesitate to get in touch by replying to this email.</p>
         <p>We look forward to welcoming you to Lanzarote!</p>
         <p>The Villa Hola Team</p>
       </div>
@@ -136,8 +139,8 @@ function generatePaymentIcs(booking) {
 }
 
 async function sendOwnerCalendarAlert(booking) {
-  const ownerEmail = process.env.OWNER_EMAIL;
-  if (!ownerEmail) return; // OWNER_EMAIL not set — skip silently
+  const ownerEmail = process.env.OWNER_EMAIL || 'bookings@villahola.es';
+  if (!ownerEmail) return; // safety fallback
 
   const t = getTransporter();
   if (!t) return;

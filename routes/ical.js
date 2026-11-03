@@ -24,22 +24,46 @@ router.get('/export.ics', (req, res) => {
 
     const bookings = db.getAllBookings({ status: 'confirmed' });
     for (const b of bookings) {
+      // ── Booking block event ──────────────────────────────────────
+      // Span check_in through check_out as an all-day multi-day event
+      const ciDate = new Date(b.check_in  + 'T00:00:00');
+      const coDate = new Date(b.check_out + 'T00:00:00');
       cal.createEvent({
-        start: new Date(b.check_in + 'T14:00:00'),
-        end:   new Date(b.check_out + 'T10:00:00'),
-        summary: `BLOCKED — ${b.reference}`,
-        description: `Villa Hola booking ${b.reference}`,
+        start:   ciDate,
+        end:     coDate,
+        allDay:  true,
+        summary: `BOOKED — ${b.guest_name} (${b.reference})`,
+        description: `Villa Hola · ${b.reference}\nGuest: ${b.guest_name}\nEmail: ${b.guest_email}\nPhone: ${b.guest_phone || '—'}\nNationality: ${b.guest_country || '—'}\nGuests: ${b.num_guests}\nTotal: €${b.total_price.toFixed(2)}\nDeposit paid: €${b.deposit_paid.toFixed(2)}\nBalance due: €${b.balance_due.toFixed(2)}`,
       });
+
+      // ── Balance reminder — all-day event 30 days before check-in ─
+      if (b.balance_due > 0) {
+        const checkIn    = new Date(b.check_in + 'T12:00:00');
+        const reminderD  = new Date(checkIn);
+        reminderD.setDate(reminderD.getDate() - 30);
+        const nextDay    = new Date(reminderD);
+        nextDay.setDate(nextDay.getDate() + 1);
+
+        const balancePct = Math.round((b.balance_due / b.total_price) * 100);
+
+        cal.createEvent({
+          start:    reminderD,
+          end:      nextDay,
+          allDay:   true,
+          summary:  `💰 Collect balance — ${b.guest_name} — €${b.balance_due.toFixed(2)}`,
+          description: `Balance collection reminder for ${b.reference}\n\nGuest: ${b.guest_name}\nEmail: ${b.guest_email}\nPhone: ${b.guest_phone || '—'}\n\nAmount due: €${b.balance_due.toFixed(2)} (${balancePct}% of €${b.total_price.toFixed(2)})\nCheck-in: ${b.check_in}\nCheck-out: ${b.check_out}\n\nPayment due 30 days before arrival. Accept bank transfer, card or cash.`,
+          alarms: [{ type: 'display', trigger: -7 * 24 * 60 * 60 }], // 7-day alert
+        });
+      }
     }
 
     // Add manually blocked dates as single-day events
-    const oneYearAgo  = new Date(); oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+    const oneYearAgo   = new Date(); oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
     const oneYearAhead = new Date(); oneYearAhead.setFullYear(oneYearAhead.getFullYear() + 2);
     const blocked = db.getBlockedDates(
       oneYearAgo.toISOString().slice(0,10),
       oneYearAhead.toISOString().slice(0,10)
     );
-    // Group consecutive days
     blocked.forEach(date => {
       cal.createEvent({
         start: new Date(date + 'T00:00:00'),

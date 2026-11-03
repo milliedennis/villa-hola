@@ -1175,10 +1175,10 @@ footer {
 }
 .flatpickr-calendar { font-family: 'Inter', sans-serif !important; }
 
-/* ── Calendar reservation labels ─────────────────────────────── */
+/* ── Calendar unavailable days — clean simple style ──────────── */
 .flatpickr-day { position: relative; }
 .day-booking-label {
-  display: block;
+  display: none; /* hidden on public calendar */
   font-size: 7px;
   line-height: 1;
   color: rgba(255,255,255,0.85);
@@ -1189,16 +1189,25 @@ footer {
   margin: 0 auto;
   pointer-events: none;
 }
-.flatpickr-day.flatpickr-disabled .day-booking-label { color: rgba(0,0,0,0.45); }
+/* Unavailable/booked days — muted, no orange circles */
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover {
+  background: #F3E8E8 !important;
+  border-color: transparent !important;
+  color: #C9A0A0 !important;
+  text-decoration: line-through;
+  cursor: not-allowed !important;
+  opacity: 1 !important;
+}
 .flatpickr-day.changeover-day {
-  background: #F59E0B !important;
-  border-color: #D97706 !important;
+  background: #FEF3C7 !important;
+  border-color: transparent !important;
   color: #fff !important;
   font-weight: 600;
 }
-.flatpickr-day.changeover-day:hover { background: #D97706 !important; }
+.flatpickr-day.changeover-day:hover { background: #FDE68A !important; }
 .changeover-label {
-  display: block;
+  display: none; /* hidden on public calendar */
   font-size: 7px;
   line-height: 1;
   color: rgba(255,255,255,0.9);
@@ -2928,15 +2937,7 @@ async function init() {
 
     if (changeoverDates.has(ds)) {
       dayElem.classList.add('changeover-day');
-      const lbl = document.createElement('span');
-      lbl.className = 'changeover-label';
-      lbl.textContent = 'Changeover';
-      dayElem.appendChild(lbl);
-    } else if (reservationDateMap[ds]) {
-      const lbl = document.createElement('span');
-      lbl.className = 'day-booking-label';
-      lbl.textContent = reservationDateMap[ds];
-      dayElem.appendChild(lbl);
+      // No text label on public calendar — just the subtle yellow tint
     }
   }
 
