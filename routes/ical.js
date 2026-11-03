@@ -110,8 +110,9 @@ router.post('/sync', requireAdmin, async (req, res) => {
       // Clear old entries from this source
       db.clearChannelBlocks(source);
 
+      const isPrepTime = s => /prep.?time|housekeeping|cleaning|maintenance/i.test(s || '');
       for (const event of events) {
-        if (event.start && event.end) {
+        if (event.start && event.end && !isPrepTime(event.summary)) {
           const dates = db.getDatesInRange(event.start, event.end);
           for (const d of dates) {
             db.blockDate(d, source, event.summary || null, source);
@@ -164,8 +165,11 @@ async function syncLodgify() {
 
     db.clearChannelBlocks('lodgify');
 
+    // Skip Lodgify housekeeping/prep events — only block real guest bookings
+    const isPrepTime = s => /prep.?time|housekeeping|cleaning|maintenance|block/i.test(s || '');
+
     for (const event of events) {
-      if (event.start && event.end) {
+      if (event.start && event.end && !isPrepTime(event.summary)) {
         const dates = db.getDatesInRange(event.start, event.end);
         for (const d of dates) {
           db.blockDate(d, 'lodgify', event.summary || 'Lodgify booking', 'lodgify');
@@ -173,7 +177,7 @@ async function syncLodgify() {
       }
     }
 
-    lodgifyEventsCache = events; // keep full event list for /reservations endpoint
+    lodgifyEventsCache = events.filter(e => !isPrepTime(e.summary)); // only real bookings cached
     lodgifyLastSynced = Date.now();
     console.log(`[iCal] Lodgify sync: ${events.length} events imported`);
   } catch (err) {

@@ -1165,6 +1165,12 @@ footer {
 }
 
 /* ── flatpickr overrides ──────────────────────────────────────── */
+/* Uniform date colour — no grey prev/next month dates */
+.flatpickr-day,
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay {
+  color: #1C1C1C !important;
+}
 .flatpickr-day.selected, .flatpickr-day.selected:hover {
   background: var(--terracotta) !important;
   border-color: var(--terracotta) !important;
