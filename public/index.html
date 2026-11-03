@@ -1165,56 +1165,48 @@ footer {
 }
 
 /* ── flatpickr overrides ──────────────────────────────────────── */
-/* Uniform date colour — no grey prev/next month dates */
+/* Uniform date colour for all available dates */
 .flatpickr-day,
 .flatpickr-day.prevMonthDay,
 .flatpickr-day.nextMonthDay {
   color: #1C1C1C !important;
+  opacity: 1 !important;
 }
-.flatpickr-day.selected, .flatpickr-day.selected:hover {
-  background: var(--terracotta) !important;
-  border-color: var(--terracotta) !important;
+/* Selected day — dark teal so it's clearly distinct from unavailable pink */
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+  background: #2A6B6B !important;
+  border-color: #2A6B6B !important;
+  color: #fff !important;
 }
 .flatpickr-day.inRange {
-  background: rgba(217,166,176,0.15) !important;
-  border-color: rgba(217,166,176,0.15) !important;
+  background: rgba(42,107,107,0.12) !important;
+  border-color: rgba(42,107,107,0.12) !important;
 }
 .flatpickr-calendar { font-family: 'Inter', sans-serif !important; }
 
-/* ── Calendar unavailable days — clean simple style ──────────── */
+/* ── Unavailable days — identical style regardless of month position ──────── */
 .flatpickr-day { position: relative; }
-.day-booking-label {
-  display: none; /* hidden on public calendar */
-  font-size: 7px;
-  line-height: 1;
-  color: rgba(255,255,255,0.85);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 90%;
-  margin: 0 auto;
-  pointer-events: none;
-}
-/* Unavailable/booked days — pink background + strikethrough only, same font as available */
-.flatpickr-day.flatpickr-disabled,
-.flatpickr-day.flatpickr-disabled:hover,
-.flatpickr-day.flatpickr-disabled.prevMonthDay,
-.flatpickr-day.flatpickr-disabled.prevMonthDay:hover,
-.flatpickr-day.flatpickr-disabled.nextMonthDay,
-.flatpickr-day.flatpickr-disabled.nextMonthDay:hover {
+.day-booking-label { display: none; }
+
+.flatpickr-calendar .flatpickr-day.flatpickr-disabled,
+.flatpickr-calendar .flatpickr-day.flatpickr-disabled:hover,
+.flatpickr-calendar .flatpickr-day.flatpickr-disabled.prevMonthDay,
+.flatpickr-calendar .flatpickr-day.flatpickr-disabled.prevMonthDay:hover,
+.flatpickr-calendar .flatpickr-day.flatpickr-disabled.nextMonthDay,
+.flatpickr-calendar .flatpickr-day.flatpickr-disabled.nextMonthDay:hover,
+.flatpickr-calendar .flatpickr-day.changeover-day,
+.flatpickr-calendar .flatpickr-day.changeover-day.prevMonthDay,
+.flatpickr-calendar .flatpickr-day.changeover-day.nextMonthDay {
   background: #F3E8E8 !important;
   border-color: transparent !important;
   color: #1C1C1C !important;
-  text-decoration: line-through;
+  text-decoration: line-through !important;
   cursor: not-allowed !important;
   opacity: 1 !important;
-}
-/* Changeover days — handled by flatpickr-disabled above */
-.flatpickr-day.changeover-day,
-.flatpickr-day.changeover-day.prevMonthDay,
-.flatpickr-day.changeover-day.nextMonthDay {
-  color: #fff !important;
-  font-weight: 600;
+  font-weight: normal !important;
 }
 .changeover-label {
   display: none; /* hidden on public calendar */
