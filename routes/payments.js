@@ -2,7 +2,7 @@
 const express = require('express');
 const router  = express.Router();
 const db      = require('../database/db');
-const { sendConfirmationEmail } = require('./email');
+const { sendConfirmationEmail, sendOwnerCalendarAlert } = require('./email');
 
 let stripe;
 function getStripe() {
@@ -89,8 +89,10 @@ router.post('/confirm', async (req, res) => {
 
     db.confirmBooking(booking.id, payment_intent_id);
 
-    // Send confirmation email if configured
-    try { await sendConfirmationEmail(db.getBookingById(booking.id)); } catch (_) {}
+    // Send confirmation email + owner calendar alert if configured
+    const confirmed = db.getBookingById(booking.id);
+    try { await sendConfirmationEmail(confirmed); } catch (_) {}
+    try { await sendOwnerCalendarAlert(confirmed); } catch (_) {}
 
     res.json({
       success: true,
@@ -126,7 +128,9 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
     const booking = db.getBookingByStripeIntent(intent.id);
     if (booking && booking.status === 'pending') {
       db.confirmBooking(booking.id, intent.id);
-      try { await sendConfirmationEmail(db.getBookingById(booking.id)); } catch (_) {}
+      const wbooking = db.getBookingById(booking.id);
+      try { await sendConfirmationEmail(wbooking); } catch (_) {}
+      try { await sendOwnerCalendarAlert(wbooking); } catch (_) {}
     }
   }
 
