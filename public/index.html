@@ -1209,21 +1209,13 @@ footer {
   cursor: not-allowed !important;
   opacity: 1 !important;
 }
-/* Changeover days — same */
+/* Changeover days — handled by flatpickr-disabled above */
 .flatpickr-day.changeover-day,
 .flatpickr-day.changeover-day.prevMonthDay,
 .flatpickr-day.changeover-day.nextMonthDay {
-  background: #F3E8E8 !important;
-  border-color: transparent !important;
-  color: #1C1C1C !important;
-  text-decoration: line-through;
-  cursor: not-allowed !important;
   color: #fff !important;
   font-weight: 600;
 }
-.flatpickr-day.changeover-day:hover,
-.flatpickr-day.changeover-day.prevMonthDay:hover,
-.flatpickr-day.changeover-day.nextMonthDay:hover { background: #F3E8E8 !important; color: #1C1C1C !important; }
 .changeover-label {
   display: none; /* hidden on public calendar */
   font-size: 7px;
@@ -3040,8 +3032,11 @@ async function loadBlockedDates() {
         reservationDateMap[d.toISOString().slice(0,10)] = label;
         d.setDate(d.getDate() + 1);
       }
-      // Mark check_out as changeover
+      // Changeover day — add to blockedDates so flatpickr disables it too
       changeoverDates.add(reservation.check_out);
+      if (!blockedDates.includes(reservation.check_out)) {
+        blockedDates.push(reservation.check_out);
+      }
     }
   } catch (e) {}
 }
