@@ -1,10 +1,11 @@
 'use strict';
 require('dotenv').config();
 
-const express  = require('express');
-const path     = require('path');
-const session  = require('express-session');
-const cors     = require('cors');
+const express      = require('express');
+const path         = require('path');
+const session      = require('express-session');
+const cors         = require('cors');
+const SQLiteStore  = require('./database/sessionStore');
 
 const availabilityRoutes = require('./routes/availability');
 const bookingRoutes      = require('./routes/bookings');
@@ -15,6 +16,9 @@ const icalRoutes         = require('./routes/ical');
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
+// ── Trust Railway's reverse proxy so secure cookies work over HTTPS ───────────
+app.set('trust proxy', 1);
+
 // ── Stripe webhook needs raw body — register BEFORE JSON middleware ────────────
 app.use('/api/payments/webhook', express.raw({ type: 'application/json' }));
 
@@ -23,6 +27,7 @@ app.use(cors({ origin: process.env.BASE_URL || '*', credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
+  store: new SQLiteStore(),   // persists across Railway container restarts
   secret: process.env.SESSION_SECRET || 'dev-secret-change-in-production',
   resave: false,
   saveUninitialized: false,
