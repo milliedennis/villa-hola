@@ -12,8 +12,10 @@ function getPasswordHash() {
 
 function requireAdmin(req, res, next) {
   if (req.session && req.session.adminLoggedIn) return next();
-  // API requests get 401
-  if (req.path.startsWith('/api/')) return res.status(401).json({ error: 'Unauthorised' });
+  // API requests get 401 JSON (check originalUrl so sub-router paths work correctly)
+  const isApi = req.originalUrl.includes('/api/') || req.xhr ||
+                (req.headers.accept && req.headers.accept.includes('application/json'));
+  if (isApi) return res.status(401).json({ error: 'Unauthorised' });
   // Browser requests redirect to login
   return res.redirect('/admin/login');
 }
