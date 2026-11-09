@@ -86,14 +86,20 @@ router.get('/export.ics', (req, res) => {
 router.post('/sync', requireAdmin, async (req, res) => {
   const results = {};
 
-  for (const source of ['airbnb', 'bookingcom']) {
-    const urlEnvKey = source === 'airbnb' ? 'AIRBNB_ICAL_URL' : 'BOOKINGCOM_ICAL_URL';
-    const url = process.env[urlEnvKey];
+  const channels = [
+    { key: 'airbnb',     envVar: 'AIRBNB_ICAL_URL' },
+    { key: 'bookingcom', envVar: 'BOOKINGCOM_ICAL_URL' },
+    { key: 'lodgify',    envVar: 'LODGIFY_ICAL_URL' },
+    { key: 'optima',     envVar: 'OPTIMA_ICAL_URL' },
+  ];
+
+  for (const { key, envVar } of channels) {
+    const url = process.env[envVar];
 
     if (!url) {
-      results[source] = {
+      results[key] = {
         status: 'skipped',
-        message: `${urlEnvKey} not configured. Add it to .env when your ${source} account is ready.`,
+        message: `${envVar} not configured — add it to your Railway environment variables.`,
       };
       continue;
     }
@@ -103,29 +109,27 @@ router.post('/sync', requireAdmin, async (req, res) => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const text = await response.text();
 
-      // Parse iCal — extract DTSTART/DTEND pairs
       const events = parseIcal(text);
       let datesAdded = 0;
 
-      // Clear old entries from this source
-      db.clearChannelBlocks(source);
+      db.clearChannelBlocks(key);
 
       const isPrepTime = s => /prep.?time|housekeeping|cleaning|maintenance/i.test(s || '');
       for (const event of events) {
         if (event.start && event.end && !isPrepTime(event.summary)) {
           const dates = db.getDatesInRange(event.start, event.end);
           for (const d of dates) {
-            db.blockDate(d, source, event.summary || null, source);
+            db.blockDate(d, key, event.summary || null, key);
             datesAdded++;
           }
         }
       }
 
-      db.logIcalSync(source, 'success', `Synced ${events.length} events`, datesAdded, 0);
-      results[source] = { status: 'success', events: events.length, datesAdded };
+      db.logIcalSync(key, 'success', `Synced ${events.length} events`, datesAdded, 0);
+      results[key] = { status: 'success', events: events.length, datesAdded };
     } catch (err) {
-      db.logIcalSync(source, 'error', err.message);
-      results[source] = { status: 'error', message: err.message };
+      db.logIcalSync(key, 'error', err.message);
+      results[key] = { status: 'error', message: err.message };
     }
   }
 
@@ -135,14 +139,10 @@ router.post('/sync', requireAdmin, async (req, res) => {
 // GET /api/ical/sync-status
 router.get('/sync-status', requireAdmin, (req, res) => {
   res.json({
-    airbnb: {
-      configured: !!process.env.AIRBNB_ICAL_URL,
-      lastSync: db.getLastIcalSync('airbnb'),
-    },
-    bookingcom: {
-      configured: !!process.env.BOOKINGCOM_ICAL_URL,
-      lastSync: db.getLastIcalSync('bookingcom'),
-    },
+    airbnb:     { configured: !!process.env.AIRBNB_ICAL_URL,     lastSync: db.getLastIcalSync('airbnb') },
+    bookingcom: { configured: !!process.env.BOOKINGCOM_ICAL_URL,  lastSync: db.getLastIcalSync('bookingcom') },
+    lodgify:    { configured: !!process.env.LODGIFY_ICAL_URL,     lastSync: db.getLastIcalSync('lodgify') },
+    optima:     { configured: !!process.env.OPTIMA_ICAL_URL,      lastSync: db.getLastIcalSync('optima') },
   });
 });
 

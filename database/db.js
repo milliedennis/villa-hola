@@ -378,7 +378,18 @@ function updatePricingSeason(id, data) {
     SET name = @name, start_date = @start_date, end_date = @end_date,
         price_per_night = @price_per_night, min_stay = @min_stay
     WHERE id = @id
-  `).run({ ...data, id });
+  `).run({ min_stay: 5, ...data, id });
+}
+
+function createPricingSeason(data) {
+  return getDb().prepare(`
+    INSERT INTO pricing_seasons (name, start_date, end_date, price_per_night, min_stay)
+    VALUES (@name, @start_date, @end_date, @price_per_night, @min_stay)
+  `).run({ min_stay: 5, ...data });
+}
+
+function deletePricingSeason(id) {
+  return getDb().prepare('DELETE FROM pricing_seasons WHERE id = ?').run(id);
 }
 
 // ── iCal sync log ────────────────────────────────────────────────────────────
@@ -458,6 +469,8 @@ module.exports = {
   getPricingSeasons,
   calculatePrice,
   updatePricingSeason,
+  createPricingSeason,
+  deletePricingSeason,
   // iCal
   logIcalSync,
   getLastIcalSync,

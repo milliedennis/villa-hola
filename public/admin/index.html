@@ -865,6 +865,34 @@ textarea { resize: vertical; min-height: 80px; }
         </div>
       </div>
 
+      <div class="sync-card">
+        <div class="sync-info">
+          <div class="sync-logo">🏨</div>
+          <div>
+            <div class="sync-name">Lodgify</div>
+            <div class="sync-status" id="lodgify-status"><span class="sync-dot grey"></span>Loading…</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <div id="lodgify-last-sync" style="font-size:12px;color:var(--light)"></div>
+          <button class="btn btn-ghost btn-sm" onclick="triggerSync('lodgify')" id="sync-lodgify-btn">Sync Now</button>
+        </div>
+      </div>
+
+      <div class="sync-card">
+        <div class="sync-info">
+          <div class="sync-logo">🔑</div>
+          <div>
+            <div class="sync-name">Optima</div>
+            <div class="sync-status" id="optima-status"><span class="sync-dot grey"></span>Loading…</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <div id="optima-last-sync" style="font-size:12px;color:var(--light)"></div>
+          <button class="btn btn-ghost btn-sm" onclick="triggerSync('optima')" id="sync-optima-btn">Sync Now</button>
+        </div>
+      </div>
+
       <div class="table-card" style="padding:22px">
         <h3 style="font-size:16px;font-weight:700;margin-bottom:12px">📤 Export Your Calendar</h3>
         <p style="color:var(--mid);font-size:14px;margin-bottom:16px;line-height:1.6">
@@ -886,6 +914,9 @@ textarea { resize: vertical; min-height: 80px; }
     <!-- ── Pricing ─────────────────────────────────────────────────── -->
     <div id="view-pricing" class="view">
       <div id="pricing-alert" style="display:none"></div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
+        <button class="btn btn-primary btn-sm" onclick="addSeason()">➕ Add Season</button>
+      </div>
       <div class="pricing-table">
         <div class="season-row header">
           <div>Season Name</div>
@@ -1430,8 +1461,10 @@ async function loadIcalStatus() {
       }
     };
 
-    setStatus('airbnb', data.airbnb || {});
+    setStatus('airbnb',     data.airbnb     || {});
     setStatus('bookingcom', data.bookingcom || {});
+    setStatus('lodgify',    data.lodgify    || {});
+    setStatus('optima',     data.optima     || {});
   } catch (_) {}
 }
 
@@ -1443,14 +1476,15 @@ async function triggerSync(channel) {
   try {
     const res = await fetch('/api/ical/sync', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
     const data = await res.json();
-    const result = data.results?.[channel === 'bookingcom' ? 'bookingcom' : 'airbnb'];
+    const result = data.results?.[channel];
+    const label  = { airbnb: 'Airbnb', bookingcom: 'Booking.com', lodgify: 'Lodgify', optima: 'Optima' }[channel] || channel;
 
     if (result?.status === 'success') {
-      showAlert('ical-alert', `✅ ${channel === 'airbnb' ? 'Airbnb' : 'Booking.com'} sync successful — ${result.events} events, ${result.datesAdded} dates blocked.`, 'success');
+      showAlert('ical-alert', `✅ ${label} sync successful — ${result.events} events, ${result.datesAdded} dates blocked.`, 'success');
     } else if (result?.status === 'skipped') {
       showAlert('ical-alert', `ℹ️ ${result.message}`, 'info');
     } else {
-      showAlert('ical-alert', `❌ Sync failed: ${result?.message || 'Unknown error'}`, 'error');
+      showAlert('ical-alert', `❌ ${label} sync failed: ${result?.message || 'Unknown error'}`, 'error');
     }
     loadIcalStatus();
   } catch (err) {
@@ -1484,8 +1518,8 @@ async function loadPricing() {
                  onfocus="this.style.background='var(--cream)';this.style.borderRadius='6px';this.style.padding='4px 8px'"
                  onblur="this.style.background='transparent';this.style.padding='4px 0'">
         </div>
-        <div><input type="date" value="${s.start_month ? seasonDateOf(s.start_month, s.start_day) : ''}" id="sf-${s.id}" class="filter-input" style="padding:6px 10px"></div>
-        <div><input type="date" value="${s.end_month ? seasonDateOf(s.end_month, s.end_day) : ''}" id="st-${s.id}" class="filter-input" style="padding:6px 10px"></div>
+        <div><input type="date" value="${s.start_date ? '2024-' + s.start_date : ''}" id="sf-${s.id}" class="filter-input" style="padding:6px 10px"></div>
+        <div><input type="date" value="${s.end_date ? '2024-' + s.end_date : ''}" id="st-${s.id}" class="filter-input" style="padding:6px 10px"></div>
         <div>
           <div style="display:flex;align-items:center;gap:4px">
             <span style="color:var(--light)">€</span>
@@ -1493,7 +1527,10 @@ async function loadPricing() {
                    class="filter-input" style="width:90px;padding:6px 10px" min="0" step="5">
           </div>
         </div>
-        <div><button class="btn btn-primary btn-sm" onclick="saveSeason(${s.id})">Save</button></div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-primary btn-sm" onclick="saveSeason(${s.id})">Save</button>
+          <button class="btn btn-sm" style="background:var(--red-bg);color:var(--red);border:none" onclick="deleteSeason(${s.id})">✕</button>
+        </div>
       </div>
     `).join('');
   } catch (err) {
@@ -1509,33 +1546,59 @@ function seasonDateOf(month, day) {
 }
 
 async function saveSeason(id) {
-  const name   = document.getElementById('sn-' + id)?.value;
-  const fromEl = document.getElementById('sf-' + id)?.value;
-  const toEl   = document.getElementById('st-' + id)?.value;
-  const price  = document.getElementById('sp-' + id)?.value;
+  const name  = document.getElementById('sn-' + id)?.value;
+  const fromV = document.getElementById('sf-' + id)?.value; // 2024-MM-DD
+  const toV   = document.getElementById('st-' + id)?.value;
+  const price = document.getElementById('sp-' + id)?.value;
 
-  const parseDate = val => {
-    if (!val) return {};
-    const [,m,d] = val.split('-');
-    return { month: parseInt(m), day: parseInt(d) };
-  };
-
-  const from = parseDate(fromEl);
-  const to   = parseDate(toEl);
+  // Date inputs give YYYY-MM-DD; DB stores MM-DD (strip the year)
+  const toMMDD = val => val ? val.slice(5) : '';
 
   try {
     await api('/pricing/' + id, {
       method: 'PUT',
       body: {
         name,
-        start_month: from.month,
-        start_day:   from.day,
-        end_month:   to.month,
-        end_day:     to.day,
+        start_date: toMMDD(fromV),
+        end_date:   toMMDD(toV),
         price_per_night: parseFloat(price),
+        min_stay: 5,
       },
     });
     showAlert('pricing-alert', '✅ Season saved!', 'success');
+  } catch (err) {
+    showAlert('pricing-alert', '❌ ' + esc(err.message), 'error');
+  }
+}
+
+async function addSeason() {
+  try {
+    const data = await api('/pricing', {
+      method: 'POST',
+      body: { name: 'New Season', start_date: '01-01', end_date: '01-31', price_per_night: 325, min_stay: 5 },
+    });
+    // Re-render with the new season from the server response
+    const seasons = data.seasons || [];
+    // Reuse loadPricing's render — trigger a reload
+    await loadPricing();
+    // Scroll to and focus the new row
+    const lastId = seasons[seasons.length - 1]?.id;
+    if (lastId) {
+      const el = document.getElementById('sn-' + lastId);
+      if (el) { el.focus(); el.select(); }
+      document.getElementById('season-row-' + lastId)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  } catch (err) {
+    showAlert('pricing-alert', '❌ ' + esc(err.message), 'error');
+  }
+}
+
+async function deleteSeason(id) {
+  if (!confirm('Delete this pricing season?')) return;
+  try {
+    await api('/pricing/' + id, { method: 'DELETE' });
+    document.getElementById('season-row-' + id)?.remove();
+    showAlert('pricing-alert', '✅ Season deleted.', 'success');
   } catch (err) {
     showAlert('pricing-alert', '❌ ' + esc(err.message), 'error');
   }

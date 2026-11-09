@@ -143,6 +143,24 @@ router.put('/api/pricing/:id', requireAdmin, (req, res) => {
   res.json({ seasons: db.getPricingSeasons() });
 });
 
+router.post('/api/pricing', requireAdmin, (req, res) => {
+  try {
+    db.createPricingSeason(req.body);
+    res.json({ seasons: db.getPricingSeasons() });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.delete('/api/pricing/:id', requireAdmin, (req, res) => {
+  try {
+    db.deletePricingSeason(req.params.id);
+    res.json({ seasons: db.getPricingSeasons() });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ── Dashboard page ────────────────────────────────────────────────────────────
 
 router.get('/', requireAdmin, (req, res) => {
